@@ -75,6 +75,7 @@
         android:textAllCaps="false"
         android:background="@drawable/bg_hello_button"
         android:textColor="@drawable/hello_button_text_color"
+
         />
 
 </LinearLayout>
