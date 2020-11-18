@@ -22,7 +22,7 @@ class TestHelloActivity : AppCompatActivity() {
         val helloContinueButton: Button = findViewById(R.id.continue_button)
         val helloYourNameTextView: TextView = findViewById(R.id.hello_some_user_TextView)
         val user: String = getSavedUser()
-        helloYourNameTextView.text = resources.getString(R.string.hello_some_user_fmt, user)
+        helloYourNameTextView.text = resources.getString(R.string.hello_user_fmt, user)
 
         helloContinueButton.setOnClickListener {
             finish()

@@ -15,7 +15,6 @@ import kz.kolesateam.confapp.presentation.common.AbstractTextWatcher
 
 const val USER_NAME_KEY = "user_name"
 const val APPLICATION_SHARED_PREFERENCES = "application"
-private const val TAG = "TestHelloActivity"
 
 class HelloActivity : AppCompatActivity() {
 
