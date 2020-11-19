@@ -5,10 +5,10 @@
             <solid android:color="@color/bg_disable_button_solid"
                 />
             <stroke
-                android:width="@dimen/editText_stroke_width"
+                android:width="@dimen/stroke_width"
                 android:color="@color/grey"
                 />
-            <corners android:radius="@dimen/editText_frame_radius"
+            <corners android:radius="@dimen/frame_radius"
                 />
         </shape>
     </item>
@@ -17,10 +17,10 @@
             <solid android:color="@color/bg_enable_button_solid"
                 />
             <stroke
-                android:width="@dimen/editText_stroke_width"
+                android:width="@dimen/stroke_width"
                 android:color="@color/bg_enable_button_solid"
                 />
-            <corners android:radius="@dimen/editText_frame_radius"
+            <corners android:radius="@dimen/frame_radius"
                 />
         </shape>
     </item>

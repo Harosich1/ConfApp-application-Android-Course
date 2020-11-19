@@ -3,8 +3,8 @@
     <dimen name="activity_hello_header">165dp</dimen>
     <dimen name="activity_hello_margin">16dp</dimen>
     <dimen name="activity_hello_padding">10dp</dimen>
-    <dimen name="editText_frame_radius">4dp</dimen>
-    <dimen name="editText_stroke_width">1dp</dimen>
+    <dimen name="frame_radius">4dp</dimen>
+    <dimen name="stroke_width">1dp</dimen>
     <dimen name="activity_hello_padding_topBottom">14dp</dimen>
     <dimen name="activity_hello_padding_horizontal">18dp</dimen>
     <dimen name="activity_hello_button_padding">15dp</dimen>
