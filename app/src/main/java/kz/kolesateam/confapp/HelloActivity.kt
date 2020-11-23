@@ -1,14 +1,8 @@
 package kz.kolesateam.confapp
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.widget.Button
-import android.widget.EditText
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import kz.kolesateam.confapp.events.presentation.UpcomingEventsActivity
 
@@ -19,7 +13,7 @@ class HelloActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_hello)
+        setContentView(R.layout.hello_activity_enabled_button)
 
         val mainContinueButton: Button = findViewById(R.id.continue_button)
 
