@@ -9,6 +9,14 @@ data class EventApiData(
         val id: Int?,
         @JsonProperty(value = "title")
         val title: String?,
+        @JsonProperty(value = "startTime")
+        val startTime: String?,
+        @JsonProperty(value = "endTime")
+        val endTime: String?,
+        @JsonProperty(value = "description")
+        val description: String?,
+        @JsonProperty(value = "place")
+        val place: String?,
         @JsonProperty(value = "speaker")
         val speaker: SpeakerApiData?
 )

@@ -44,18 +44,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
     }
 
     private fun bindViews(){
-        responceTextView = findViewById(R.id.upcoming_events_textView)
-        loadDataButtonSync = findViewById(R.id.upcoming_events_syncLoad)
-        loadDataButtonAsync = findViewById(R.id.upcoming_events_aSyncLoad)
         progressBar = findViewById(R.id.events_progress_bar)
-        loadDataButtonSync.setOnClickListener{
-            progressBar.visibility = View.VISIBLE
-            loadApiDataSync()
-        }
-        loadDataButtonAsync.setOnClickListener{
-            progressBar.visibility = View.VISIBLE
-            loadApiDataAsync()
-        }
     }
 
     private fun loadApiDataSync(){

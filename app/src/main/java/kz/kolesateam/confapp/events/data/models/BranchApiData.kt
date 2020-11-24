@@ -10,5 +10,5 @@ data class BranchApiData (
         @JsonProperty(value = "title")
     val title: String?,
         @JsonProperty(value = "events")
-    val events: List<EventApiData>?
+    val events: List<EventApiData>
 )
