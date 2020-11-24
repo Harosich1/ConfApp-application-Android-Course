@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
-import org.w3c.dom.Text
 
 class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -21,6 +20,7 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val speakerJobCurrent: TextView = branchCurrentEvent.findViewById(R.id.job_of_speaker)
     private val eventDescriptionCurrent: TextView = branchCurrentEvent.findViewById(R.id.description_of_event)
 
+    private val eventStateNext: TextView = branchNextEvent.findViewById(R.id.event_state)
     private val eventTimeAndAuditoryNext: TextView = branchNextEvent.findViewById(R.id.time_and_auditory)
     private val nameOfSpeakerNext: TextView = branchNextEvent.findViewById(R.id.name_of_speaker)
     private val speakerJobNext: TextView = branchNextEvent.findViewById(R.id.job_of_speaker)
@@ -45,6 +45,7 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         nameOfSpeakerCurrent.text = currentEvent.speaker?.fullName ?: "no name"
         speakerJobCurrent.text = currentEvent.speaker?.job
         eventDescriptionCurrent.text = currentEvent.title
+
 
         val nextEventTimeAndAuditoryString = "%s - %s • %s".format(
                 nextEvent.startTime,

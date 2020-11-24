@@ -12,5 +12,5 @@ interface ApiClient {
     fun getUpcomingEventsSync(): Call<ResponseBody>
 
     @GET("/upcoming_events")
-    fun getUpcomingEventsAsync(): Call<List<BranchApiData>>
+    fun getUpcomingEvents(): Call<List<BranchApiData>>
 }
