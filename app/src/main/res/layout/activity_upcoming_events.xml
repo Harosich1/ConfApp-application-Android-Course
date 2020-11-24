@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".events.presentation.UpcomingEventsActivity"
+    android:background="@drawable/blue_gradient"
     >
 
     <FrameLayout
@@ -18,10 +19,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/branch_item"
             tools:itemCount="5"
             />
-
-
 
         <Button
             android:layout_width="wrap_content"
@@ -37,8 +37,6 @@
             android:textColor="@color/blue"
             android:background="@drawable/in_favourite_button_selector"
             />
-
-
 
     <ProgressBar
         android:id="@+id/events_progress_bar"
