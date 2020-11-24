@@ -24,9 +24,10 @@
             />
 
         <ImageView
-            android:layout_width="@dimen/layout_size_32x"
-            android:layout_height="@dimen/layout_size_32x"
+            android:layout_width="@dimen/layout_size_12x"
+            android:layout_height="@dimen/layout_size_12x"
             android:src="@drawable/arrow_back_bold"
+            android:layout_gravity="center"
             />
 
     </LinearLayout>
@@ -34,6 +35,8 @@
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:overScrollMode="never"
         >
 
         <LinearLayout
@@ -44,7 +47,7 @@
         <include
             android:id="@+id/branch_current_event"
             layout="@layout/event_card_layout"
-            android:layout_width="@dimen/layout_size_280x"
+            android:layout_width="@dimen/layout_size_320x"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_8x"
             android:layout_marginStart="@dimen/margin_24x"
@@ -53,7 +56,7 @@
         <include
             android:id="@+id/branch_next_event"
             layout="@layout/event_card_layout"
-            android:layout_width="@dimen/layout_size_280x"
+            android:layout_width="@dimen/layout_size_320x"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_24x"
             />

@@ -27,7 +27,7 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val eventDescriptionNext: TextView = branchNextEvent.findViewById(R.id.description_of_event)
 
     init {
-        branchCurrentEvent.findViewById<TextView>(R.id.event_state).visibility = View.GONE
+        branchCurrentEvent.findViewById<TextView>(R.id.event_state).visibility = View.INVISIBLE
     }
 
     fun onBind(branchApiData: BranchApiData){
