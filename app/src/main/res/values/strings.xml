@@ -8,5 +8,6 @@
     <string name="hello_string">Привет!</string>
     <string name="event_sync_loading">Sync loading</string>
     <string name="event_async_loading">Async loading</string>
+    <string name="in_favourite">В избранные</string>
 
 </resources>

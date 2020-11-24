@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_24x"
+            android:text="Branch title"
+            />
+
+        <ImageView
+            android:layout_width="@dimen/layout_size_32x"
+            android:layout_height="@dimen/layout_size_32x"
+            android:src="@drawable/arrow_back_bold"
+            />
+
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+        <include
+            layout="@layout/event_card_layout"
+            android:layout_width="@dimen/layout_size_280x"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_8x"
+            />
+
+        <include
+            layout="@layout/event_card_layout"
+            android:layout_width="@dimen/layout_size_280x"
+            android:layout_height="wrap_content"
+            />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+</LinearLayout>

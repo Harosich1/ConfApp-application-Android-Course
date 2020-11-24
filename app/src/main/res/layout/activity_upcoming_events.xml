@@ -14,60 +14,30 @@
         android:orientation="vertical"
         >
 
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:orientation="vertical"
-       >
-       <FrameLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="@dimen/event_margin"
-           >
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="5"
+            />
 
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               >
 
-               <Button
-                   android:id="@+id/upcoming_events_syncLoad"
-                   android:layout_width="fill_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_weight="1"
-                   android:layout_gravity="start"
-                   android:padding="@dimen/activity_hello_button_padding"
-                   android:text="@string/event_sync_loading"
-                   android:textAllCaps="false"
-                   android:textSize="@dimen/activity_hello_Button_text_size"
-                   android:layout_marginTop="@dimen/event_margin"
-                   android:layout_marginHorizontal="@dimen/event_margin"
-                   />
 
-               <Button
-                   android:id="@+id/upcoming_events_aSyncLoad"
-                   android:layout_width="fill_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_weight="1"
-                   android:layout_gravity="end"
-                   android:padding="@dimen/activity_hello_button_padding"
-                   android:text="@string/event_async_loading"
-                   android:textAllCaps="false"
-                   android:textSize="@dimen/activity_hello_Button_text_size"
-                   android:layout_marginTop="@dimen/event_margin"
-                   android:layout_marginHorizontal="@dimen/event_margin"
-                   />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:drawableStart="@drawable/favourite_icon_not_filled"
+            android:paddingStart="@dimen/padding_12x"
+            android:paddingEnd="@dimen/padding_16x"
+            android:layout_marginBottom="@dimen/padding_16x"
+            android:drawablePadding="@dimen/padding_4x"
+            android:text="@string/in_favourite"
+            android:textAllCaps="false"
+            android:textColor="@color/blue"
+            android:background="@drawable/in_favourite_button_selector"
+            />
 
-           </LinearLayout>
-       </FrameLayout>
-
-       <TextView
-           android:id="@+id/upcoming_events_textView"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:textColor="@color/black"
-           />
-   </LinearLayout>
 
 
     <ProgressBar

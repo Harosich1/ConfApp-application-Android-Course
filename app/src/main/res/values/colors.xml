@@ -10,4 +10,7 @@
     <color name="syncButton_text_color">#2196F3</color>
     <color name="asyncButton_text_color">#4CAF50</color>
     <color name="error_message_text_color">#F44336</color>
+    <color name="blue">#2A81DD</color>
+    <color name="transparent_grey">#888B94</color>
+    <color name="bold_black">#1C1819</color>
 </resources>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="@dimen/padding_4x"
+    android:paddingBottom="@dimen/padding_16x"
+    android:paddingHorizontal="@dimen/padding_16x"
+
+    android:background="@drawable/bg_event_card"
+    >
+
+    <TextView
+        android:id="@+id/event_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingHorizontal="@dimen/padding_8x"
+        android:textColor="@color/white"
+        android:text="Следующий доклад"
+        android:background="@drawable/bg_event_state"
+        />
+
+    <TextView
+        android:id="@+id/time_and_auditory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/event_state"
+        app:layout_constraintTop_toBottomOf="@id/event_state"
+        android:layout_marginTop="@dimen/margin_4x"
+        android:textColor="@color/transparent_grey"
+        android:text="14:00-16:00 Зал номер 5"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/time_and_auditory"
+        app:layout_constraintBottom_toBottomOf="@id/time_and_auditory"
+        android:src="@drawable/favourite_icon_not_filled"
+        />
+
+
+    <TextView
+        android:id="@+id/name_of_speaker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/time_and_auditory"
+        app:layout_constraintTop_toBottomOf="@id/time_and_auditory"
+        android:layout_marginTop="@dimen/margin_8x"
+        android:textColor="@color/bold_black"
+        android:text="Кирилл Розов"
+        />
+
+    <TextView
+        android:id="@+id/department_of_speaker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/name_of_speaker"
+        app:layout_constraintTop_toBottomOf="@id/name_of_speaker"
+        android:textColor="@color/transparent_grey"
+        android:text="Event State"
+        />
+
+    <TextView
+        android:id="@+id/description_of_event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/department_of_speaker"
+        app:layout_constraintTop_toBottomOf="@id/department_of_speaker"
+        android:layout_marginTop="@dimen/margin_8x"
+        android:textColor="@color/black"
+        android:text="Увлекательная жизнь в панели уведомлений"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
