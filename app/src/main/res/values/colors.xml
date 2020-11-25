@@ -7,6 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="bg_enable_button_solid">#2481de</color>
+    <color name="grey">#dcdcdc</color>
+    <color name="bg_disable_button_solid">#dcdcdc</color>
+    <color name="brighter_grey">#808080</color>
     <color name="syncButton_text_color">#2196F3</color>
     <color name="asyncButton_text_color">#4CAF50</color>
     <color name="error_message_text_color">#F44336</color>

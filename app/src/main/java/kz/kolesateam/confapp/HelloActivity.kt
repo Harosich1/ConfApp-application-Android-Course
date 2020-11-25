@@ -6,12 +6,14 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import kz.kolesateam.confapp.events.presentation.UpcomingEventsActivity
 
+const val USER_NAME_KEY = "user_name"
+const val APPLICATION_SHARED_PREFERENCES = "application"
 
 class HelloActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_hello)
+        setContentView(R.layout.hello_activity_enabled_button)
 
         val mainContinueButton: Button = findViewById(R.id.continue_button)
 
