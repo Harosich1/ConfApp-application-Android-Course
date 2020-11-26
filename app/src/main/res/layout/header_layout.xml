@@ -3,12 +3,14 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/padding_16x"
+    android:paddingTop="@dimen/padding_16x"
+    android:paddingHorizontal="@dimen/padding_16x"
+    android:paddingBottom="@dimen/padding_4x"
     >
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="160dp"
+        android:layout_height="24dp"
         android:src="@drawable/header_logo_white"
         android:layout_gravity="center"
         />
@@ -20,7 +22,8 @@
         android:layout_gravity="bottom|start"
         android:layout_marginTop="@dimen/margin_16x"
         android:textColor="@color/white"
-        android:text="Здаров, Васян"
+        android:textSize="@dimen/textSize_14x"
+        android:text="Привет, Васян!"
         />
 
 </LinearLayout>
