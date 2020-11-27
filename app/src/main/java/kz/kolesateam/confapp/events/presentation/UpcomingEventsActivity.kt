@@ -78,7 +78,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
                     val upcomingEventListItem: MutableList<UpcomingEventListItem> = mutableListOf()
                     val headerListItem: UpcomingEventListItem = UpcomingEventListItem(
                             type = 1,
-                            data = "Hokins"
+                            data = resources.getString(R.string.hello_user_fmt, getSavedUser())
                     )
 
                     val branchListItem: List<UpcomingEventListItem> = response.body()!!.map {
