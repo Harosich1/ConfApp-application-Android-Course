@@ -2,12 +2,14 @@ package kz.kolesateam.confapp.events.presentation
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.APPLICATION_SHARED_PREFERENCES
@@ -35,7 +37,6 @@ val apiClient: ApiClient = apiRetrofit.create(ApiClient::class.java)
 class UpcomingEventsActivity : AppCompatActivity() {
 
     private lateinit var progressBar: ProgressBar
-    private lateinit var iconInFavourite: ImageView
     private lateinit var recyclerView: RecyclerView
     private lateinit var branchAdapter: BranchAdapter
     private lateinit var userNameTextView: TextView
@@ -43,7 +44,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_upcoming_events)
+        setContentView(R.layout.activity_upcoming_layout)
 
         bindViews()
         loadApiData()
@@ -61,7 +62,6 @@ class UpcomingEventsActivity : AppCompatActivity() {
                 this,
                 LinearLayoutManager.VERTICAL,
                 false
-
         )
     }
 

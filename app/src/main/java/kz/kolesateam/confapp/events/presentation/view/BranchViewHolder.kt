@@ -1,6 +1,7 @@
 package kz.kolesateam.confapp.events.presentation.view
 
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
@@ -19,12 +20,14 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val nameOfSpeakerCurrent: TextView = branchCurrentEvent.findViewById(R.id.name_of_speaker)
     private val speakerJobCurrent: TextView = branchCurrentEvent.findViewById(R.id.job_of_speaker)
     private val eventDescriptionCurrent: TextView = branchCurrentEvent.findViewById(R.id.description_of_event)
+    private val iconInFavouriteCurrent: ImageView = branchCurrentEvent.findViewById(R.id.ic_in_favourite)
 
     private val eventStateNext: TextView = branchNextEvent.findViewById(R.id.event_state)
     private val eventTimeAndAuditoryNext: TextView = branchNextEvent.findViewById(R.id.time_and_auditory)
     private val nameOfSpeakerNext: TextView = branchNextEvent.findViewById(R.id.name_of_speaker)
     private val speakerJobNext: TextView = branchNextEvent.findViewById(R.id.job_of_speaker)
     private val eventDescriptionNext: TextView = branchNextEvent.findViewById(R.id.description_of_event)
+    private val iconInFavouriteNext: ImageView = branchNextEvent.findViewById(R.id.ic_in_favourite)
 
     init {
         branchCurrentEvent.findViewById<TextView>(R.id.event_state).visibility = View.INVISIBLE
@@ -45,6 +48,17 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         nameOfSpeakerCurrent.text = currentEvent.speaker?.fullName ?: "no name"
         speakerJobCurrent.text = currentEvent.speaker?.job
         eventDescriptionCurrent.text = currentEvent.title
+        iconInFavouriteCurrent.tag = R.drawable.favourite_icon_not_filled
+        iconInFavouriteCurrent.setOnClickListener {
+            if(iconInFavouriteCurrent.tag == R.drawable.favorite_icon_filled) {
+                iconInFavouriteCurrent.setImageResource(R.drawable.favourite_icon_not_filled)
+                iconInFavouriteCurrent.tag = R.drawable.favourite_icon_not_filled
+            }
+            else{
+                iconInFavouriteCurrent.setImageResource(R.drawable.favorite_icon_filled)
+                iconInFavouriteCurrent.tag = R.drawable.favorite_icon_filled
+            }
+        }
 
 
         val nextEventTimeAndAuditoryString = "%s - %s • %s".format(
@@ -57,5 +71,16 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         nameOfSpeakerNext.text = nextEvent.speaker?.fullName ?: "no name"
         speakerJobNext.text = nextEvent.speaker?.job
         eventDescriptionNext.text = nextEvent.title
+        iconInFavouriteNext.tag = R.drawable.favourite_icon_not_filled
+        iconInFavouriteNext.setOnClickListener {
+            if(iconInFavouriteNext.tag == R.drawable.favorite_icon_filled) {
+                iconInFavouriteNext.setImageResource(R.drawable.favourite_icon_not_filled)
+                iconInFavouriteNext.tag = R.drawable.favourite_icon_not_filled
+            }
+            else{
+                iconInFavouriteNext.setImageResource(R.drawable.favorite_icon_filled)
+                iconInFavouriteNext.tag = R.drawable.favorite_icon_filled
+            }
+        }
     }
 }
