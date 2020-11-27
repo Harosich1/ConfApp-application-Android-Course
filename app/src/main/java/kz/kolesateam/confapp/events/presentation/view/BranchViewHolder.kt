@@ -1,19 +1,26 @@
 package kz.kolesateam.confapp.events.presentation.view
 
+import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.fasterxml.jackson.annotation.JsonInclude
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
 
 class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+    private lateinit var branchAdapterForToast: BranchAdapter
+
     private val branchCurrentEvent: View = itemView.findViewById(R.id.branch_current_event)
     private val branchNextEvent: View = itemView.findViewById(R.id.branch_next_event)
 
     private val branchTitleCurrent: TextView = itemView.findViewById(R.id.branch_title)
+    private val branchArrowTransition: ImageView = itemView.findViewById(R.id.about_branch)
 
     private val eventStateCurrent: TextView = branchCurrentEvent.findViewById(R.id.event_state)
     private val eventTimeAndAuditoryCurrent: TextView = branchCurrentEvent.findViewById(R.id.time_and_auditory)
@@ -35,8 +42,38 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun onBind(branchApiData: BranchApiData){
         branchTitleCurrent.text = branchApiData.title
+        branchAdapterForToast = BranchAdapter.branchAdapterForToast
+
         val currentEvent: EventApiData = branchApiData.events.first()
         val nextEvent: EventApiData = branchApiData.events.last()
+
+        val toastAttributesList: MutableList<Any> = branchAdapterForToast.getToastAttributesList()
+        val toastContext = toastAttributesList[0] as Context
+        val toastTextForArrow = (toastAttributesList[1] as String).format(
+                "направление",
+                branchApiData.title
+        )
+        val toastTextForCurrentReport = (toastAttributesList[1] as String).format(
+                "доклад",
+                currentEvent.title
+        )
+        val toastTextForNextReport = (toastAttributesList[1] as String).format(
+                "доклад",
+                nextEvent.title
+        )
+        val toastInt = toastAttributesList[2] as Int
+
+        branchArrowTransition.setOnClickListener{
+            Toast.makeText(toastContext, toastTextForArrow, toastInt).show()
+        }
+
+        branchCurrentEvent.setOnClickListener{
+            Toast.makeText(toastContext, toastTextForCurrentReport, toastInt).show()
+        }
+
+        branchNextEvent.setOnClickListener{
+            Toast.makeText(toastContext, toastTextForNextReport, toastInt).show()
+        }
 
         val currentEventTimeAndAuditoryString = "%s - %s • %s".format(
                 currentEvent.startTime,
@@ -82,5 +119,8 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 iconInFavouriteNext.tag = R.drawable.favorite_icon_filled
             }
         }
+    }
+
+    fun getToast(toast: Toast){
     }
 }

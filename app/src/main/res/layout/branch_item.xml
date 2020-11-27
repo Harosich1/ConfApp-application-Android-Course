@@ -28,6 +28,7 @@
             />
 
         <ImageView
+            android:id="@+id/about_branch"
             android:layout_width="@dimen/layout_size_14x"
             android:layout_height="@dimen/layout_size_14x"
             android:src="@drawable/arrow_back_bold"

@@ -2,14 +2,11 @@ package kz.kolesateam.confapp.events.presentation
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.widget.ImageView
+import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.APPLICATION_SHARED_PREFERENCES
@@ -19,13 +16,11 @@ import kz.kolesateam.confapp.events.data.ApiClient
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
-import kz.kolesateam.confapp.events.presentation.view.HeaderViewHolder
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
-import java.util.zip.Inflater
 
 val apiRetrofit: Retrofit = Retrofit.Builder()
         .baseUrl("http://37.143.8.68:2020")
@@ -39,8 +34,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
     private lateinit var branchAdapter: BranchAdapter
-    private lateinit var userNameTextView: TextView
-    private lateinit var headerViewHolder: HeaderViewHolder
+    private lateinit var branchAdapterForToast: BranchAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,11 +45,13 @@ class UpcomingEventsActivity : AppCompatActivity() {
 
     }
 
+
     private fun bindViews(){
         recyclerView = findViewById(R.id.upcoming_event_activity_recycler)
 
         branchAdapter = BranchAdapter()
-        val user: String = getSavedUser()
+        branchAdapterForToast = branchAdapter.getBranchAdapterForToast()
+        branchAdapterForToast.setToast(this, "Это %s %s!")
 
         recyclerView.adapter = branchAdapter
         recyclerView.layoutManager = LinearLayoutManager(
@@ -102,5 +98,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
         })
     }
 }
+
+
 
 

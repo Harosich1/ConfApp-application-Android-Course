@@ -6,7 +6,6 @@
     android:paddingTop="@dimen/padding_16x"
     android:paddingHorizontal="@dimen/padding_16x"
     android:paddingBottom="@dimen/padding_4x"
-    android:background="@color/black"
     >
 
     <ImageView
