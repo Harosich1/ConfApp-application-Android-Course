@@ -1,84 +1,67 @@
 package kz.kolesateam.confapp.events.presentation.view
 
-import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.events.data.models.BranchApiData
+import kz.kolesateam.confapp.events.data.models.HEADER_TYPE
 import kz.kolesateam.confapp.events.data.models.UpcomingEventListItem
-import kotlin.math.log
+import kz.kolesateam.confapp.events.presentation.ClickListener
 
-class BranchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class BranchAdapter(
+        private val eventClickListener: ClickListener
+) : RecyclerView.Adapter<BaseViewHolder<UpcomingEventListItem>>() {
 
-    private val dataList: MutableList<UpcomingEventListItem> = mutableListOf()
-    private val toastAttributesList: MutableList<Any> = mutableListOf()
+    private val branchApiDataList: MutableList<UpcomingEventListItem> = mutableListOf()
 
-    private lateinit var activityDirectionContext: Context
-
-    companion object {
-        val branchAdapterForToast = BranchAdapter()
-        val branchAdapterForDirectionActivity = BranchAdapter()
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType) {
-            1 -> HeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.header_layout_for_upcoming_layout, parent, false))
-            else -> BranchViewHolder(View.inflate(parent.context, R.layout.branch_item, null))
+    override fun onCreateViewHolder(
+            parent: ViewGroup,
+            viewType: Int
+    ): BaseViewHolder<UpcomingEventListItem> {
+        return when (viewType) {
+            HEADER_TYPE -> createHeaderViewHolder(parent)
+            else -> createBranchViewHolder(parent)
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if(holder is HeaderViewHolder){
-            holder.onBind(dataList[position].data as String)
-        }
-        if(holder is BranchViewHolder){
-            holder.onBind(dataList[position].data as BranchApiData)
-        }
+    override fun onBindViewHolder(
+            holder: BaseViewHolder<UpcomingEventListItem>,
+            position: Int
+    ) {
+        holder.onBind(branchApiDataList[position])
     }
 
-    override fun getItemCount(): Int {
-        return dataList.size
-    }
+    override fun getItemCount(): Int = branchApiDataList.size
 
-    override fun getItemViewType(position: Int): Int {
-        return dataList[position].type
-    }
+    override fun getItemViewType(
+            position: Int
+    ): Int = branchApiDataList[position].type
 
-    fun setList(branchApiDataList: List<UpcomingEventListItem>){
-        dataList.clear()
-        dataList.addAll(branchApiDataList)
+    fun setList(branchApiDataList: List<UpcomingEventListItem>) {
+        this.branchApiDataList.clear()
+        this.branchApiDataList.addAll(branchApiDataList)
+
         notifyDataSetChanged()
     }
 
-    fun setToast (context: Context, textOfToast: String){
-        toastAttributesList.add(context)
-        toastAttributesList.add(textOfToast)
-        toastAttributesList.add(Toast.LENGTH_LONG)
-    }
+    private fun createHeaderViewHolder(
+            parent: ViewGroup
+    ): BaseViewHolder<UpcomingEventListItem> = HeaderViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                    R.layout.header_layout_for_upcoming_layout,
+                    parent,
+                    false
+            )
+    )
 
-    fun setContextForDirectionActivity(context: Context){
-        branchAdapterForDirectionActivity.activityDirectionContext = context
-    }
-
-    fun getContextForDirectionActivity(): Context{
-      return branchAdapterForDirectionActivity.activityDirectionContext
-    }
-
-    fun getBranchAdapterForDirectionActivity() : BranchAdapter{
-        return branchAdapterForDirectionActivity
-    }
-
-    fun getToastAttributesList(): MutableList<Any>{
-        return toastAttributesList
-    }
-
-    fun getBranchAdapterForToast() : BranchAdapter{
-        return branchAdapterForToast
-    }
+    private fun createBranchViewHolder(
+            parent: ViewGroup
+    ): BaseViewHolder<UpcomingEventListItem> = BranchViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                    R.layout.branch_item,
+                    parent,
+                    false
+            ),
+            eventClickListener
+    )
 }

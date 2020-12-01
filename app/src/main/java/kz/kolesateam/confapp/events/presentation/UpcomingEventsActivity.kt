@@ -2,13 +2,11 @@ package kz.kolesateam.confapp.events.presentation
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +15,8 @@ import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.USER_NAME_KEY
 import kz.kolesateam.confapp.events.data.ApiClient
 import kz.kolesateam.confapp.events.data.models.BranchApiData
+import kz.kolesateam.confapp.events.data.models.BranchListItem
+import kz.kolesateam.confapp.events.data.models.HeaderItem
 import kz.kolesateam.confapp.events.data.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import retrofit2.Call
@@ -33,13 +33,13 @@ val apiRetrofit: Retrofit = Retrofit.Builder()
 val apiClient: ApiClient = apiRetrofit.create(ApiClient::class.java)
 
 private const val TAG = "onFailureMessage"
+const val TOAST_TEXT_FOR_DIRECTION = "Это направление %s!"
+const val TOAST_TEXT_FOR_REPORT= "Это доклад %s!"
 
-class UpcomingEventsActivity : AppCompatActivity() {
+class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var branchAdapter: BranchAdapter
-    private lateinit var branchAdapterForToast: BranchAdapter
-    private lateinit var branchAdapterForDirection: BranchAdapter
     private lateinit var eventsProgressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,12 +54,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.upcoming_event_activity_recycler)
         eventsProgressBar = findViewById(R.id.events_progress_bar)
 
-        branchAdapter = BranchAdapter()
-        branchAdapterForToast = branchAdapter.getBranchAdapterForToast()
-        branchAdapterForDirection = branchAdapter.getBranchAdapterForDirectionActivity()
-        branchAdapterForToast.setToast(this, "Это %s %s!")
-        branchAdapterForDirection.setContextForDirectionActivity(this)
-
+        branchAdapter = BranchAdapter(eventClickListener = this)
         recyclerView.adapter = branchAdapter
         recyclerView.layoutManager = LinearLayoutManager(
                 this,
@@ -72,21 +67,9 @@ class UpcomingEventsActivity : AppCompatActivity() {
         apiClient.getUpcomingEvents().enqueue(object : Callback<List<BranchApiData>> {
             override fun onResponse(call: Call<List<BranchApiData>>, response: Response<List<BranchApiData>>) {
                 if(response.isSuccessful){
-                    val upcomingEventListItem: MutableList<UpcomingEventListItem> = mutableListOf()
-                    val headerListItem: UpcomingEventListItem = UpcomingEventListItem(
-                            type = 1,
-                            data = resources.getString(R.string.hello_user_fmt, getSavedUser())
-                    )
+                    val upcomingEventListItem: List<UpcomingEventListItem> =
 
-                    val branchListItem: List<UpcomingEventListItem> = response.body()!!.map {
-                        branchApiData -> UpcomingEventListItem(
-                            type = 2,
-                            data = branchApiData
-                    )
-                    }
-
-                    upcomingEventListItem.add(headerListItem)
-                    upcomingEventListItem.addAll(branchListItem)
+                    listOf(getHeaderItem()) + getBranchItems(response.body()!!)
 
                     branchAdapter.setList(upcomingEventListItem)
                 }
@@ -101,6 +84,15 @@ class UpcomingEventsActivity : AppCompatActivity() {
         setStatusOfProgressBar()
     }
 
+    private fun getHeaderItem(): HeaderItem = HeaderItem (
+                userName = resources.getString(R.string.hello_user_fmt, getSavedUser())
+        )
+
+    private fun getBranchItems(
+            branchList: List<BranchApiData>
+    ): List<UpcomingEventListItem> = branchList.map { branchApiData -> BranchListItem(data = branchApiData) }
+
+
     private fun getSavedUser(): String {
         val sharedPreferences: SharedPreferences = getSharedPreferences(APPLICATION_SHARED_PREFERENCES, Context.MODE_PRIVATE)
 
@@ -109,5 +101,9 @@ class UpcomingEventsActivity : AppCompatActivity() {
 
     private fun setStatusOfProgressBar(){
         eventsProgressBar.visibility = View.GONE
+    }
+
+    override fun onClickListener(TOAST_TEXT: String) {
+        Toast.makeText(this, TOAST_TEXT, Toast.LENGTH_LONG).show()
     }
 }

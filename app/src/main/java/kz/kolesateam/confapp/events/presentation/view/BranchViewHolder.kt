@@ -1,27 +1,26 @@
 package kz.kolesateam.confapp.events.presentation.view
 
-import android.content.Context
-import android.content.Intent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
-import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.BranchApiData
+import kz.kolesateam.confapp.events.data.models.BranchListItem
 import kz.kolesateam.confapp.events.data.models.EventApiData
-import kz.kolesateam.confapp.events.presentation.DirectionActivity
+import kz.kolesateam.confapp.events.data.models.UpcomingEventListItem
+import kz.kolesateam.confapp.events.presentation.ClickListener
+import kz.kolesateam.confapp.events.presentation.TOAST_TEXT_FOR_DIRECTION
+import kz.kolesateam.confapp.events.presentation.TOAST_TEXT_FOR_REPORT
 
-class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-    private lateinit var branchAdapterForToast: BranchAdapter
-    private lateinit var branchAdapterForDirectionActivity: BranchAdapter
+class BranchViewHolder(
+        itemView: View,
+        private val clickListener: ClickListener
+) : BaseViewHolder<UpcomingEventListItem>(itemView) {
 
     private val branchCurrentEvent: View = itemView.findViewById(R.id.branch_current_event)
     private val branchNextEvent: View = itemView.findViewById(R.id.branch_next_event)
 
-    private val branchTitleCurrent: TextView = itemView.findViewById(R.id.branch_title)
+    private val branchTitle: TextView = itemView.findViewById(R.id.branch_title)
     private val branchArrowTransition: ImageView = itemView.findViewById(R.id.about_branch)
 
     private val eventStateCurrent: TextView = branchCurrentEvent.findViewById(R.id.event_state)
@@ -42,42 +41,43 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         branchCurrentEvent.findViewById<TextView>(R.id.event_state).visibility = View.INVISIBLE
     }
 
-    fun onBind(branchApiData: BranchApiData){
-        branchTitleCurrent.text = branchApiData.title
-        branchAdapterForToast = BranchAdapter.branchAdapterForToast
-        branchAdapterForDirectionActivity = BranchAdapter.branchAdapterForDirectionActivity
+    override fun onBind(data: UpcomingEventListItem) {
+        val branchApiData: BranchApiData = (data as? BranchListItem)?.data ?: return
+
+        branchTitle.text = branchApiData.title
 
         val currentEvent: EventApiData = branchApiData.events.first()
         val nextEvent: EventApiData = branchApiData.events.last()
 
-        val toastAttributesList: MutableList<Any> = branchAdapterForToast.getToastAttributesList()
-        val toastContext = toastAttributesList[0] as Context
-        val toastTextForArrow = (toastAttributesList[1] as String).format(
-                "направление",
-                branchApiData.title
-        )
-        val toastTextForCurrentReport = (toastAttributesList[1] as String).format(
-                "доклад",
-                currentEvent.title
-        )
-        val toastTextForNextReport = (toastAttributesList[1] as String).format(
-                "доклад",
-                nextEvent.title
-        )
-        val toastInt = toastAttributesList[2] as Int
+        setActionToast(currentEvent, nextEvent, branchApiData.title)
+        onBindCurrentEvent(currentEvent)
+        onBindEventNext(nextEvent)
+    }
 
+    private fun setActionToast(currentEvent: EventApiData, nextEvent: EventApiData, title: String?) {
+        branchTitle.setOnClickListener{
+            clickListener.onClickListener(TOAST_TEXT_FOR_DIRECTION.format(
+                    title
+            ))
+        }
         branchArrowTransition.setOnClickListener{
-            Toast.makeText(toastContext, toastTextForArrow, toastInt).show()
-            navigateToDirectionActivity()
+            clickListener.onClickListener(TOAST_TEXT_FOR_DIRECTION.format(
+                    title
+            ))
         }
-
         branchCurrentEvent.setOnClickListener{
-            Toast.makeText(toastContext, toastTextForCurrentReport, toastInt).show()
+            clickListener.onClickListener(TOAST_TEXT_FOR_REPORT.format(
+                    currentEvent.title
+            ))
         }
-
         branchNextEvent.setOnClickListener{
-            Toast.makeText(toastContext, toastTextForNextReport, toastInt).show()
+            clickListener.onClickListener(TOAST_TEXT_FOR_REPORT.format(
+                    nextEvent.title
+            ))
         }
+    }
+
+    private fun onBindCurrentEvent(currentEvent: EventApiData) {
 
         val currentEventTimeAndAuditoryString = "%s - %s • %s".format(
                 currentEvent.startTime,
@@ -89,18 +89,11 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         nameOfSpeakerCurrent.text = currentEvent.speaker?.fullName ?: "no name"
         speakerJobCurrent.text = currentEvent.speaker?.job
         eventDescriptionCurrent.text = currentEvent.title
-        iconInFavouriteCurrent.tag = R.drawable.favourite_icon_not_filled
-        iconInFavouriteCurrent.setOnClickListener {
-            if(iconInFavouriteCurrent.tag == R.drawable.favorite_icon_filled) {
-                iconInFavouriteCurrent.setImageResource(R.drawable.favourite_icon_not_filled)
-                iconInFavouriteCurrent.tag = R.drawable.favourite_icon_not_filled
-            }
-            else{
-                iconInFavouriteCurrent.setImageResource(R.drawable.favorite_icon_filled)
-                iconInFavouriteCurrent.tag = R.drawable.favorite_icon_filled
-            }
-        }
 
+        setActionForChangeStateOfLikeButton(iconInFavouriteCurrent)
+    }
+
+    private fun onBindEventNext(nextEvent: EventApiData) {
 
         val nextEventTimeAndAuditoryString = "%s - %s • %s".format(
                 nextEvent.startTime,
@@ -112,21 +105,26 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         nameOfSpeakerNext.text = nextEvent.speaker?.fullName ?: "no name"
         speakerJobNext.text = nextEvent.speaker?.job
         eventDescriptionNext.text = nextEvent.title
-        iconInFavouriteNext.tag = R.drawable.favourite_icon_not_filled
-        iconInFavouriteNext.setOnClickListener {
-            if(iconInFavouriteNext.tag == R.drawable.favorite_icon_filled) {
-                iconInFavouriteNext.setImageResource(R.drawable.favourite_icon_not_filled)
-                iconInFavouriteNext.tag = R.drawable.favourite_icon_not_filled
-            }
-            else{
-                iconInFavouriteNext.setImageResource(R.drawable.favorite_icon_filled)
-                iconInFavouriteNext.tag = R.drawable.favorite_icon_filled
-            }
-        }
+
+        setActionForChangeStateOfLikeButton(iconInFavouriteNext)
     }
 
-    private fun navigateToDirectionActivity() {
-        val directionScreenIntent = Intent(branchAdapterForDirectionActivity.getContextForDirectionActivity(), DirectionActivity::class.java)
-        startActivity(branchAdapterForDirectionActivity.getContextForDirectionActivity(), directionScreenIntent, null)
+    private fun setActionForChangeStateOfLikeButton(iconInFavourite: ImageView) {
+        iconInFavourite.tag = R.drawable.favourite_icon_not_filled
+
+        iconInFavourite.setOnClickListener {
+
+            if (iconInFavourite.tag == R.drawable.favorite_icon_filled) {
+
+                iconInFavourite.setImageResource(R.drawable.favourite_icon_not_filled)
+                iconInFavourite.tag = R.drawable.favourite_icon_not_filled
+            }
+
+            else {
+
+                iconInFavourite.setImageResource(R.drawable.favorite_icon_filled)
+                iconInFavourite.tag = R.drawable.favorite_icon_filled
+            }
+        }
     }
 }

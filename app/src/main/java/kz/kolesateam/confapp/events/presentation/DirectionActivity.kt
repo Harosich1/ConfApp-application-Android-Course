@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 
-class DirectionActivity : AppCompatActivity() {
+class DirectionActivity : AppCompatActivity(), ClickListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var branchAdapter: BranchAdapter
@@ -28,7 +28,7 @@ class DirectionActivity : AppCompatActivity() {
     private fun bindViews(){
         recyclerView = findViewById(R.id.activity_direction_recycler)
         arrowActionBack = findViewById(R.id.direction_layout_action_back)
-        branchAdapter = BranchAdapter()
+        branchAdapter = BranchAdapter(eventClickListener = this)
 
         recyclerView.adapter = branchAdapter
         recyclerView.layoutManager = LinearLayoutManager(
@@ -41,5 +41,9 @@ class DirectionActivity : AppCompatActivity() {
     private fun navigateToUpcomingEventsActivity() {
         val directionScreenIntent = Intent(this, UpcomingEventsActivity::class.java)
         startActivity(directionScreenIntent)
+    }
+
+    override fun onClickListener(TOAST_TEXT: String) {
+
     }
 }
