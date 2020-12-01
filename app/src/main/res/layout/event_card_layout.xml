@@ -20,7 +20,7 @@
         android:paddingHorizontal="@dimen/padding_8x"
         android:textColor="@color/white"
         android:background="@drawable/background_event_state"
-        tools:text="Следующий доклад"
+        android:text="@string/event_card_layout_event_state_text"
         />
 
     <TextView
@@ -44,7 +44,7 @@
         app:layout_constraintLeft_toRightOf="@id/time_and_auditory"
         app:layout_constraintTop_toTopOf="@id/time_and_auditory"
         app:layout_constraintBottom_toBottomOf="@id/time_and_auditory"
-        tools:src="@drawable/favourite_icon_not_filled"
+        android:src="@drawable/favourite_icon_not_filled"
         />
 
 
