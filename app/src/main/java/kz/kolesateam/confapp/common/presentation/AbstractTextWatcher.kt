@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.events.presentation.common
+package kz.kolesateam.confapp.common.presentation
 
 import android.text.Editable
 import android.text.TextWatcher

@@ -19,13 +19,16 @@ class BranchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val dataList: MutableList<UpcomingEventListItem> = mutableListOf()
     private val toastAttributesList: MutableList<Any> = mutableListOf()
 
+    private lateinit var activityDirectionContext: Context
+
     companion object {
         val branchAdapterForToast = BranchAdapter()
+        val branchAdapterForDirectionActivity = BranchAdapter()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType) {
-            1 -> HeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.header_layout, parent, false))
+            1 -> HeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.header_layout_for_upcoming_layout, parent, false))
             else -> BranchViewHolder(View.inflate(parent.context, R.layout.branch_item, null))
         }
     }
@@ -59,6 +62,18 @@ class BranchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         toastAttributesList.add(Toast.LENGTH_LONG)
     }
 
+    fun setContextForDirectionActivity(context: Context){
+        branchAdapterForDirectionActivity.activityDirectionContext = context
+    }
+
+    fun getContextForDirectionActivity(): Context{
+      return branchAdapterForDirectionActivity.activityDirectionContext
+    }
+
+    fun getBranchAdapterForDirectionActivity() : BranchAdapter{
+        return branchAdapterForDirectionActivity
+    }
+
     fun getToastAttributesList(): MutableList<Any>{
         return toastAttributesList
     }
@@ -66,5 +81,4 @@ class BranchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun getBranchAdapterForToast() : BranchAdapter{
         return branchAdapterForToast
     }
-
 }

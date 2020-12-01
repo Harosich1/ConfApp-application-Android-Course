@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingTop="@dimen/padding_4x"
     android:paddingBottom="@dimen/padding_16x"
     android:paddingHorizontal="@dimen/padding_16x"
-    android:background="@drawable/bg_event_card"
+    android:background="@drawable/background_event_card"
     >
 
     <TextView
@@ -17,8 +19,8 @@
         app:layout_constraintTop_toTopOf="parent"
         android:paddingHorizontal="@dimen/padding_8x"
         android:textColor="@color/white"
-        android:text="Следующий доклад"
-        android:background="@drawable/bg_event_state"
+        android:background="@drawable/background_event_state"
+        tools:text="Следующий доклад"
         />
 
     <TextView
@@ -31,7 +33,7 @@
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         android:layout_marginTop="@dimen/margin_4x"
         android:textColor="@color/transparent_grey"
-        android:text="14:00-16:00 Зал номер 5"
+        tools:text="14:00-16:00 Зал номер 5"
         />
 
     <ImageView
@@ -42,7 +44,7 @@
         app:layout_constraintLeft_toRightOf="@id/time_and_auditory"
         app:layout_constraintTop_toTopOf="@id/time_and_auditory"
         app:layout_constraintBottom_toBottomOf="@id/time_and_auditory"
-        android:src="@drawable/favourite_icon_not_filled"
+        tools:src="@drawable/favourite_icon_not_filled"
         />
 
 
@@ -54,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@id/time_and_auditory"
         android:layout_marginTop="@dimen/margin_8x"
         android:textColor="@color/bold_black"
-        android:text="Кирилл Розов"
+        tools:text="Кирилл Розов"
         />
 
     <TextView
@@ -68,7 +70,7 @@
         android:maxLines="1"
         android:ellipsize="end"
         android:textColor="@color/transparent_grey"
-        android:text="Event State"
+        tools:text="Event State"
         />
 
     <TextView
@@ -83,7 +85,7 @@
         android:maxLines="3"
         android:ellipsize="end"
         android:textColor="@color/black"
-        android:text="Увлекательная жизнь в панели уведомлений"
+        tools:text="Увлекательная жизнь в панели уведомлений"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

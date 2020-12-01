@@ -4,9 +4,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.APPLICATION_SHARED_PREFERENCES
@@ -31,10 +33,10 @@ val apiClient: ApiClient = apiRetrofit.create(ApiClient::class.java)
 
 class UpcomingEventsActivity : AppCompatActivity() {
 
-    private lateinit var progressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
     private lateinit var branchAdapter: BranchAdapter
     private lateinit var branchAdapterForToast: BranchAdapter
+    private lateinit var branchAdapterForDirection: BranchAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +53,9 @@ class UpcomingEventsActivity : AppCompatActivity() {
 
         branchAdapter = BranchAdapter()
         branchAdapterForToast = branchAdapter.getBranchAdapterForToast()
+        branchAdapterForDirection = branchAdapter.getBranchAdapterForDirectionActivity()
         branchAdapterForToast.setToast(this, "Это %s %s!")
+        branchAdapterForDirection.setContextForDirectionActivity(this)
 
         recyclerView.adapter = branchAdapter
         recyclerView.layoutManager = LinearLayoutManager(
@@ -64,7 +68,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
     private fun getSavedUser(): String {
         val sharedPreferences: SharedPreferences = getSharedPreferences(APPLICATION_SHARED_PREFERENCES, Context.MODE_PRIVATE)
 
-        return sharedPreferences.getString(USER_NAME_KEY, null) ?: "World"
+        return sharedPreferences.getString(USER_NAME_KEY, null) ?: resources.getString(R.string.event_screen_if_shared_preferences_is_null_text)
     }
 
     private fun loadApiData(){
@@ -92,13 +96,9 @@ class UpcomingEventsActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<List<BranchApiData>>, t: Throwable) {
-
+                recyclerView.visibility = View.GONE
+                Toast.makeText(this, t.localizedMessage, Toast.LENGTH_SHORT)
             }
-
         })
     }
 }
-
-
-
-

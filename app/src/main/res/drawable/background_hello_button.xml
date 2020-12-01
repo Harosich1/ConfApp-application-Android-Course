@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_enabled="false">
         <shape>
-            <solid android:color="@color/bg_disable_button_solid"
+            <solid android:color="@color/background_disable_button_solid"
                 />
             <stroke
                 android:width="@dimen/stroke_width"
@@ -14,11 +14,11 @@
     </item>
     <item android:state_enabled="true">
         <shape>
-            <solid android:color="@color/bg_enable_button_solid"
+            <solid android:color="@color/background_enable_button_solid"
                 />
             <stroke
                 android:width="@dimen/stroke_width"
-                android:color="@color/bg_enable_button_solid"
+                android:color="@color/background_enable_button_solid"
                 />
             <corners android:radius="@dimen/frame_radius"
                 />

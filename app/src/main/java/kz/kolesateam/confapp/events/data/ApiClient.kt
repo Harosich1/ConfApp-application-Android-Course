@@ -5,6 +5,7 @@ import kz.kolesateam.confapp.events.data.models.BranchApiData
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.GET
+private var kek: String = "0"
 
 interface ApiClient {
 

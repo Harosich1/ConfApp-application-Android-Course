@@ -8,7 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import kz.kolesateam.confapp.events.presentation.UpcomingEventsActivity
-import kz.kolesateam.confapp.events.presentation.common.AbstractTextWatcher
+import kz.kolesateam.confapp.common.presentation.AbstractTextWatcher
 
 const val USER_NAME_KEY = "user_name"
 const val APPLICATION_SHARED_PREFERENCES = "application"

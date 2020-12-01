@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".hello.presentation.TestHelloActivity"
     android:orientation="vertical"
+    tools:context=".hello.presentation.TestHelloActivity"
     >
 
     <FrameLayout
@@ -16,8 +16,8 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/header_background"
             android:scaleType="centerCrop"
+            android:src="@drawable/header_background"
             />
 
         <LinearLayout
@@ -29,16 +29,16 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/header_logo_white"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/activity_hello_margin"
+                android:src="@drawable/header_logo_white"
                 />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_corona_small"
                 android:layout_gravity="center"
+                android:src="@drawable/ic_corona_small"
                 />
 
         </LinearLayout>
@@ -49,30 +49,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Приивет"
-        android:layout_marginTop="@dimen/activity_hello_margin"
         android:layout_marginHorizontal="@dimen/activity_hello_margin"
-        android:textStyle="bold"
+        android:layout_marginTop="@dimen/activity_hello_margin"
         android:textColor="@color/black"
         android:textSize="@dimen/activity_hello_view_text_size"
+        android:textStyle="bold"
+        tools:text="Привет"
         />
 
     <Button
+        android:id="@+id/continue_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_hello_margin"
+        android:layout_gravity="center"
         android:layout_marginHorizontal="@dimen/activity_hello_margin"
-        android:text="@string/action_continue"
-        android:typeface="sans"
-        android:textSize="@dimen/activity_hello_button_text_size"
+        android:layout_marginTop="@dimen/activity_hello_margin"
+        android:background="@drawable/background_hello_button"
+        android:enabled="true"
         android:paddingTop="@dimen/activity_hello_button_padding"
         android:paddingBottom="@dimen/activity_hello_button_padding"
-        android:layout_gravity="center"
-        android:enabled="true"
-        android:id="@+id/continue_button"
+        android:text="@string/action_continue"
         android:textAllCaps="false"
-        android:background="@drawable/bg_hello_button"
         android:textColor="@drawable/hello_button_text_color"
+        android:textSize="@dimen/activity_hello_button_text_size"
+        android:typeface="sans"
         />
 
 </LinearLayout>

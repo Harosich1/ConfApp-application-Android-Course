@@ -1,41 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_events_and_direction_screen"
     android:orientation="vertical"
     tools:context=".events.presentation.UpcomingEventsActivity"
-    android:background="@drawable/blue_gradient"
     >
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/upcoming_event_activity_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/padding_90x"
-            android:clipToPadding="false"
-            tools:listitem="@layout/branch_item"
-            tools:itemCount="5"
-            android:scrollbars="none"
-            android:overScrollMode="never"
-            />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/upcoming_event_activity_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingBottom="@dimen/padding_90x"
+        android:scrollbars="none"
+        tools:itemCount="5"
+        tools:listitem="@layout/branch_item"
+        />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|bottom"
-            android:drawableStart="@drawable/favourite_icon_not_filled"
-            android:paddingStart="@dimen/padding_12x"
-            android:paddingEnd="@dimen/padding_16x"
-            android:layout_marginBottom="@dimen/padding_16x"
-            android:drawablePadding="@dimen/padding_4x"
-            android:text="@string/in_favourite"
-            android:textAllCaps="false"
-            android:textColor="@color/blue"
-            android:background="@drawable/in_favourite_button_selector"
-            />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="@dimen/padding_16x"
+        android:background="@drawable/in_favourite_button_selector"
+        android:drawableStart="@drawable/favourite_icon_not_filled"
+        android:drawablePadding="@dimen/padding_4x"
+        android:paddingStart="@dimen/padding_12x"
+        android:paddingEnd="@dimen/padding_16x"
+        android:text="@string/event_screen_in_favourite_button_text"
+        android:textAllCaps="false"
+        android:textColor="@color/blue"
+        />
 
     <ProgressBar
         android:id="@+id/events_progress_bar"

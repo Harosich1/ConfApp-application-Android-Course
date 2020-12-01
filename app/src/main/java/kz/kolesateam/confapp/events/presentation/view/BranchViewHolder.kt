@@ -1,20 +1,22 @@
 package kz.kolesateam.confapp.events.presentation.view
 
 import android.content.Context
+import android.content.Intent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.fasterxml.jackson.annotation.JsonInclude
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
+import kz.kolesateam.confapp.events.presentation.DirectionActivity
 
 class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private lateinit var branchAdapterForToast: BranchAdapter
+    private lateinit var branchAdapterForDirectionActivity: BranchAdapter
 
     private val branchCurrentEvent: View = itemView.findViewById(R.id.branch_current_event)
     private val branchNextEvent: View = itemView.findViewById(R.id.branch_next_event)
@@ -43,6 +45,7 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun onBind(branchApiData: BranchApiData){
         branchTitleCurrent.text = branchApiData.title
         branchAdapterForToast = BranchAdapter.branchAdapterForToast
+        branchAdapterForDirectionActivity = BranchAdapter.branchAdapterForDirectionActivity
 
         val currentEvent: EventApiData = branchApiData.events.first()
         val nextEvent: EventApiData = branchApiData.events.last()
@@ -65,6 +68,7 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         branchArrowTransition.setOnClickListener{
             Toast.makeText(toastContext, toastTextForArrow, toastInt).show()
+            navigateToDirectionActivity()
         }
 
         branchCurrentEvent.setOnClickListener{
@@ -121,6 +125,8 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
     }
 
-    fun getToast(toast: Toast){
+    private fun navigateToDirectionActivity() {
+        val directionScreenIntent = Intent(branchAdapterForDirectionActivity.getContextForDirectionActivity(), DirectionActivity::class.java)
+        startActivity(branchAdapterForDirectionActivity.getContextForDirectionActivity(), directionScreenIntent, null)
     }
 }
