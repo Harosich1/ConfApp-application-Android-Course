@@ -12,7 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ConfApp"
         android:usesCleartextTraffic="true">
-        <activity android:name=".events.presentation.DirectionActivity"></activity>
         <activity android:name=".events.presentation.UpcomingEventsActivity" />
         <activity android:name=".HelloActivity">
             <intent-filter>
