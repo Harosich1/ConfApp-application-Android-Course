@@ -48,6 +48,7 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
 
         bindViews()
         loadApiData()
+        eventsProgressBar.visibility = View.GONE
     }
 
     private fun bindViews(){
@@ -80,8 +81,6 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
                 Log.d(TAG, t.localizedMessage)
             }
         })
-
-        setStatusOfProgressBar()
     }
 
     private fun getHeaderItem(): HeaderItem = HeaderItem (
@@ -97,10 +96,6 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
         val sharedPreferences: SharedPreferences = getSharedPreferences(APPLICATION_SHARED_PREFERENCES, Context.MODE_PRIVATE)
 
         return sharedPreferences.getString(USER_NAME_KEY, null) ?: resources.getString(R.string.event_screen_if_shared_preferences_is_null_text)
-    }
-
-    private fun setStatusOfProgressBar(){
-        eventsProgressBar.visibility = View.GONE
     }
 
     override fun onClickListener(toastText: String) {
