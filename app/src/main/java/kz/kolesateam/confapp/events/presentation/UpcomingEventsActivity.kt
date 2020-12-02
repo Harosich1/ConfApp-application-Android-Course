@@ -1,7 +1,9 @@
 package kz.kolesateam.confapp.events.presentation
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Path
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -103,7 +105,13 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
         eventsProgressBar.visibility = View.GONE
     }
 
-    override fun onClickListener(TOAST_TEXT: String) {
+    override fun onClickListenerNavigateToActivity(branchId: Int) {
+        val directionScreenIntent = Intent(this, DirectionActivity::class.java)
+        directionScreenIntent.putExtra("branchId", branchId)
+        startActivity(directionScreenIntent)
+    }
+
+    override fun onClickListenerToast(TOAST_TEXT: String) {
         Toast.makeText(this, TOAST_TEXT, Toast.LENGTH_LONG).show()
     }
 }

@@ -49,29 +49,31 @@ class BranchViewHolder(
         val currentEvent: EventApiData = branchApiData.events.first()
         val nextEvent: EventApiData = branchApiData.events.last()
 
-        setActionToast(currentEvent, nextEvent, branchApiData.title)
+        setActionToast(currentEvent, nextEvent, branchApiData.title, branchApiData.id)
         onBindCurrentEvent(currentEvent)
         onBindEventNext(nextEvent)
     }
 
-    private fun setActionToast(currentEvent: EventApiData, nextEvent: EventApiData, title: String?) {
+    private fun setActionToast(currentEvent: EventApiData, nextEvent: EventApiData, title: String?, branchId: Int?) {
         branchTitle.setOnClickListener{
-            clickListener.onClickListener(TOAST_TEXT_FOR_DIRECTION.format(
+            clickListener.onClickListenerToast(TOAST_TEXT_FOR_DIRECTION.format(
                     title
             ))
+            clickListener.onClickListenerNavigateToActivity(branchId)
         }
         branchArrowTransition.setOnClickListener{
-            clickListener.onClickListener(TOAST_TEXT_FOR_DIRECTION.format(
+            clickListener.onClickListenerToast(TOAST_TEXT_FOR_DIRECTION.format(
                     title
             ))
+            clickListener.onClickListenerNavigateToActivity(branchId)
         }
         branchCurrentEvent.setOnClickListener{
-            clickListener.onClickListener(TOAST_TEXT_FOR_REPORT.format(
+            clickListener.onClickListenerToast(TOAST_TEXT_FOR_REPORT.format(
                     currentEvent.title
             ))
         }
         branchNextEvent.setOnClickListener{
-            clickListener.onClickListener(TOAST_TEXT_FOR_REPORT.format(
+            clickListener.onClickListenerToast(TOAST_TEXT_FOR_REPORT.format(
                     nextEvent.title
             ))
         }
@@ -80,8 +82,8 @@ class BranchViewHolder(
     private fun onBindCurrentEvent(currentEvent: EventApiData) {
 
         val currentEventTimeAndAuditoryString = "%s - %s • %s".format(
-                currentEvent.startTime,
-                currentEvent.endTime,
+                currentEvent.startTime?.dropLast(3),
+                currentEvent.endTime?.dropLast(3),
                 currentEvent.place,
         )
 
@@ -96,8 +98,8 @@ class BranchViewHolder(
     private fun onBindEventNext(nextEvent: EventApiData) {
 
         val nextEventTimeAndAuditoryString = "%s - %s • %s".format(
-                nextEvent.startTime,
-                nextEvent.endTime,
+                nextEvent.startTime?.dropLast(3),
+                nextEvent.endTime?.dropLast(3),
                 nextEvent.place,
         )
 

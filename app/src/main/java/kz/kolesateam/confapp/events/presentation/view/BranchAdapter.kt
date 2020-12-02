@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.events.data.models.BRANCH_TYPE
 import kz.kolesateam.confapp.events.data.models.HEADER_TYPE
 import kz.kolesateam.confapp.events.data.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.ClickListener
@@ -20,7 +21,8 @@ class BranchAdapter(
     ): BaseViewHolder<UpcomingEventListItem> {
         return when (viewType) {
             HEADER_TYPE -> createHeaderViewHolder(parent)
-            else -> createBranchViewHolder(parent)
+            BRANCH_TYPE -> createBranchViewHolder(parent)
+            else -> createEventViewHolder(parent)
         }
     }
 
@@ -59,6 +61,17 @@ class BranchAdapter(
     ): BaseViewHolder<UpcomingEventListItem> = BranchViewHolder(
             LayoutInflater.from(parent.context).inflate(
                     R.layout.branch_item,
+                    parent,
+                    false
+            ),
+            eventClickListener
+    )
+
+    private fun createEventViewHolder(
+            parent: ViewGroup
+    ): BaseViewHolder<UpcomingEventListItem> = BranchViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                    R.layout.activity_direction_layout,
                     parent,
                     false
             ),
