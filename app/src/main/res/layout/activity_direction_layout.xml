@@ -38,20 +38,33 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="16dp"
+            android:layout_height="@dimen/layout_size_16x"
             android:src="@drawable/header_logo_white"
             android:layout_gravity="center"
             />
 
     </LinearLayout>
 
+        <TextView
+            android:id="@+id/direction_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/activity_direction_recycler"
+            app:layout_constraintTop_toBottomOf="@id/direction_header_static"
+            android:paddingBottom="@dimen/padding_16x"
+            tools:text="Anroid"
+            android:textSize="@dimen/textSize_24x"
+            android:gravity="center"
+            android:textColor="@color/white"
+            />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/activity_direction_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/direction_header_static"
-        android:paddingStart="@dimen/padding_24x"
+        app:layout_constraintTop_toBottomOf="@id/direction_title"
+        android:paddingStart="@dimen/padding_40x"
         android:paddingBottom="@dimen/padding_90x"
         android:clipToPadding="false"
         tools:listitem="@layout/event_card_layout"

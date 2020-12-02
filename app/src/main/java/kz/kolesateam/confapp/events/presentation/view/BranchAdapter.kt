@@ -69,9 +69,9 @@ class BranchAdapter(
 
     private fun createEventViewHolder(
             parent: ViewGroup
-    ): BaseViewHolder<UpcomingEventListItem> = BranchViewHolder(
+    ): BaseViewHolder<UpcomingEventListItem> = EventViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                    R.layout.activity_direction_layout,
+                    R.layout.event_card_layout,
                     parent,
                     false
             ),

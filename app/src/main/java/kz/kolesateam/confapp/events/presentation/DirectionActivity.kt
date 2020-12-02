@@ -25,11 +25,12 @@ class DirectionActivity : AppCompatActivity(), ClickListener {
     private lateinit var recyclerView: RecyclerView
     private lateinit var branchAdapter: BranchAdapter
     private lateinit var arrowActionBack: ImageView
-    private val branchId: Int? = intent.extras!!.getInt("branchId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_direction_layout)
+
+        val branchId: Int? = intent.extras?.getInt("branchId")
 
         bindViews()
         arrowActionBack.setOnClickListener {
