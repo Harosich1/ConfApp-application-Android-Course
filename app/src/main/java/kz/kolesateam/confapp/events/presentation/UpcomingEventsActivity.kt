@@ -105,9 +105,10 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
         eventsProgressBar.visibility = View.GONE
     }
 
-    override fun onClickListenerNavigateToActivity(branchId: Int?) {
+    override fun onClickListenerNavigateToActivity(branchId: Int?, title: String?) {
         val directionScreenIntent = Intent(this, DirectionActivity::class.java)
         directionScreenIntent.putExtra("branchId", branchId)
+        directionScreenIntent.putExtra("branchTitle", title)
         startActivity(directionScreenIntent)
     }
 

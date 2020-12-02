@@ -16,8 +16,6 @@ class EventViewHolder (
 
     private val event: View = itemView.findViewById(R.id.event_card)
 
-//    private val branchTitle: TextView = itemView.findViewById(R.id.direction_title)
-
     private val eventState: TextView = event.findViewById(R.id.event_state)
     private val eventTimeAndAuditory: TextView = event.findViewById(R.id.time_and_auditory)
     private val nameOfSpeaker: TextView = event.findViewById(R.id.name_of_speaker)
@@ -28,18 +26,11 @@ class EventViewHolder (
     override fun onBind(data: UpcomingEventListItem) {
         val eventApiData: EventApiData = (data as? EventListItem)?.data ?: return
 
-        //branchTitle.text = event.title
         setActionToast(eventApiData, eventApiData.title, eventApiData.id)
         onBindCurrentEvent(eventApiData)
     }
 
     private fun setActionToast(eventApiData: EventApiData, title: String?, branchId: Int?) {
-        /*branchTitle.setOnClickListener{
-            clickListener.onClickListenerToast(TOAST_TEXT_FOR_DIRECTION.format(
-                    title
-            ))
-            clickListener.onClickListenerNavigateToActivity(branchId)
-        }*/
         event.setOnClickListener{
             clickListener.onClickListenerToast(TOAST_TEXT_FOR_REPORT.format(
                     eventApiData.title

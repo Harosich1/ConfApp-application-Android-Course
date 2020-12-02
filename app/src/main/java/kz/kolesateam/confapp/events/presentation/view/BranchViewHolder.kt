@@ -59,13 +59,13 @@ class BranchViewHolder(
             clickListener.onClickListenerToast(TOAST_TEXT_FOR_DIRECTION.format(
                     title
             ))
-            clickListener.onClickListenerNavigateToActivity(branchId)
+            clickListener.onClickListenerNavigateToActivity(branchId, title)
         }
         branchArrowTransition.setOnClickListener{
             clickListener.onClickListenerToast(TOAST_TEXT_FOR_DIRECTION.format(
                     title
             ))
-            clickListener.onClickListenerNavigateToActivity(branchId)
+            clickListener.onClickListenerNavigateToActivity(branchId, title)
         }
         branchCurrentEvent.setOnClickListener{
             clickListener.onClickListenerToast(TOAST_TEXT_FOR_REPORT.format(

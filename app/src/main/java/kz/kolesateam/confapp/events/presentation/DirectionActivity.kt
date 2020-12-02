@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
@@ -24,6 +25,7 @@ class DirectionActivity : AppCompatActivity(), ClickListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var branchAdapter: BranchAdapter
+    private lateinit var directionTitle: TextView
     private lateinit var arrowActionBack: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,8 +33,10 @@ class DirectionActivity : AppCompatActivity(), ClickListener {
         setContentView(R.layout.activity_direction_layout)
 
         val branchId: Int? = intent.extras?.getInt("branchId")
+        val branchTitle: String? = intent.extras?.getString("branchTitle")
 
         bindViews()
+        directionTitle.text = branchTitle
         arrowActionBack.setOnClickListener {
             navigateToUpcomingEventsActivity()
         }
@@ -42,6 +46,8 @@ class DirectionActivity : AppCompatActivity(), ClickListener {
     private fun bindViews(){
         recyclerView = findViewById(R.id.activity_direction_recycler)
         arrowActionBack = findViewById(R.id.direction_layout_action_back)
+        directionTitle = findViewById(R.id.direction_title)
+
         branchAdapter = BranchAdapter(eventClickListener = this)
 
         recyclerView.adapter = branchAdapter
@@ -87,7 +93,7 @@ class DirectionActivity : AppCompatActivity(), ClickListener {
         startActivity(directionScreenIntent)
     }
 
-    override fun onClickListenerNavigateToActivity(branchId: Int?) {
+    override fun onClickListenerNavigateToActivity(branchId: Int?, title: String?) {
     }
 
     override fun onClickListenerToast(TOAST_TEXT: String) {
