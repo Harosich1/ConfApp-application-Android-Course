@@ -1,5 +1,5 @@
 package kz.kolesateam.confapp.events.presentation
 
 interface ClickListener {
-    fun onClickListener(TOAST_TEXT: String)
+    fun onClickListener(toastText: String)
 }

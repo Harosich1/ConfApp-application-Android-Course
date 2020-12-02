@@ -4,13 +4,17 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.common.presentation.BaseViewHolder
 import kz.kolesateam.confapp.events.data.models.BranchApiData
-import kz.kolesateam.confapp.events.data.models.BranchListItem
+import kz.kolesateam.confapp.events.presentation.models.BranchListItem
 import kz.kolesateam.confapp.events.data.models.EventApiData
-import kz.kolesateam.confapp.events.data.models.UpcomingEventListItem
+import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.ClickListener
 import kz.kolesateam.confapp.events.presentation.TOAST_TEXT_FOR_DIRECTION
 import kz.kolesateam.confapp.events.presentation.TOAST_TEXT_FOR_REPORT
+
+const val dateOfEvent = "%s - %s • %s"
+const val nOfElementsToDrop = 3
 
 class BranchViewHolder(
         itemView: View,
@@ -79,14 +83,14 @@ class BranchViewHolder(
 
     private fun onBindCurrentEvent(currentEvent: EventApiData) {
 
-        val currentEventTimeAndAuditoryString = "%s - %s • %s".format(
-                currentEvent.startTime?.dropLast(3),
-                currentEvent.endTime?.dropLast(3),
+        val currentEventTimeAndAuditoryString = dateOfEvent.format(
+                currentEvent.startTime?.dropLast(nOfElementsToDrop),
+                currentEvent.endTime?.dropLast(nOfElementsToDrop),
                 currentEvent.place,
         )
 
         eventTimeAndAuditoryCurrent.text = currentEventTimeAndAuditoryString
-        nameOfSpeakerCurrent.text = currentEvent.speaker?.fullName ?: "no name"
+        nameOfSpeakerCurrent.text = currentEvent.speaker?.fullName ?: ""
         speakerJobCurrent.text = currentEvent.speaker?.job
         eventDescriptionCurrent.text = currentEvent.title
 
@@ -95,14 +99,14 @@ class BranchViewHolder(
 
     private fun onBindEventNext(nextEvent: EventApiData) {
 
-        val nextEventTimeAndAuditoryString = "%s - %s • %s".format(
-                nextEvent.startTime?.dropLast(3),
-                nextEvent.endTime?.dropLast(3),
+        val nextEventTimeAndAuditoryString = dateOfEvent.format(
+                nextEvent.startTime?.dropLast(nOfElementsToDrop),
+                nextEvent.endTime?.dropLast(nOfElementsToDrop),
                 nextEvent.place,
         )
 
         eventTimeAndAuditoryNext.text = nextEventTimeAndAuditoryString
-        nameOfSpeakerNext.text = nextEvent.speaker?.fullName ?: "no name"
+        nameOfSpeakerNext.text = nextEvent.speaker?.fullName ?: ""
         speakerJobNext.text = nextEvent.speaker?.job
         eventDescriptionNext.text = nextEvent.title
 

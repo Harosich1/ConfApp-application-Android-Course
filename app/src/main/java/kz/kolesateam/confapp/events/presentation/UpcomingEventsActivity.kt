@@ -15,9 +15,9 @@ import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.USER_NAME_KEY
 import kz.kolesateam.confapp.events.data.ApiClient
 import kz.kolesateam.confapp.events.data.models.BranchApiData
-import kz.kolesateam.confapp.events.data.models.BranchListItem
-import kz.kolesateam.confapp.events.data.models.HeaderItem
-import kz.kolesateam.confapp.events.data.models.UpcomingEventListItem
+import kz.kolesateam.confapp.events.presentation.models.BranchListItem
+import kz.kolesateam.confapp.events.presentation.models.HeaderItem
+import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import retrofit2.Call
 import retrofit2.Callback
@@ -103,7 +103,7 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
         eventsProgressBar.visibility = View.GONE
     }
 
-    override fun onClickListener(TOAST_TEXT: String) {
-        Toast.makeText(this, TOAST_TEXT, Toast.LENGTH_LONG).show()
+    override fun onClickListener(toastText: String) {
+        Toast.makeText(this, toastText, Toast.LENGTH_LONG).show()
     }
 }

@@ -1,4 +1,6 @@
-package kz.kolesateam.confapp.events.data.models
+package kz.kolesateam.confapp.events.presentation.models
+
+import kz.kolesateam.confapp.events.data.models.BranchApiData
 
 const val HEADER_TYPE: Int = 0
 const val EVENT_TYPE: Int = 1
