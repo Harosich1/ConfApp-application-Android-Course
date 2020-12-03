@@ -4,7 +4,9 @@
     <dimen name="activity_hello_margin">16dp</dimen>
     <dimen name="activity_hello_padding">10dp</dimen>
     <dimen name="frame_radius">4dp</dimen>
-    <dimen name="stroke_width">1dp</dimen>
+    <dimen name="stroke_width_text_shape">1dp</dimen>
+    <dimen name="stroke_width_hello_button">1dp</dimen>
+    <dimen name="stroke_width_text_frame">1dp</dimen>
     <dimen name="activity_hello_padding_topBottom">14dp</dimen>
     <dimen name="activity_hello_padding_horizontal">18dp</dimen>
     <dimen name="activity_hello_button_padding">15dp</dimen>
@@ -35,5 +37,8 @@
     <dimen name="layout_size_32x">32dp</dimen>
     <dimen name="layout_size_280x">280dp</dimen>
     <dimen name="layout_size_320x">320dp</dimen>
+    <dimen name="radius_4x">4dp</dimen>
+    <dimen name="radius_6x">6dp</dimen>
     <dimen name="radius_46x">46dp</dimen>
+
 </resources>

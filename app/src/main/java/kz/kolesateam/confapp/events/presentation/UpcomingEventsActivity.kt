@@ -17,9 +17,9 @@ import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.USER_NAME_KEY
 import kz.kolesateam.confapp.events.data.ApiClient
 import kz.kolesateam.confapp.events.data.models.BranchApiData
-import kz.kolesateam.confapp.events.data.models.BranchListItem
-import kz.kolesateam.confapp.events.data.models.HeaderItem
-import kz.kolesateam.confapp.events.data.models.UpcomingEventListItem
+import kz.kolesateam.confapp.events.presentation.models.BranchListItem
+import kz.kolesateam.confapp.events.presentation.models.HeaderItem
+import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import retrofit2.Call
 import retrofit2.Callback
@@ -50,6 +50,7 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
 
         bindViews()
         loadApiData()
+        eventsProgressBar.visibility = View.GONE
     }
 
     private fun bindViews(){
@@ -82,8 +83,6 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
                 Log.d(TAG, t.localizedMessage)
             }
         })
-
-        setStatusOfProgressBar()
     }
 
     private fun getHeaderItem(): HeaderItem = HeaderItem (
@@ -101,10 +100,6 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
         return sharedPreferences.getString(USER_NAME_KEY, null) ?: resources.getString(R.string.event_screen_if_shared_preferences_is_null_text)
     }
 
-    private fun setStatusOfProgressBar(){
-        eventsProgressBar.visibility = View.GONE
-    }
-
     override fun onClickListenerNavigateToActivity(branchId: Int?, title: String?) {
         val directionScreenIntent = Intent(this, DirectionActivity::class.java)
         directionScreenIntent.putExtra("branchId", branchId)
@@ -112,7 +107,7 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
         startActivity(directionScreenIntent)
     }
 
-    override fun onClickListenerToast(TOAST_TEXT: String) {
-        Toast.makeText(this, TOAST_TEXT, Toast.LENGTH_LONG).show()
+    override fun onClickListenerToast(toastText: String) {
+        Toast.makeText(this, toastText, Toast.LENGTH_LONG).show()
     }
 }

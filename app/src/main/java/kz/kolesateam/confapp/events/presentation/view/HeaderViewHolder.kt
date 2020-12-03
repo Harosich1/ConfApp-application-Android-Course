@@ -3,8 +3,9 @@ package kz.kolesateam.confapp.events.presentation.view
 import android.view.View
 import android.widget.TextView
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.events.data.models.HeaderItem
-import kz.kolesateam.confapp.events.data.models.UpcomingEventListItem
+import kz.kolesateam.confapp.common.presentation.BaseViewHolder
+import kz.kolesateam.confapp.events.presentation.models.HeaderItem
+import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 
 class HeaderViewHolder(itemView: View) : BaseViewHolder<UpcomingEventListItem>(itemView) {
 

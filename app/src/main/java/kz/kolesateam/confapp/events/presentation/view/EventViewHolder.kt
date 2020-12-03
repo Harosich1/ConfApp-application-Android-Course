@@ -4,10 +4,13 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.common.presentation.BaseViewHolder
 import kz.kolesateam.confapp.events.data.models.*
 import kz.kolesateam.confapp.events.presentation.ClickListener
 import kz.kolesateam.confapp.events.presentation.TOAST_TEXT_FOR_DIRECTION
 import kz.kolesateam.confapp.events.presentation.TOAST_TEXT_FOR_REPORT
+import kz.kolesateam.confapp.events.presentation.models.EventListItem
+import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 
 class EventViewHolder (
         itemView: View,

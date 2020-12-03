@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.ApiClient
 import kz.kolesateam.confapp.events.data.models.*
+import kz.kolesateam.confapp.events.presentation.models.EventListItem
+import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import retrofit2.Call
 import retrofit2.Callback
