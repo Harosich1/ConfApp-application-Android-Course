@@ -8,10 +8,8 @@ import kz.kolesateam.confapp.common.presentation.BaseViewHolder
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.presentation.models.BranchListItem
 import kz.kolesateam.confapp.events.data.models.EventApiData
+import kz.kolesateam.confapp.events.presentation.*
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
-import kz.kolesateam.confapp.events.presentation.ClickListener
-import kz.kolesateam.confapp.events.presentation.TOAST_TEXT_FOR_DIRECTION
-import kz.kolesateam.confapp.events.presentation.TOAST_TEXT_FOR_REPORT
 
 const val dateOfEvent = "%s - %s • %s"
 const val nOfElementsToDrop = 3
@@ -124,12 +122,14 @@ class BranchViewHolder(
 
                 iconInFavourite.setImageResource(R.drawable.favourite_icon_not_filled)
                 iconInFavourite.tag = R.drawable.favourite_icon_not_filled
+                clickListener.onClickListenerToast(TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE)
             }
 
             else {
 
                 iconInFavourite.setImageResource(R.drawable.favorite_icon_filled)
                 iconInFavourite.tag = R.drawable.favorite_icon_filled
+                clickListener.onClickListenerToast(TOAST_TEXT_FOR_ADD_IN_FAVOURITE)
             }
         }
     }

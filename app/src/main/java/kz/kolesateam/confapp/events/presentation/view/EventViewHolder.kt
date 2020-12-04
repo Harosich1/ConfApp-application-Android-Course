@@ -7,10 +7,13 @@ import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.presentation.BaseViewHolder
 import kz.kolesateam.confapp.events.data.models.*
 import kz.kolesateam.confapp.events.presentation.ClickListener
-import kz.kolesateam.confapp.events.presentation.TOAST_TEXT_FOR_DIRECTION
+import kz.kolesateam.confapp.events.presentation.TOAST_TEXT_FOR_ADD_IN_FAVOURITE
+import kz.kolesateam.confapp.events.presentation.TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE
 import kz.kolesateam.confapp.events.presentation.TOAST_TEXT_FOR_REPORT
 import kz.kolesateam.confapp.events.presentation.models.EventListItem
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
+
+const val widthOfEventCard = 750
 
 class EventViewHolder (
         itemView: View,
@@ -26,14 +29,21 @@ class EventViewHolder (
     private val eventDescription: TextView = event.findViewById(R.id.description_of_event)
     private val iconInFavourite: ImageView = event.findViewById(R.id.ic_in_favourite)
 
+    init {
+        event.findViewById<TextView>(R.id.event_state).visibility = View.INVISIBLE
+    }
+
+
     override fun onBind(data: UpcomingEventListItem) {
         val eventApiData: EventApiData = (data as? EventListItem)?.data ?: return
 
-        setActionToast(eventApiData, eventApiData.title, eventApiData.id)
-        onBindCurrentEvent(eventApiData)
+        event.layoutParams.width = widthOfEventCard
+
+        setActionToast(eventApiData)
+        onBindEvent(eventApiData)
     }
 
-    private fun setActionToast(eventApiData: EventApiData, title: String?, branchId: Int?) {
+    private fun setActionToast(eventApiData: EventApiData) {
         event.setOnClickListener{
             clickListener.onClickListenerToast(TOAST_TEXT_FOR_REPORT.format(
                     eventApiData.title
@@ -41,16 +51,16 @@ class EventViewHolder (
         }
     }
 
-    private fun onBindCurrentEvent(eventApiData: EventApiData) {
+    private fun onBindEvent(eventApiData: EventApiData) {
 
-        val eventTimeAndAuditoryString = "%s - %s • %s".format(
-                eventApiData.startTime?.dropLast(3),
-                eventApiData.endTime?.dropLast(3),
+        val eventTimeAndAuditoryString = dateOfEvent.format(
+                eventApiData.startTime?.dropLast(nOfElementsToDrop),
+                eventApiData.endTime?.dropLast(nOfElementsToDrop),
                 eventApiData.place,
         )
 
         eventTimeAndAuditory.text = eventTimeAndAuditoryString
-        nameOfSpeaker.text = eventApiData.speaker?.fullName ?: "no name"
+        nameOfSpeaker.text = eventApiData.speaker?.fullName ?: ""
         speakerJob.text = eventApiData.speaker?.job
         eventDescription.text = eventApiData.title
 
@@ -66,12 +76,14 @@ class EventViewHolder (
 
                 iconInFavourite.setImageResource(R.drawable.favourite_icon_not_filled)
                 iconInFavourite.tag = R.drawable.favourite_icon_not_filled
+                clickListener.onClickListenerToast(TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE)
             }
 
             else {
 
                 iconInFavourite.setImageResource(R.drawable.favorite_icon_filled)
                 iconInFavourite.tag = R.drawable.favorite_icon_filled
+                clickListener.onClickListenerToast(TOAST_TEXT_FOR_ADD_IN_FAVOURITE)
             }
         }
     }

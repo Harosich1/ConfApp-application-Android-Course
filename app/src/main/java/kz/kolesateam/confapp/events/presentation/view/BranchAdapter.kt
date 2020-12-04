@@ -5,10 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.presentation.BaseViewHolder
-import kz.kolesateam.confapp.events.presentation.models.HEADER_TYPE
+import kz.kolesateam.confapp.events.presentation.models.UPCOMING_HEADER_TYPE
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.ClickListener
 import kz.kolesateam.confapp.events.presentation.models.BRANCH_TYPE
+import kz.kolesateam.confapp.events.presentation.models.EVENT_TYPE
 
 class BranchAdapter(
         private val eventClickListener: ClickListener
@@ -21,9 +22,10 @@ class BranchAdapter(
             viewType: Int
     ): BaseViewHolder<UpcomingEventListItem> {
         return when (viewType) {
-            HEADER_TYPE -> createHeaderViewHolder(parent)
+            UPCOMING_HEADER_TYPE -> createUpcomingHeaderViewHolder(parent)
             BRANCH_TYPE -> createBranchViewHolder(parent)
-            else -> createEventViewHolder(parent)
+            EVENT_TYPE -> createEventViewHolder(parent)
+            else -> createDirectionHeaderViewHolder(parent)
         }
     }
 
@@ -47,11 +49,21 @@ class BranchAdapter(
         notifyDataSetChanged()
     }
 
-    private fun createHeaderViewHolder(
+    private fun createUpcomingHeaderViewHolder(
             parent: ViewGroup
-    ): BaseViewHolder<UpcomingEventListItem> = HeaderViewHolder(
+    ): BaseViewHolder<UpcomingEventListItem> = UpcomingHeaderViewHolder(
             LayoutInflater.from(parent.context).inflate(
                     R.layout.header_layout_for_upcoming_layout,
+                    parent,
+                    false
+            )
+    )
+
+    private fun createDirectionHeaderViewHolder(
+            parent: ViewGroup
+    ): BaseViewHolder<UpcomingEventListItem> = DirectionHeaderViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                    R.layout.header_layout_for_direction_layout,
                     parent,
                     false
             )

@@ -5,15 +5,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.ApiClient
 import kz.kolesateam.confapp.events.data.models.*
+import kz.kolesateam.confapp.events.presentation.models.DirectionHeaderItem
 import kz.kolesateam.confapp.events.presentation.models.EventListItem
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
+import kz.kolesateam.confapp.events.presentation.models.UpcomingHeaderItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,7 +31,7 @@ class DirectionActivity : AppCompatActivity(), ClickListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var branchAdapter: BranchAdapter
-    private lateinit var directionTitle: TextView
+    private lateinit var inYourFavouriteButton: Button
     private lateinit var arrowActionBack: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,17 +42,19 @@ class DirectionActivity : AppCompatActivity(), ClickListener {
         val branchTitle: String? = intent.extras?.getString("branchTitle")
 
         bindViews()
-        directionTitle.text = branchTitle
         arrowActionBack.setOnClickListener {
             navigateToUpcomingEventsActivity()
         }
-        loadApiData(branchId.toString())
+        inYourFavouriteButton.setOnClickListener {
+            Toast.makeText(this, TOAST_TEXT_FOR_ENTER_IN_FAVOURITE, Toast.LENGTH_LONG).show()
+        }
+        loadApiData(branchId.toString(), branchTitle!!)
     }
 
     private fun bindViews(){
         recyclerView = findViewById(R.id.activity_direction_recycler)
         arrowActionBack = findViewById(R.id.direction_layout_action_back)
-        directionTitle = findViewById(R.id.direction_title)
+        inYourFavouriteButton = findViewById(R.id.button_in_favourite)
 
         branchAdapter = BranchAdapter(eventClickListener = this)
 
@@ -60,7 +66,7 @@ class DirectionActivity : AppCompatActivity(), ClickListener {
         )
     }
 
-    private fun loadApiData(branchId: String?){
+    private fun loadApiData(branchId: String?, branchTitle: String){
 
         val apiRetrofit: Retrofit = Retrofit.Builder()
                 .baseUrl("http://37.143.8.68:2020")
@@ -73,7 +79,9 @@ class DirectionActivity : AppCompatActivity(), ClickListener {
             override fun onResponse(call: Call<List<EventApiData>>, response: Response<List<EventApiData>>) {
                 if(response.isSuccessful){
 
-                    val upcomingEventListItem: List<UpcomingEventListItem> = getEventListItems(response.body()!!)
+                    val upcomingEventListItem: List<UpcomingEventListItem> =
+
+                            listOf(getDirectionHeaderItem(branchTitle)) + getEventListItems(response.body()!!)
 
                     branchAdapter.setList(upcomingEventListItem)
                 }
@@ -90,6 +98,10 @@ class DirectionActivity : AppCompatActivity(), ClickListener {
             eventList: List<EventApiData>
     ): List<UpcomingEventListItem> = eventList.map { eventApiData -> EventListItem(data = eventApiData) }
 
+    private fun getDirectionHeaderItem(branchTitle: String): DirectionHeaderItem = DirectionHeaderItem (
+            directionTitle = branchTitle
+    )
+
     private fun navigateToUpcomingEventsActivity() {
         val directionScreenIntent = Intent(this, UpcomingEventsActivity::class.java)
         startActivity(directionScreenIntent)
@@ -98,6 +110,7 @@ class DirectionActivity : AppCompatActivity(), ClickListener {
     override fun onClickListenerNavigateToActivity(branchId: Int?, title: String?) {
     }
 
-    override fun onClickListenerToast(TOAST_TEXT: String) {
+    override fun onClickListenerToast(toastText: String) {
+        Toast.makeText(this, toastText, Toast.LENGTH_LONG).show()
     }
 }

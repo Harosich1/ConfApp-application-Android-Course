@@ -3,11 +3,11 @@ package kz.kolesateam.confapp.events.presentation
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Path
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +18,7 @@ import kz.kolesateam.confapp.USER_NAME_KEY
 import kz.kolesateam.confapp.events.data.ApiClient
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.presentation.models.BranchListItem
-import kz.kolesateam.confapp.events.presentation.models.HeaderItem
+import kz.kolesateam.confapp.events.presentation.models.UpcomingHeaderItem
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import retrofit2.Call
@@ -37,12 +37,16 @@ val apiClient: ApiClient = apiRetrofit.create(ApiClient::class.java)
 private const val TAG = "onFailureMessage"
 const val TOAST_TEXT_FOR_DIRECTION = "Это направление %s!"
 const val TOAST_TEXT_FOR_REPORT= "Это доклад %s!"
+const val TOAST_TEXT_FOR_ADD_IN_FAVOURITE= "Вы добавили в избранное!"
+const val TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE= "Вы убрали из избранного!"
+const val TOAST_TEXT_FOR_ENTER_IN_FAVOURITE= "Это ваше избранное!"
 
 class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var branchAdapter: BranchAdapter
     private lateinit var eventsProgressBar: ProgressBar
+    private lateinit var inYourFavouriteButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,11 +55,15 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
         bindViews()
         loadApiData()
         eventsProgressBar.visibility = View.GONE
+        inYourFavouriteButton.setOnClickListener {
+            Toast.makeText(this, TOAST_TEXT_FOR_ENTER_IN_FAVOURITE, Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun bindViews(){
         recyclerView = findViewById(R.id.upcoming_event_activity_recycler)
         eventsProgressBar = findViewById(R.id.events_progress_bar)
+        inYourFavouriteButton = findViewById(R.id.button_in_favourite)
 
         branchAdapter = BranchAdapter(eventClickListener = this)
         recyclerView.adapter = branchAdapter
@@ -72,7 +80,7 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
                 if(response.isSuccessful){
                     val upcomingEventListItem: List<UpcomingEventListItem> =
 
-                    listOf(getHeaderItem()) + getBranchItems(response.body()!!)
+                    listOf(getUpcomingHeaderItem()) + getBranchItems(response.body()!!)
 
                     branchAdapter.setList(upcomingEventListItem)
                 }
@@ -85,7 +93,7 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
         })
     }
 
-    private fun getHeaderItem(): HeaderItem = HeaderItem (
+    private fun getUpcomingHeaderItem(): UpcomingHeaderItem = UpcomingHeaderItem (
                 userName = resources.getString(R.string.hello_user_fmt, getSavedUser())
         )
 
