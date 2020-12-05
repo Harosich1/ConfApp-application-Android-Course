@@ -41,7 +41,7 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
         setContentView(R.layout.activity_upcoming_layout)
 
         bindViews()
-        getApiData()
+        setApiData()
     }
 
     private fun bindViews(){
@@ -61,7 +61,7 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
         }
     }
 
-    private fun getApiData() {
+    private fun setApiData() {
 
         eventsProgressBar.visibility = View.VISIBLE
         upcomingEventsRepository.loadApiData(

@@ -17,15 +17,16 @@ import kz.kolesateam.confapp.events.presentation.models.DirectionHeaderItem
 import kz.kolesateam.confapp.events.presentation.models.EventListItem
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
+import org.koin.android.ext.android.inject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
 
-private const val TAG = "onFailureMessage"
-
 class DirectionActivity : AppCompatActivity(), ClickListener {
+
+    private val directionEventsRepository: DirectionEventsRepository by inject()
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var branchAdapter: BranchAdapter
@@ -40,13 +41,7 @@ class DirectionActivity : AppCompatActivity(), ClickListener {
         val branchTitle: String? = intent.extras?.getString("branchTitle")
 
         bindViews()
-        arrowActionBack.setOnClickListener {
-            navigateToUpcomingEventsActivity()
-        }
-        inYourFavouriteButton.setOnClickListener {
-            Toast.makeText(this, TOAST_TEXT_FOR_ENTER_IN_FAVOURITE, Toast.LENGTH_LONG).show()
-        }
-        loadApiData(branchId.toString(), branchTitle!!)
+        setApiData(branchTitle!!, branchId.toString())
     }
 
     private fun bindViews(){
@@ -62,9 +57,30 @@ class DirectionActivity : AppCompatActivity(), ClickListener {
                 LinearLayoutManager.VERTICAL,
                 false
         )
+
+        arrowActionBack.setOnClickListener {
+            navigateToUpcomingEventsActivity()
+        }
+        inYourFavouriteButton.setOnClickListener {
+            Toast.makeText(this, TOAST_TEXT_FOR_ENTER_IN_FAVOURITE, Toast.LENGTH_LONG).show()
+        }
     }
 
-    private fun loadApiData(branchId: String?, branchTitle: String){
+    private fun setApiData(
+            branchTitle: String,
+            branchId: String
+    ) = directionEventsRepository.loadApiData(
+            branchTitle,
+            branchId,
+            result = {
+                    upcomingEventListItem -> setResult(upcomingEventListItem)
+                }
+        )
+
+    private fun setResult(upcomingEventListItem: List<UpcomingEventListItem>) = branchAdapter.setList(upcomingEventListItem)
+
+
+    /*private fun loadApiData(branchId: String?, branchTitle: String){
 
         val apiRetrofit: Retrofit = Retrofit.Builder()
                 .baseUrl("http://37.143.8.68:2020")
@@ -99,7 +115,7 @@ class DirectionActivity : AppCompatActivity(), ClickListener {
     private fun getDirectionHeaderItem(branchTitle: String): DirectionHeaderItem = DirectionHeaderItem (
             directionTitle = branchTitle
     )
-
+*/
     private fun navigateToUpcomingEventsActivity() {
         val directionScreenIntent = Intent(this, UpcomingEventsActivity::class.java)
         startActivity(directionScreenIntent)

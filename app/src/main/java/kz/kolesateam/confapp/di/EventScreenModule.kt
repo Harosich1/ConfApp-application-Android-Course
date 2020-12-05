@@ -1,6 +1,7 @@
     package kz.kolesateam.confapp.di
 
 import kz.kolesateam.confapp.events.data.datasource.EventsDataSource
+import kz.kolesateam.confapp.events.data.models.DirectionEventsRepository
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsRepository
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -27,6 +28,12 @@ val eventScreenModule: Module = module {
     factory {
         UpcomingEventsRepository (
         eventsDataSource = get()
+        )
+    }
+
+    factory {
+        DirectionEventsRepository(
+                eventsDataSource = get()
         )
     }
 }
