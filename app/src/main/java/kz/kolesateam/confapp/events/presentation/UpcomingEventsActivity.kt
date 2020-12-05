@@ -1,38 +1,23 @@
 package kz.kolesateam.confapp.events.presentation
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kz.kolesateam.confapp.APPLICATION_SHARED_PREFERENCES
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.USER_NAME_KEY
-import kz.kolesateam.confapp.events.data.ApiClient
-import kz.kolesateam.confapp.events.data.models.BranchApiData
-import kz.kolesateam.confapp.events.presentation.models.BranchListItem
-import kz.kolesateam.confapp.events.presentation.models.UpcomingHeaderItem
+import kz.kolesateam.confapp.di.SHARED_PREFS_DATA_SOURCE
+import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
+import kz.kolesateam.confapp.events.data.models.UpcomingEventsRepository
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.jackson.JacksonConverterFactory
+import org.koin.android.ext.android.inject
+import org.koin.core.qualifier.named
 
-val apiRetrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("http://37.143.8.68:2020")
-        .addConverterFactory(JacksonConverterFactory.create())
-        .build()
-
-val apiClient: ApiClient = apiRetrofit.create(ApiClient::class.java)
 
 private const val TAG = "onFailureMessage"
 const val TOAST_TEXT_FOR_DIRECTION = "Это направление %s!"
@@ -42,6 +27,9 @@ const val TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE= "Вы убрали из избр
 const val TOAST_TEXT_FOR_ENTER_IN_FAVOURITE= "Это ваше избранное!"
 
 class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
+
+    private val upcomingEventsRepository: UpcomingEventsRepository by inject()
+    private val userNameLocalDataSource: UserNameDataSource by inject(named(SHARED_PREFS_DATA_SOURCE))
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var branchAdapter: BranchAdapter
@@ -53,11 +41,7 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
         setContentView(R.layout.activity_upcoming_layout)
 
         bindViews()
-        loadApiData()
-        eventsProgressBar.visibility = View.GONE
-        inYourFavouriteButton.setOnClickListener {
-            Toast.makeText(this, TOAST_TEXT_FOR_ENTER_IN_FAVOURITE, Toast.LENGTH_LONG).show()
-        }
+        getApiData()
     }
 
     private fun bindViews(){
@@ -72,41 +56,26 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
                 LinearLayoutManager.VERTICAL,
                 false
         )
+        inYourFavouriteButton.setOnClickListener {
+            Toast.makeText(this, TOAST_TEXT_FOR_ENTER_IN_FAVOURITE, Toast.LENGTH_LONG).show()
+        }
     }
 
-    private fun loadApiData(){
-        apiClient.getUpcomingEvents().enqueue(object : Callback<List<BranchApiData>> {
-            override fun onResponse(call: Call<List<BranchApiData>>, response: Response<List<BranchApiData>>) {
-                if(response.isSuccessful){
-                    val upcomingEventListItem: List<UpcomingEventListItem> =
+    private fun getApiData() {
 
-                    listOf(getUpcomingHeaderItem()) + getBranchItems(response.body()!!)
-
-                    branchAdapter.setList(upcomingEventListItem)
+        eventsProgressBar.visibility = View.VISIBLE
+        upcomingEventsRepository.loadApiData(
+                getSavedUser(),
+                result = {
+                    upcomingEventListItem -> setResult(upcomingEventListItem)
                 }
-            }
-
-            override fun onFailure(call: Call<List<BranchApiData>>, t: Throwable) {
-                recyclerView.visibility = View.GONE
-                Log.d(TAG, t.localizedMessage)
-            }
-        })
-    }
-
-    private fun getUpcomingHeaderItem(): UpcomingHeaderItem = UpcomingHeaderItem (
-                userName = resources.getString(R.string.hello_user_fmt, getSavedUser())
         )
-
-    private fun getBranchItems(
-            branchList: List<BranchApiData>
-    ): List<UpcomingEventListItem> = branchList.map { branchApiData -> BranchListItem(data = branchApiData) }
-
-
-    private fun getSavedUser(): String {
-        val sharedPreferences: SharedPreferences = getSharedPreferences(APPLICATION_SHARED_PREFERENCES, Context.MODE_PRIVATE)
-
-        return sharedPreferences.getString(USER_NAME_KEY, null) ?: resources.getString(R.string.event_screen_if_shared_preferences_is_null_text)
+        eventsProgressBar.visibility = View.GONE
     }
+
+    private fun getSavedUser(): String = userNameLocalDataSource.getUserName() ?: ""
+
+    private fun setResult(upcomingEventListItem: List<UpcomingEventListItem>) = branchAdapter.setList(upcomingEventListItem)
 
     override fun onClickListenerNavigateToActivity(branchId: Int?, title: String?) {
         val directionScreenIntent = Intent(this, DirectionActivity::class.java)

@@ -6,14 +6,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import androidx.appcompat.app.ActionBar
-import kz.kolesateam.confapp.APPLICATION_SHARED_PREFERENCES
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.USER_NAME_KEY
+import kz.kolesateam.confapp.di.SHARED_PREFS_DATA_SOURCE
+import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
+import org.koin.android.ext.android.inject
+import org.koin.core.qualifier.named
 
 private const val TAG = "TestHelloActivity"
 
 class TestHelloActivity : AppCompatActivity() {
+
+    private val userNameLocalDataSource: UserNameDataSource by inject(named(SHARED_PREFS_DATA_SOURCE))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,9 +32,5 @@ class TestHelloActivity : AppCompatActivity() {
         }
     }
 
-    private fun getSavedUser(): String {
-        val sharedPreferences: SharedPreferences = getSharedPreferences(APPLICATION_SHARED_PREFERENCES, Context.MODE_PRIVATE)
-
-        return sharedPreferences.getString(USER_NAME_KEY, null) ?: "World"
-    }
+    private fun getSavedUser(): String = userNameLocalDataSource.getUserName() ?: ""
 }

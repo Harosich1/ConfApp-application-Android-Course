@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.events.data
+package kz.kolesateam.confapp.events.data.datasource
 
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
@@ -8,7 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 
-interface ApiClient {
+interface EventsDataSource {
 
     @GET("/upcoming_events")
     fun getUpcomingEventsSync(): Call<ResponseBody>

@@ -7,17 +7,15 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.events.data.ApiClient
+import kz.kolesateam.confapp.events.data.datasource.EventsDataSource
 import kz.kolesateam.confapp.events.data.models.*
 import kz.kolesateam.confapp.events.presentation.models.DirectionHeaderItem
 import kz.kolesateam.confapp.events.presentation.models.EventListItem
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
-import kz.kolesateam.confapp.events.presentation.models.UpcomingHeaderItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import retrofit2.Call
 import retrofit2.Callback
@@ -73,9 +71,9 @@ class DirectionActivity : AppCompatActivity(), ClickListener {
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build()
 
-        val apiClient: ApiClient = apiRetrofit.create(ApiClient::class.java)
+        val eventsDataSource: EventsDataSource = apiRetrofit.create(EventsDataSource::class.java)
 
-        apiClient.getDirectionEvents(branchId).enqueue(object : Callback<List<EventApiData>> {
+        eventsDataSource.getDirectionEvents(branchId).enqueue(object : Callback<List<EventApiData>> {
             override fun onResponse(call: Call<List<EventApiData>>, response: Response<List<EventApiData>>) {
                 if(response.isSuccessful){
 
