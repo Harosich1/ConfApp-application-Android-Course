@@ -23,7 +23,6 @@
         android:layout_gravity="bottom|start"
         android:layout_marginTop="@dimen/margin_16x"
         android:textColor="@color/white"
-        android:textSize="@dimen/textSize_14x"
         tools:text="Привет, Васян!"
         />
 
