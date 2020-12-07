@@ -60,22 +60,22 @@ class BranchViewHolder(
 
     private fun setActionToast(currentEvent: EventApiData, nextEvent: EventApiData, title: String?) {
         branchTitle.setOnClickListener{
-            clickListener.onClickListener(TOAST_TEXT_FOR_DIRECTION.format(
+            clickListener.onClick(TOAST_TEXT_FOR_DIRECTION.format(
                     title
             ))
         }
         branchArrowTransition.setOnClickListener{
-            clickListener.onClickListener(TOAST_TEXT_FOR_DIRECTION.format(
+            clickListener.onClick(TOAST_TEXT_FOR_DIRECTION.format(
                     title
             ))
         }
         branchCurrentEvent.setOnClickListener{
-            clickListener.onClickListener(TOAST_TEXT_FOR_REPORT.format(
+            clickListener.onClick(TOAST_TEXT_FOR_REPORT.format(
                     currentEvent.title
             ))
         }
         branchNextEvent.setOnClickListener{
-            clickListener.onClickListener(TOAST_TEXT_FOR_REPORT.format(
+            clickListener.onClick(TOAST_TEXT_FOR_REPORT.format(
                     nextEvent.title
             ))
         }

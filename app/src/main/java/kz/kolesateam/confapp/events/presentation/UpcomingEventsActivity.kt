@@ -98,7 +98,7 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
         return sharedPreferences.getString(USER_NAME_KEY, null) ?: resources.getString(R.string.event_screen_if_shared_preferences_is_null_text)
     }
 
-    override fun onClickListener(toastText: String) {
-        Toast.makeText(this, toastText, Toast.LENGTH_LONG).show()
+    override fun onClick(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 }
