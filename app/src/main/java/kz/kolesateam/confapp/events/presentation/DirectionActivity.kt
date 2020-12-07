@@ -3,26 +3,16 @@ package kz.kolesateam.confapp.events.presentation
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.events.data.datasource.EventsDataSource
 import kz.kolesateam.confapp.events.data.models.*
-import kz.kolesateam.confapp.events.presentation.models.DirectionHeaderItem
-import kz.kolesateam.confapp.events.presentation.models.EventListItem
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import org.koin.android.ext.android.inject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.jackson.JacksonConverterFactory
 
 class DirectionActivity : AppCompatActivity(), ClickListener {
 
@@ -124,7 +114,7 @@ class DirectionActivity : AppCompatActivity(), ClickListener {
     override fun onClickListenerNavigateToActivity(branchId: Int?, title: String?) {
     }
 
-    override fun onClickListenerToast(toastText: String) {
-        Toast.makeText(this, toastText, Toast.LENGTH_LONG).show()
+    override fun onClickListenerToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 }

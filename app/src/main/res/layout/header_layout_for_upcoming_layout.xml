@@ -10,8 +10,8 @@
     >
 
     <ImageView
-        android:layout_width="160dp"
-        android:layout_height="24dp"
+        android:layout_width="@dimen/layout_size_160x"
+        android:layout_height="@dimen/layout_size_24x"
         android:layout_gravity="center"
         android:src="@drawable/header_logo_white"
         />
@@ -23,7 +23,6 @@
         android:layout_gravity="bottom|start"
         android:layout_marginTop="@dimen/margin_16x"
         android:textColor="@color/white"
-        android:textSize="@dimen/textSize_14x"
         tools:text="Привет, Васян!"
         />
 

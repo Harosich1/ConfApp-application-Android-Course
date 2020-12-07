@@ -84,7 +84,7 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
         startActivity(directionScreenIntent)
     }
 
-    override fun onClickListenerToast(toastText: String) {
-        Toast.makeText(this, toastText, Toast.LENGTH_LONG).show()
+    override fun onClickListenerToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 }
