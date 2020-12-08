@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/padding_4x"
+    android:paddingBottom="@dimen/padding_16x"
+    android:paddingHorizontal="@dimen/padding_16x"
+    android:background="@drawable/background_event_card"
+    >
+
+    <TextView
+        android:id="@+id/event_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingHorizontal="@dimen/padding_8x"
+        android:textColor="@color/white"
+        android:background="@drawable/background_event_state"
+        android:text="@string/event_card_layout_event_state_text"
+        />
+
+    <TextView
+        android:id="@+id/time_and_auditory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toLeftOf="@id/ic_in_favourite"
+        app:layout_constraintTop_toBottomOf="@id/event_state"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        android:layout_marginTop="@dimen/margin_4x"
+        android:textColor="@color/transparent_grey"
+        tools:text="14:00-16:00 Зал номер 5"
+        />
+
+    <ImageView
+        android:id="@+id/ic_in_favourite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/time_and_auditory"
+        app:layout_constraintTop_toTopOf="@id/time_and_auditory"
+        app:layout_constraintBottom_toBottomOf="@id/time_and_auditory"
+        android:src="@drawable/favourite_icon_not_filled"
+        />
+
+
+    <TextView
+        android:id="@+id/name_of_speaker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/time_and_auditory"
+        app:layout_constraintTop_toBottomOf="@id/time_and_auditory"
+        android:layout_marginTop="@dimen/margin_8x"
+        android:textColor="@color/bold_black"
+        tools:text="Кирилл Розов"
+        />
+
+    <TextView
+        android:id="@+id/job_of_speaker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/name_of_speaker"
+        app:layout_constraintTop_toBottomOf="@id/name_of_speaker"
+        android:lines="1"
+        android:minLines="1"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textColor="@color/transparent_grey"
+        tools:text="Event State"
+        />
+
+    <TextView
+        android:id="@+id/description_of_event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/job_of_speaker"
+        app:layout_constraintTop_toBottomOf="@id/job_of_speaker"
+        android:layout_marginTop="@dimen/margin_8x"
+        android:lines="3"
+        android:minLines="3"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:textColor="@color/black"
+        tools:text="Увлекательная жизнь в панели уведомлений"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

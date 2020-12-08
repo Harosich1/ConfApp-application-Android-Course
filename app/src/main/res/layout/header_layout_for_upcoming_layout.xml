@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/padding_16x"
+    android:paddingTop="@dimen/padding_16x"
+    android:paddingBottom="@dimen/padding_4x"
+    >
+
+    <ImageView
+        android:layout_width="@dimen/layout_size_160x"
+        android:layout_height="@dimen/layout_size_24x"
+        android:layout_gravity="center"
+        android:src="@drawable/header_logo_white"
+        />
+
+    <TextView
+        android:id="@+id/user_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start"
+        android:layout_marginTop="@dimen/margin_16x"
+        android:textColor="@color/white"
+        tools:text="Привет, Васян!"
+        />
+
+</LinearLayout>

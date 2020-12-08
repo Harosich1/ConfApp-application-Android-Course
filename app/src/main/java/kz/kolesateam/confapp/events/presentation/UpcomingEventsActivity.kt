@@ -1,16 +1,24 @@
 package kz.kolesateam.confapp.events.presentation
 
-import android.graphics.Color
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.ProgressBar
-import android.widget.TextView
-import com.fasterxml.jackson.databind.JsonNode
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import kz.kolesateam.confapp.APPLICATION_SHARED_PREFERENCES
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.USER_NAME_KEY
 import kz.kolesateam.confapp.events.data.ApiClient
+import kz.kolesateam.confapp.events.data.models.BranchApiData
+import kz.kolesateam.confapp.events.presentation.models.BranchListItem
+import kz.kolesateam.confapp.events.presentation.models.HeaderItem
+import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
+import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,67 +32,73 @@ val apiRetrofit: Retrofit = Retrofit.Builder()
 
 val apiClient: ApiClient = apiRetrofit.create(ApiClient::class.java)
 
-class UpcomingEventsActivity : AppCompatActivity() {
+private const val TAG = "onFailureMessage"
+const val TOAST_TEXT_FOR_DIRECTION = "Это направление %s!"
+const val TOAST_TEXT_FOR_REPORT= "Это доклад %s!"
 
-    private lateinit var responceTextView: TextView
-    private lateinit var loadDataButtonSync: Button
-    private lateinit var loadDataButtonAsync: Button
-    private lateinit var progressBar: ProgressBar
+class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var branchAdapter: BranchAdapter
+    private lateinit var eventsProgressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_upcoming_events)
+        setContentView(R.layout.activity_upcoming_layout)
 
         bindViews()
+        loadApiData()
+        eventsProgressBar.visibility = View.GONE
     }
 
     private fun bindViews(){
-        responceTextView = findViewById(R.id.upcoming_events_textView)
-        loadDataButtonSync = findViewById(R.id.upcoming_events_syncLoad)
-        loadDataButtonAsync = findViewById(R.id.upcoming_events_aSyncLoad)
-        progressBar = findViewById(R.id.events_progress_bar)
-        loadDataButtonSync.setOnClickListener{
-            progressBar.visibility = View.VISIBLE
-            loadApiDataSync()
-        }
-        loadDataButtonAsync.setOnClickListener{
-            progressBar.visibility = View.VISIBLE
-            loadApiDataAsync()
-        }
+        recyclerView = findViewById(R.id.upcoming_event_activity_recycler)
+        eventsProgressBar = findViewById(R.id.events_progress_bar)
+
+        branchAdapter = BranchAdapter(eventClickListener = this)
+        recyclerView.adapter = branchAdapter
+        recyclerView.layoutManager = LinearLayoutManager(
+                this,
+                LinearLayoutManager.VERTICAL,
+                false
+        )
     }
 
-    private fun loadApiDataSync(){
-        Thread{
-            Thread.sleep(5000)
-            val response: Response<JsonNode> = apiClient.getUpcomingEvents().execute()
-            if(response.isSuccessful){
-                val body: JsonNode = response.body()!!
-                runOnUiThread{
-                    progressBar.visibility = View.GONE
-                    responceTextView.setTextColor(Color.parseColor("#2196F3"))
-                    responceTextView.text = body.toString()
+    private fun loadApiData(){
+        apiClient.getUpcomingEvents().enqueue(object : Callback<List<BranchApiData>> {
+            override fun onResponse(call: Call<List<BranchApiData>>, response: Response<List<BranchApiData>>) {
+                if(response.isSuccessful){
+                    val upcomingEventListItem: List<UpcomingEventListItem> =
+
+                    listOf(getHeaderItem()) + getBranchItems(response.body()!!)
+
+                    branchAdapter.setList(upcomingEventListItem)
                 }
             }
-        }.start()
+
+            override fun onFailure(call: Call<List<BranchApiData>>, t: Throwable) {
+                recyclerView.visibility = View.GONE
+                Log.d(TAG, t.localizedMessage)
+            }
+        })
     }
 
-    private fun loadApiDataAsync(){
-       apiClient.getUpcomingEvents().enqueue(object :Callback<JsonNode> {
-           override fun onResponse(call: Call<JsonNode>, response: Response<JsonNode>) {
-               if (response.isSuccessful) {
-                   progressBar.visibility = View.GONE
-                   responceTextView.setTextColor(Color.parseColor("#4CAF50"))
-                   val body: JsonNode = response.body()!!
-                   responceTextView.text = body.toString()
-               }
-           }
+    private fun getHeaderItem(): HeaderItem = HeaderItem (
+                userName = resources.getString(R.string.hello_user_fmt, getSavedUser())
+        )
 
-           override fun onFailure(call: Call<JsonNode>, t: Throwable) {
-               progressBar.visibility = View.GONE
-               responceTextView.setTextColor(Color.parseColor("#F44336"))
-               responceTextView.text = t.localizedMessage
-           }
+    private fun getBranchItems(
+            branchList: List<BranchApiData>
+    ): List<UpcomingEventListItem> = branchList.map { branchApiData -> BranchListItem(data = branchApiData) }
 
-       })
+
+    private fun getSavedUser(): String {
+        val sharedPreferences: SharedPreferences = getSharedPreferences(APPLICATION_SHARED_PREFERENCES, Context.MODE_PRIVATE)
+
+        return sharedPreferences.getString(USER_NAME_KEY, null) ?: resources.getString(R.string.event_screen_if_shared_preferences_is_null_text)
+    }
+
+    override fun onClick(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 }

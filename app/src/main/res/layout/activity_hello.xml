@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".hello.presentation.TestHelloActivity"
     android:orientation="vertical"
     >
 
@@ -16,9 +15,9 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/header_background"
             android:scaleType="centerCrop"
-           />
+            android:src="@drawable/header_background"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,16 +28,16 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/header_logo_white"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/activity_hello_margin"
+                android:src="@drawable/header_logo_white"
                 />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_corona_small"
                 android:layout_gravity="center"
+                android:src="@drawable/ic_corona_small"
                 />
 
         </LinearLayout>
@@ -48,46 +47,46 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/text_view_your_name"
-        android:layout_marginTop="@dimen/activity_hello_margin"
         android:layout_marginHorizontal="@dimen/activity_hello_margin"
-        android:textStyle="bold"
+        android:layout_marginTop="@dimen/activity_hello_margin"
+        android:text="@string/text_view_your_name"
         android:textColor="@color/black"
         android:textSize="@dimen/activity_hello_view_text_size"
+        android:textStyle="bold"
         />
 
     <EditText
+        android:id="@+id/enter_your_name_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/activity_hello_margin"
         android:layout_marginTop="@dimen/activity_hello_margin"
-        android:textSize="@dimen/activity_hello_edit_text_text_size"
+        android:background="@drawable/hello_edit_text_frame_shape"
+        android:hint="@string/action_enter_name"
+        android:inputType="text"
+        android:paddingHorizontal="@dimen/activity_hello_padding_horizontal"
         android:paddingTop="@dimen/activity_hello_padding_topBottom"
         android:paddingBottom="@dimen/activity_hello_padding_topBottom"
-        android:inputType="text"
-        android:hint="@string/action_enter_name"
-        android:paddingHorizontal="@dimen/activity_hello_padding_horizontal"
-        android:id="@+id/enter_your_name_textView"
-        android:background="@drawable/hello_edit_text_frame_shape"
         android:textColor="@drawable/hello_text_editor_text_color"
+        android:textSize="@dimen/activity_hello_editText_text_size"
         />
 
     <Button
+        android:id="@+id/continue_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_hello_margin"
+        android:layout_gravity="center"
         android:layout_marginHorizontal="@dimen/activity_hello_margin"
-        android:text="@string/action_continue"
-        android:typeface="sans"
-        android:textSize="@dimen/activity_hello_button_text_size"
+        android:layout_marginTop="@dimen/activity_hello_margin"
+        android:background="@drawable/background_hello_button"
+        android:enabled="false"
         android:paddingTop="@dimen/activity_hello_button_padding"
         android:paddingBottom="@dimen/activity_hello_button_padding"
-        android:layout_gravity="center"
-        android:enabled="false"
-        android:id="@+id/continue_button"
+        android:text="@string/action_continue"
         android:textAllCaps="false"
-        android:background="@drawable/bg_hello_button"
         android:textColor="@drawable/hello_button_text_color"
+        android:textSize="@dimen/activity_hello_button_text_size"
+        android:typeface="sans"
         />
 
 </LinearLayout>

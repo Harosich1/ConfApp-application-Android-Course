@@ -4,12 +4,40 @@
     <dimen name="activity_hello_margin">16dp</dimen>
     <dimen name="activity_hello_padding">10dp</dimen>
     <dimen name="frame_radius">4dp</dimen>
-    <dimen name="stroke_width">1dp</dimen>
+    <dimen name="stroke_width_text_shape">1dp</dimen>
+    <dimen name="stroke_width_hello_button">1dp</dimen>
+    <dimen name="stroke_width_text_frame">1dp</dimen>
     <dimen name="activity_hello_padding_topBottom">14dp</dimen>
     <dimen name="activity_hello_padding_horizontal">18dp</dimen>
     <dimen name="activity_hello_button_padding">15dp</dimen>
     <dimen name="activity_hello_view_text_size">24sp</dimen>
-    <dimen name="activity_hello_edit_text_text_size">20sp</dimen>
+    <dimen name="activity_hello_editText_text_size">20sp</dimen>
     <dimen name="activity_hello_button_text_size">18sp</dimen>
     <dimen name="event_margin">10dp</dimen>
-    </resources>
+    <dimen name="margin_4x">4dp</dimen>
+    <dimen name="margin_8x">8dp</dimen>
+    <dimen name="margin_16x">16dp</dimen>
+    <dimen name="margin_24x">24dp</dimen>
+    <dimen name="padding_4x">4dp</dimen>
+    <dimen name="padding_6x">6dp</dimen>
+    <dimen name="padding_8x">8dp</dimen>
+    <dimen name="padding_10x">10dp</dimen>
+    <dimen name="padding_12x">12dp</dimen>
+    <dimen name="padding_16x">16dp</dimen>
+    <dimen name="padding_22x">22dp</dimen>
+    <dimen name="padding_24x">24dp</dimen>
+    <dimen name="padding_90x">90dp</dimen>
+    <dimen name="textSize_24x">24sp</dimen>
+    <dimen name="layout_size_12x">12dp</dimen>
+    <dimen name="layout_size_14x">14dp</dimen>
+    <dimen name="layout_size_16x">16dp</dimen>
+    <dimen name="layout_size_24x">24dp</dimen>
+    <dimen name="layout_size_32x">32dp</dimen>
+    <dimen name="layout_size_160x">160dp</dimen>
+    <dimen name="layout_size_280x">280dp</dimen>
+    <dimen name="layout_size_320x">320dp</dimen>
+    <dimen name="radius_4x">4dp</dimen>
+    <dimen name="radius_6x">6dp</dimen>
+    <dimen name="radius_46x">46dp</dimen>
+
+</resources>

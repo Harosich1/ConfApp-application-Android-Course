@@ -8,5 +8,8 @@
     <string name="hello_string">Привет!</string>
     <string name="event_sync_loading">Sync loading</string>
     <string name="event_async_loading">Async loading</string>
+    <string name="event_screen_in_favourite_button_text">В избранные</string>
+    <string name="event_screen_if_shared_preferences_is_null_text">пользоатель</string>
+    <string name="event_card_layout_event_state_text">Следующий доклад</string>
 
 </resources>
