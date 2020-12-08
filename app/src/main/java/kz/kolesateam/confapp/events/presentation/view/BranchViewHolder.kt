@@ -58,24 +58,24 @@ class BranchViewHolder(
 
     private fun setActionToast(currentEvent: EventApiData, nextEvent: EventApiData, title: String?, branchId: Int?) {
         branchTitle.setOnClickListener{
-            clickListener.onClickListenerToast(TOAST_TEXT_FOR_DIRECTION.format(
+            clickListener.onClick(TOAST_TEXT_FOR_DIRECTION.format(
                     title
             ))
             clickListener.onClickListenerNavigateToActivity(branchId, title)
         }
         branchArrowTransition.setOnClickListener{
-            clickListener.onClickListenerToast(TOAST_TEXT_FOR_DIRECTION.format(
+            clickListener.onClick(TOAST_TEXT_FOR_DIRECTION.format(
                     title
             ))
             clickListener.onClickListenerNavigateToActivity(branchId, title)
         }
         branchCurrentEvent.setOnClickListener{
-            clickListener.onClickListenerToast(TOAST_TEXT_FOR_REPORT.format(
+            clickListener.onClick(TOAST_TEXT_FOR_REPORT.format(
                     currentEvent.title
             ))
         }
         branchNextEvent.setOnClickListener{
-            clickListener.onClickListenerToast(TOAST_TEXT_FOR_REPORT.format(
+            clickListener.onClick(TOAST_TEXT_FOR_REPORT.format(
                     nextEvent.title
             ))
         }
@@ -122,14 +122,14 @@ class BranchViewHolder(
 
                 iconInFavourite.setImageResource(R.drawable.favourite_icon_not_filled)
                 iconInFavourite.tag = R.drawable.favourite_icon_not_filled
-                clickListener.onClickListenerToast(TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE)
+                clickListener.onClick(TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE)
             }
 
             else {
 
                 iconInFavourite.setImageResource(R.drawable.favorite_icon_filled)
                 iconInFavourite.tag = R.drawable.favorite_icon_filled
-                clickListener.onClickListenerToast(TOAST_TEXT_FOR_ADD_IN_FAVOURITE)
+                clickListener.onClick(TOAST_TEXT_FOR_ADD_IN_FAVOURITE)
             }
         }
     }

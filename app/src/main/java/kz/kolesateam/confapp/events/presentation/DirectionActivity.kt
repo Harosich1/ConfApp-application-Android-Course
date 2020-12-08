@@ -114,7 +114,7 @@ class DirectionActivity : AppCompatActivity(), ClickListener {
     override fun onClickListenerNavigateToActivity(branchId: Int?, title: String?) {
     }
 
-    override fun onClickListenerToast(message: String) {
+    override fun onClick(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 }

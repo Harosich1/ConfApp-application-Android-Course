@@ -45,7 +45,7 @@ class EventViewHolder (
 
     private fun setActionToast(eventApiData: EventApiData) {
         event.setOnClickListener{
-            clickListener.onClickListenerToast(TOAST_TEXT_FOR_REPORT.format(
+            clickListener.onClick(TOAST_TEXT_FOR_REPORT.format(
                     eventApiData.title
             ))
         }
@@ -76,14 +76,14 @@ class EventViewHolder (
 
                 iconInFavourite.setImageResource(R.drawable.favourite_icon_not_filled)
                 iconInFavourite.tag = R.drawable.favourite_icon_not_filled
-                clickListener.onClickListenerToast(TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE)
+                clickListener.onClick(TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE)
             }
 
             else {
 
                 iconInFavourite.setImageResource(R.drawable.favorite_icon_filled)
                 iconInFavourite.tag = R.drawable.favorite_icon_filled
-                clickListener.onClickListenerToast(TOAST_TEXT_FOR_ADD_IN_FAVOURITE)
+                clickListener.onClick(TOAST_TEXT_FOR_ADD_IN_FAVOURITE)
             }
         }
     }
