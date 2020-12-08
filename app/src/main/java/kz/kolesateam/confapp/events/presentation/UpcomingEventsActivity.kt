@@ -21,10 +21,10 @@ import org.koin.core.qualifier.named
 
 private const val TAG = "onFailureMessage"
 const val TOAST_TEXT_FOR_DIRECTION = "Это направление %s!"
-const val TOAST_TEXT_FOR_REPORT= "Это доклад %s!"
-const val TOAST_TEXT_FOR_ADD_IN_FAVOURITE= "Вы добавили в избранное!"
-const val TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE= "Вы убрали из избранного!"
-const val TOAST_TEXT_FOR_ENTER_IN_FAVOURITE= "Это ваше избранное!"
+const val TOAST_TEXT_FOR_REPORT = "Это доклад %s!"
+const val TOAST_TEXT_FOR_ADD_IN_FAVOURITE = "Вы добавили в избранное!"
+const val TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE = "Вы убрали из избранного!"
+const val TOAST_TEXT_FOR_ENTER_IN_FAVOURITE = "Это ваше избранное!"
 
 class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
 
@@ -44,7 +44,7 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
         setApiData()
     }
 
-    private fun bindViews(){
+    private fun bindViews() {
         recyclerView = findViewById(R.id.upcoming_event_activity_recycler)
         eventsProgressBar = findViewById(R.id.events_progress_bar)
         inYourFavouriteButton = findViewById(R.id.button_in_favourite)
@@ -66,8 +66,8 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
         eventsProgressBar.visibility = View.VISIBLE
         upcomingEventsRepository.loadApiData(
                 getSavedUser(),
-                result = {
-                    upcomingEventListItem -> setResult(upcomingEventListItem)
+                result = { upcomingEventListItem ->
+                    setResult(upcomingEventListItem)
                 }
         )
         eventsProgressBar.visibility = View.GONE

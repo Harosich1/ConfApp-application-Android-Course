@@ -57,24 +57,24 @@ class BranchViewHolder(
     }
 
     private fun setActionToast(currentEvent: EventApiData, nextEvent: EventApiData, title: String?, branchId: Int?) {
-        branchTitle.setOnClickListener{
+        branchTitle.setOnClickListener {
             clickListener.onClick(TOAST_TEXT_FOR_DIRECTION.format(
                     title
             ))
             clickListener.onClickListenerNavigateToActivity(branchId, title)
         }
-        branchArrowTransition.setOnClickListener{
+        branchArrowTransition.setOnClickListener {
             clickListener.onClick(TOAST_TEXT_FOR_DIRECTION.format(
                     title
             ))
             clickListener.onClickListenerNavigateToActivity(branchId, title)
         }
-        branchCurrentEvent.setOnClickListener{
+        branchCurrentEvent.setOnClickListener {
             clickListener.onClick(TOAST_TEXT_FOR_REPORT.format(
                     currentEvent.title
             ))
         }
-        branchNextEvent.setOnClickListener{
+        branchNextEvent.setOnClickListener {
             clickListener.onClick(TOAST_TEXT_FOR_REPORT.format(
                     nextEvent.title
             ))
@@ -123,9 +123,7 @@ class BranchViewHolder(
                 iconInFavourite.setImageResource(R.drawable.favourite_icon_not_filled)
                 iconInFavourite.tag = R.drawable.favourite_icon_not_filled
                 clickListener.onClick(TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE)
-            }
-
-            else {
+            } else {
 
                 iconInFavourite.setImageResource(R.drawable.favorite_icon_filled)
                 iconInFavourite.tag = R.drawable.favorite_icon_filled

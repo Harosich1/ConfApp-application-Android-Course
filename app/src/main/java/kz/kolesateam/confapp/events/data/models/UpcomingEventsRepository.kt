@@ -5,6 +5,7 @@ import kz.kolesateam.confapp.events.data.datasource.EventsDataSource
 import kz.kolesateam.confapp.events.presentation.models.BranchListItem
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.models.UpcomingHeaderItem
+import kz.kolesateam.confapp.utils.HELLO_USER_FORMAT
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,7 +27,7 @@ class UpcomingEventsRepository(
                     val upcomingEventListItem: List<UpcomingEventListItem> =
 
                             listOf(UpcomingHeaderItem (
-                                    userName = userName
+                                    userName = HELLO_USER_FORMAT.format(userName)
                             )) + getBranchItems(response.body()!!)
 
                     result(upcomingEventListItem)

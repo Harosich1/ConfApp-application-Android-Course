@@ -2,13 +2,16 @@ package kz.kolesateam.confapp.events.data.models
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import kz.kolesateam.confapp.utils.FULL_NAME_FIELD
+import kz.kolesateam.confapp.utils.ID_FIELD
+import kz.kolesateam.confapp.utils.JOB_FIELD
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class SpeakerApiData (
-        @JsonProperty(value = "id")
+        @JsonProperty(value = ID_FIELD)
         val id: Int?,
-        @JsonProperty(value = "fullName")
+        @JsonProperty(value = FULL_NAME_FIELD)
         val fullName: String?,
-        @JsonProperty(value = "job")
+        @JsonProperty(value = JOB_FIELD)
         val job: String?
 )
