@@ -36,8 +36,8 @@ class DirectionActivity : AppCompatActivity(), ClickListener {
 
     private fun bindViews() {
         recyclerView = findViewById(R.id.activity_direction_recycler)
-        arrowActionBack = findViewById(R.id.direction_layout_action_back)
-        inYourFavouriteButton = findViewById(R.id.button_in_favourite)
+        arrowActionBack = findViewById(R.id.direction_activity_navigation_button)
+        inYourFavouriteButton = findViewById(R.id.direction_activity_button_in_favourite)
 
         branchAdapter = BranchAdapter(eventClickListener = this)
 
@@ -74,7 +74,7 @@ class DirectionActivity : AppCompatActivity(), ClickListener {
         startActivity(directionScreenIntent)
     }
 
-    override fun onClickListenerNavigateToActivity(branchId: Int?, title: String?) {
+    override fun onBranchClicked(branchId: Int?, title: String?) {
     }
 
     override fun onClick(message: String) {

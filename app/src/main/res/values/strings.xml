@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">ConfApp</string>
     <string name="text_view_your_name">Как тебя зовут?</string>
-    <string name="hello_user_fmt">Привет, %1s</string>
+    <string name="hello_user_fmt">Привет, %s!</string>
     <string name="action_continue">Продолжить</string>
     <string name="action_back">Назад</string>
     <string name="action_enter_name">Введи имя</string>

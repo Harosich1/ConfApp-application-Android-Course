@@ -17,16 +17,16 @@ class UpcomingEventsRepository(
 ) {
 
     fun loadApiData(
-      userName: String,
-      result: (List<UpcomingEventListItem>) -> Unit
-    ){
+            userName: String,
+            result: (List<UpcomingEventListItem>) -> Unit
+    ) {
         eventsDataSource.getUpcomingEvents().enqueue(object : Callback<List<BranchApiData>> {
 
             override fun onResponse(call: Call<List<BranchApiData>>, response: Response<List<BranchApiData>>) {
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     val upcomingEventListItem: List<UpcomingEventListItem> =
 
-                            listOf(UpcomingHeaderItem (
+                            listOf(UpcomingHeaderItem(
                                     userName = HELLO_USER_FORMAT.format(userName)
                             )) + getBranchItems(response.body()!!)
 

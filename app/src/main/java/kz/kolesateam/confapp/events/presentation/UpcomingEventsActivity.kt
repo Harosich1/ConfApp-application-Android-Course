@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.di.SHARED_PREFS_DATA_SOURCE
+import kz.kolesateam.confapp.common.di.SHARED_PREFS_DATA_SOURCE
 import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsRepository
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
@@ -47,7 +47,7 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
     private fun bindViews() {
         recyclerView = findViewById(R.id.upcoming_event_activity_recycler)
         eventsProgressBar = findViewById(R.id.events_progress_bar)
-        inYourFavouriteButton = findViewById(R.id.button_in_favourite)
+        inYourFavouriteButton = findViewById(R.id.direction_activity_button_in_favourite)
 
         branchAdapter = BranchAdapter(eventClickListener = this)
         recyclerView.adapter = branchAdapter
@@ -77,7 +77,7 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
 
     private fun setResult(upcomingEventListItem: List<UpcomingEventListItem>) = branchAdapter.setList(upcomingEventListItem)
 
-    override fun onClickListenerNavigateToActivity(branchId: Int?, title: String?) {
+    override fun onBranchClicked(branchId: Int?, title: String?) {
         val directionScreenIntent = Intent(this, DirectionActivity::class.java)
         directionScreenIntent.putExtra("branchId", branchId)
         directionScreenIntent.putExtra("branchTitle", title)

@@ -9,7 +9,7 @@ import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 
 class DirectionHeaderViewHolder(itemView: View) : BaseViewHolder<UpcomingEventListItem>(itemView) {
 
-    private val directionTitleTextView = itemView.findViewById<TextView>(R.id.direction_title)
+    private val directionTitleTextView = itemView.findViewById<TextView>(R.id.direction_activity_title)
 
     override fun onBind(data: UpcomingEventListItem) {
         val directionTitle: String = (data as? DirectionHeaderItem)?.directionTitle ?: return

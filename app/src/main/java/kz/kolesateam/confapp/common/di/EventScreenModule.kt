@@ -1,4 +1,4 @@
-    package kz.kolesateam.confapp.di
+package kz.kolesateam.confapp.common.di
 
 import kz.kolesateam.confapp.events.data.datasource.EventsDataSource
 import kz.kolesateam.confapp.events.data.models.DirectionEventsRepository
@@ -8,15 +8,15 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
 
-    private const val BASE_URL = "http://37.143.8.68:2020"
+private const val BASE_URL = "http://37.143.8.68:2020"
 
 val eventScreenModule: Module = module {
 
     single {
-       Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(JacksonConverterFactory.create())
-            .build()
+        Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(JacksonConverterFactory.create())
+                .build()
     }
 
     single {
@@ -26,8 +26,8 @@ val eventScreenModule: Module = module {
     }
 
     factory {
-        UpcomingEventsRepository (
-        eventsDataSource = get()
+        UpcomingEventsRepository(
+                eventsDataSource = get()
         )
     }
 

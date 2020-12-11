@@ -15,14 +15,14 @@
         android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:overScrollMode="never"
-        android:paddingBottom="@dimen/padding_90x"
+        android:paddingBottom="@dimen/padding_80x"
         android:scrollbars="none"
         tools:itemCount="5"
         tools:listitem="@layout/branch_item"
         />
 
     <Button
-        android:id="@+id/button_in_favourite"
+        android:id="@+id/direction_activity_button_in_favourite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"

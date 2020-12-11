@@ -7,7 +7,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import kz.kolesateam.confapp.events.presentation.UpcomingEventsActivity
 import kz.kolesateam.confapp.common.presentation.AbstractTextWatcher
-import kz.kolesateam.confapp.di.SHARED_PREFS_DATA_SOURCE
+import kz.kolesateam.confapp.common.di.SHARED_PREFS_DATA_SOURCE
 import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named

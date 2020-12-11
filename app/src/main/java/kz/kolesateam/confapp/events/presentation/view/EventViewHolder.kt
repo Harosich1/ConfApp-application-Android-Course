@@ -20,7 +20,7 @@ class EventViewHolder (
         private val clickListener: ClickListener
 ) : BaseViewHolder<UpcomingEventListItem>(itemView) {
 
-    private val event: View = itemView.findViewById(R.id.event_card)
+    private val event: View = itemView.findViewById(R.id.item_event_card)
 
     private val eventState: TextView = event.findViewById(R.id.event_state)
     private val eventTimeAndAuditory: TextView = event.findViewById(R.id.time_and_auditory)

@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.di
+package kz.kolesateam.confapp.common.di
 
 import android.content.Context
 import org.koin.android.ext.koin.androidApplication
