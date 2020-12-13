@@ -7,12 +7,14 @@ import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.presentation.BaseViewHolder
 import kz.kolesateam.confapp.events.presentation.models.UPCOMING_HEADER_TYPE
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
-import kz.kolesateam.confapp.events.presentation.ClickListener
+import kz.kolesateam.confapp.events.presentation.OnBranchClicked
+import kz.kolesateam.confapp.events.presentation.OnClick
 import kz.kolesateam.confapp.events.presentation.models.BRANCH_TYPE
 import kz.kolesateam.confapp.events.presentation.models.EVENT_TYPE
 
 class BranchAdapter(
-        private val eventClickListener: ClickListener
+        private val eventOnBranchClicked: OnBranchClicked,
+        private val eventOnClick: OnClick
 ) : RecyclerView.Adapter<BaseViewHolder<UpcomingEventListItem>>() {
 
     private val branchApiDataList: MutableList<UpcomingEventListItem> = mutableListOf()
@@ -23,8 +25,8 @@ class BranchAdapter(
     ): BaseViewHolder<UpcomingEventListItem> {
         return when (viewType) {
             UPCOMING_HEADER_TYPE -> createUpcomingHeaderViewHolder(parent)
-            BRANCH_TYPE -> createBranchViewHolder(parent)
-            EVENT_TYPE -> createEventViewHolder(parent)
+            BRANCH_TYPE -> createUpcomingViewHolder(parent)
+            EVENT_TYPE -> createAllEventsViewHolder(parent)
             else -> createDirectionHeaderViewHolder(parent)
         }
     }
@@ -61,15 +63,15 @@ class BranchAdapter(
 
     private fun createDirectionHeaderViewHolder(
             parent: ViewGroup
-    ): BaseViewHolder<UpcomingEventListItem> = DirectionHeaderViewHolder(
+    ): BaseViewHolder<UpcomingEventListItem> = AllEventsHeaderViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                    R.layout.header_layout_for_direction_layout,
+                    R.layout.header_layout_for_all_events_layout,
                     parent,
                     false
             )
     )
 
-    private fun createBranchViewHolder(
+    private fun createUpcomingViewHolder(
             parent: ViewGroup
     ): BaseViewHolder<UpcomingEventListItem> = BranchViewHolder(
             LayoutInflater.from(parent.context).inflate(
@@ -77,10 +79,11 @@ class BranchAdapter(
                     parent,
                     false
             ),
-            eventClickListener
+            eventOnBranchClicked,
+            eventOnClick
     )
 
-    private fun createEventViewHolder(
+    private fun createAllEventsViewHolder(
             parent: ViewGroup
     ): BaseViewHolder<UpcomingEventListItem> = EventViewHolder(
             LayoutInflater.from(parent.context).inflate(
@@ -88,6 +91,7 @@ class BranchAdapter(
                     parent,
                     false
             ),
-            eventClickListener
+            eventOnBranchClicked,
+            eventOnClick
     )
 }

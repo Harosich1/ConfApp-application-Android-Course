@@ -14,9 +14,9 @@ import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import org.koin.android.ext.android.inject
 
-class DirectionActivity : AppCompatActivity(), ClickListener {
+class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick {
 
-    private val directionEventsRepository: DirectionEventsRepository by inject()
+    private val allEventsRepository: AllEventsRepository by inject()
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var branchAdapter: BranchAdapter
@@ -25,7 +25,7 @@ class DirectionActivity : AppCompatActivity(), ClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_direction_layout)
+        setContentView(R.layout.activity_all_events_layout)
 
         val branchId: Int? = intent.extras?.getInt("branchId")
         val branchTitle: String? = intent.extras?.getString("branchTitle")
@@ -35,11 +35,14 @@ class DirectionActivity : AppCompatActivity(), ClickListener {
     }
 
     private fun bindViews() {
-        recyclerView = findViewById(R.id.activity_direction_recycler)
-        arrowActionBack = findViewById(R.id.direction_activity_navigation_button)
-        inYourFavouriteButton = findViewById(R.id.direction_activity_button_in_favourite)
+        recyclerView = findViewById(R.id.activity_all_events_recycler)
+        arrowActionBack = findViewById(R.id.all_events_activity_navigation_button)
+        inYourFavouriteButton = findViewById(R.id.all_events_activity_button_in_favourite)
 
-        branchAdapter = BranchAdapter(eventClickListener = this)
+        branchAdapter = BranchAdapter(
+                eventOnBranchClicked = this,
+                eventOnClick = this
+        )
 
         recyclerView.adapter = branchAdapter
         recyclerView.layoutManager = LinearLayoutManager(
@@ -59,7 +62,7 @@ class DirectionActivity : AppCompatActivity(), ClickListener {
     private fun setApiData(
             branchTitle: String,
             branchId: String
-    ) = directionEventsRepository.loadApiData(
+    ) = allEventsRepository.loadApiData(
             branchTitle,
             branchId,
             result = { upcomingEventListItem ->
@@ -70,14 +73,15 @@ class DirectionActivity : AppCompatActivity(), ClickListener {
     private fun setResult(upcomingEventListItem: List<UpcomingEventListItem>) = branchAdapter.setList(upcomingEventListItem)
 
     private fun navigateToUpcomingEventsActivity() {
-        val directionScreenIntent = Intent(this, UpcomingEventsActivity::class.java)
-        startActivity(directionScreenIntent)
-    }
-
-    override fun onBranchClicked(branchId: Int?, title: String?) {
+        val upcomingEventsScreenIntent = Intent(this, UpcomingEventsActivity::class.java)
+        finish()
+        startActivity(upcomingEventsScreenIntent)
     }
 
     override fun onClick(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onBranchClicked(branchId: Int?, title: String?) {
     }
 }

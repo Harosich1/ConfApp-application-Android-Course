@@ -6,7 +6,7 @@ import kz.kolesateam.confapp.events.data.models.EventApiData
 const val UPCOMING_HEADER_TYPE: Int = 0
 const val BRANCH_TYPE: Int = 1
 const val EVENT_TYPE: Int = 2
-const val DIRECTION_HEADER_TYPE: Int = 3
+const val ALL_EVENTS_HEADER_TYPE: Int = 3
 
 sealed class UpcomingEventListItem(
         val type: Int
@@ -16,9 +16,9 @@ data class UpcomingHeaderItem(
         val userName: String
 ) : UpcomingEventListItem(UPCOMING_HEADER_TYPE)
 
-data class DirectionHeaderItem(
-        val directionTitle: String
-) : UpcomingEventListItem(DIRECTION_HEADER_TYPE)
+data class AllEventsHeaderItem(
+        val allEventsTitle: String
+) : UpcomingEventListItem(ALL_EVENTS_HEADER_TYPE)
 
 data class BranchListItem (
         val data: BranchApiData

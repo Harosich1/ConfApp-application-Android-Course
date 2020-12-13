@@ -6,18 +6,16 @@ import android.widget.TextView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.presentation.BaseViewHolder
 import kz.kolesateam.confapp.events.data.models.*
-import kz.kolesateam.confapp.events.presentation.ClickListener
-import kz.kolesateam.confapp.events.presentation.TOAST_TEXT_FOR_ADD_IN_FAVOURITE
-import kz.kolesateam.confapp.events.presentation.TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE
-import kz.kolesateam.confapp.events.presentation.TOAST_TEXT_FOR_REPORT
+import kz.kolesateam.confapp.events.presentation.*
 import kz.kolesateam.confapp.events.presentation.models.EventListItem
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 
 const val widthOfEventCard = 750
 
-class EventViewHolder (
+class EventViewHolder(
         itemView: View,
-        private val clickListener: ClickListener
+        private val onBranchClicked: OnBranchClicked,
+        private val onItemClick: OnClick
 ) : BaseViewHolder<UpcomingEventListItem>(itemView) {
 
     private val event: View = itemView.findViewById(R.id.item_event_card)
@@ -44,8 +42,8 @@ class EventViewHolder (
     }
 
     private fun setActionToast(eventApiData: EventApiData) {
-        event.setOnClickListener{
-            clickListener.onClick(TOAST_TEXT_FOR_REPORT.format(
+        event.setOnClickListener {
+            onItemClick.onClick(TOAST_TEXT_FOR_REPORT.format(
                     eventApiData.title
             ))
         }
@@ -71,19 +69,14 @@ class EventViewHolder (
         iconInFavourite.tag = R.drawable.favourite_icon_not_filled
 
         iconInFavourite.setOnClickListener {
-
             if (iconInFavourite.tag == R.drawable.favorite_icon_filled) {
-
                 iconInFavourite.setImageResource(R.drawable.favourite_icon_not_filled)
                 iconInFavourite.tag = R.drawable.favourite_icon_not_filled
-                clickListener.onClick(TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE)
-            }
-
-            else {
-
+                onItemClick.onClick(TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE)
+            } else {
                 iconInFavourite.setImageResource(R.drawable.favorite_icon_filled)
                 iconInFavourite.tag = R.drawable.favorite_icon_filled
-                clickListener.onClick(TOAST_TEXT_FOR_ADD_IN_FAVOURITE)
+                onItemClick.onClick(TOAST_TEXT_FOR_ADD_IN_FAVOURITE)
             }
         }
     }

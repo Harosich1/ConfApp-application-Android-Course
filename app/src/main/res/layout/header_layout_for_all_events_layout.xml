@@ -8,7 +8,7 @@
     >
 
     <TextView
-        android:id="@+id/direction_activity_title"
+        android:id="@+id/all_events_activity_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/padding_16x"

@@ -1,6 +1,5 @@
 package kz.kolesateam.confapp.events.presentation
 
-interface ClickListener {
-    fun onBranchClicked(branchId: Int?, title: String?)
+interface OnClick {
     fun onClick(message: String)
 }

@@ -16,7 +16,8 @@ const val nOfElementsToDrop = 3
 
 class BranchViewHolder(
         itemView: View,
-        private val clickListener: ClickListener
+        private val onBranchClicked: OnBranchClicked,
+        private val onItemClick: OnClick
 ) : BaseViewHolder<UpcomingEventListItem>(itemView) {
 
     private val branchCurrentEvent: View = itemView.findViewById(R.id.branch_current_event)
@@ -58,24 +59,24 @@ class BranchViewHolder(
 
     private fun setActionToast(currentEvent: EventApiData, nextEvent: EventApiData, title: String?, branchId: Int?) {
         branchTitle.setOnClickListener {
-            clickListener.onClick(TOAST_TEXT_FOR_DIRECTION.format(
+            onItemClick.onClick(TOAST_TEXT_FOR_DIRECTION.format(
                     title
             ))
-            clickListener.onBranchClicked(branchId, title)
+            onBranchClicked.onBranchClicked(branchId, title)
         }
         branchArrowTransition.setOnClickListener {
-            clickListener.onClick(TOAST_TEXT_FOR_DIRECTION.format(
+            onItemClick.onClick(TOAST_TEXT_FOR_DIRECTION.format(
                     title
             ))
-            clickListener.onBranchClicked(branchId, title)
+            onBranchClicked.onBranchClicked(branchId, title)
         }
         branchCurrentEvent.setOnClickListener {
-            clickListener.onClick(TOAST_TEXT_FOR_REPORT.format(
+            onItemClick.onClick(TOAST_TEXT_FOR_REPORT.format(
                     currentEvent.title
             ))
         }
         branchNextEvent.setOnClickListener {
-            clickListener.onClick(TOAST_TEXT_FOR_REPORT.format(
+            onItemClick.onClick(TOAST_TEXT_FOR_REPORT.format(
                     nextEvent.title
             ))
         }
@@ -122,12 +123,12 @@ class BranchViewHolder(
 
                 iconInFavourite.setImageResource(R.drawable.favourite_icon_not_filled)
                 iconInFavourite.tag = R.drawable.favourite_icon_not_filled
-                clickListener.onClick(TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE)
+                onItemClick.onClick(TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE)
             } else {
 
                 iconInFavourite.setImageResource(R.drawable.favorite_icon_filled)
                 iconInFavourite.tag = R.drawable.favorite_icon_filled
-                clickListener.onClick(TOAST_TEXT_FOR_ADD_IN_FAVOURITE)
+                onItemClick.onClick(TOAST_TEXT_FOR_ADD_IN_FAVOURITE)
             }
         }
     }

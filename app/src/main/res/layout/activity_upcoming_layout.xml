@@ -22,7 +22,7 @@
         />
 
     <Button
-        android:id="@+id/direction_activity_button_in_favourite"
+        android:id="@+id/all_events_activity_button_in_favourite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"

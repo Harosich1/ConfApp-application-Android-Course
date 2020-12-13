@@ -15,7 +15,9 @@ import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsRepository
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
+import kz.kolesateam.confapp.events.presentation.viewModel.UpcomingEventsViewModel
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
 
 
@@ -26,8 +28,9 @@ const val TOAST_TEXT_FOR_ADD_IN_FAVOURITE = "Вы добавили в избра
 const val TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE = "Вы убрали из избранного!"
 const val TOAST_TEXT_FOR_ENTER_IN_FAVOURITE = "Это ваше избранное!"
 
-class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
+class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick {
 
+    private val upcomingEventsViewModel: UpcomingEventsViewModel by viewModel()
     private val upcomingEventsRepository: UpcomingEventsRepository by inject()
     private val userNameLocalDataSource: UserNameDataSource by inject(named(SHARED_PREFS_DATA_SOURCE))
 
@@ -47,9 +50,12 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
     private fun bindViews() {
         recyclerView = findViewById(R.id.upcoming_event_activity_recycler)
         eventsProgressBar = findViewById(R.id.events_progress_bar)
-        inYourFavouriteButton = findViewById(R.id.direction_activity_button_in_favourite)
+        inYourFavouriteButton = findViewById(R.id.all_events_activity_button_in_favourite)
 
-        branchAdapter = BranchAdapter(eventClickListener = this)
+        branchAdapter = BranchAdapter(
+                eventOnBranchClicked = this,
+                eventOnClick = this
+        )
         recyclerView.adapter = branchAdapter
         recyclerView.layoutManager = LinearLayoutManager(
                 this,
@@ -78,10 +84,11 @@ class UpcomingEventsActivity : AppCompatActivity(), ClickListener {
     private fun setResult(upcomingEventListItem: List<UpcomingEventListItem>) = branchAdapter.setList(upcomingEventListItem)
 
     override fun onBranchClicked(branchId: Int?, title: String?) {
-        val directionScreenIntent = Intent(this, DirectionActivity::class.java)
-        directionScreenIntent.putExtra("branchId", branchId)
-        directionScreenIntent.putExtra("branchTitle", title)
-        startActivity(directionScreenIntent)
+        val allEventsScreenIntent = Intent(this, AllEventsActivity::class.java)
+        allEventsScreenIntent.putExtra("branchId", branchId)
+        allEventsScreenIntent.putExtra("branchTitle", title)
+        finish()
+        startActivity(allEventsScreenIntent)
     }
 
     override fun onClick(message: String) {
