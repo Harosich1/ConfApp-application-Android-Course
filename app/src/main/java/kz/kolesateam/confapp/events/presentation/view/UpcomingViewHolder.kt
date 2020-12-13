@@ -6,8 +6,8 @@ import android.widget.TextView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.presentation.BaseViewHolder
 import kz.kolesateam.confapp.events.data.models.BranchApiData
-import kz.kolesateam.confapp.events.presentation.models.BranchListItem
 import kz.kolesateam.confapp.events.data.models.EventApiData
+import kz.kolesateam.confapp.events.presentation.models.BranchListItem
 import kz.kolesateam.confapp.events.presentation.*
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 

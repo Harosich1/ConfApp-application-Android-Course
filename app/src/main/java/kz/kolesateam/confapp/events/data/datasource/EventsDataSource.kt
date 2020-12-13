@@ -17,6 +17,6 @@ interface EventsDataSource {
     fun getUpcomingEvents(): Call<List<BranchApiData>>
 
     @GET("/branch_events/{branch_id}")
-    fun getDirectionEvents(@Path("branch_id") branchId: String?): Call<List<EventApiData>>
+    fun getAllEvents(@Path("branch_id") branchId: String?): Call<List<EventApiData>>
 
 }

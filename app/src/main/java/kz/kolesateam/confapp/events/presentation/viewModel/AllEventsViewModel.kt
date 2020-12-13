@@ -27,17 +27,17 @@ class AllEventsViewModel(
         allEventsRepository.loadApiData(
             branchId = branchId,
             result = { allEventsItem ->
-                setUpcomingEventsList(allEventsItem, branchTitle)
+                setAllEventsList(allEventsItem, branchTitle)
             }
         )
     }
 
-    override fun setUpcomingEventsList(
+    override fun setAllEventsList(
         allEventsItem: List<EventApiData>,
         branchTitle: String
     ) {
         allEventsLiveData.value =
-            listOf(getDirectionHeaderItem(branchTitle)) + getEventListItems(allEventsItem)
+            listOf(getAllEventsHeaderItem(branchTitle)) + getEventListItems(allEventsItem)
     }
 
     private fun getEventListItems(
@@ -45,7 +45,7 @@ class AllEventsViewModel(
     ): List<UpcomingEventListItem> =
         eventList.map { eventApiData -> EventListItem(data = eventApiData) }
 
-    private fun getDirectionHeaderItem(branchTitle: String): AllEventsHeaderItem =
+    private fun getAllEventsHeaderItem(branchTitle: String): AllEventsHeaderItem =
         AllEventsHeaderItem(
             allEventsTitle = branchTitle
         )
