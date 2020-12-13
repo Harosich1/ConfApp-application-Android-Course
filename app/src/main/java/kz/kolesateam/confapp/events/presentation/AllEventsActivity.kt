@@ -12,11 +12,13 @@ import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.*
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
+import kz.kolesateam.confapp.events.presentation.viewModel.AllEventsViewModel
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick {
 
-    private val allEventsRepository: AllEventsRepository by inject()
+    private val allEventsViewModel: AllEventsViewModel by viewModel()
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var branchAdapter: BranchAdapter
@@ -31,7 +33,8 @@ class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick {
         val branchTitle: String? = intent.extras?.getString("branchTitle")
 
         bindViews()
-        setApiData(branchTitle!!, branchId.toString())
+        observeUpcomingEventsViewModel()
+        allEventsViewModel.onLaunch(branchTitle = branchTitle!!, branchId = branchId!!.toString())
     }
 
     private fun bindViews() {
@@ -59,18 +62,13 @@ class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick {
         }
     }
 
-    private fun setApiData(
-            branchTitle: String,
-            branchId: String
-    ) = allEventsRepository.loadApiData(
-            branchTitle,
-            branchId,
-            result = { upcomingEventListItem ->
-                setResult(upcomingEventListItem)
-            }
-    )
+    private fun observeUpcomingEventsViewModel() {
+        allEventsViewModel.getAllEventsLiveData().observe(this, ::showResult)
+    }
 
-    private fun setResult(upcomingEventListItem: List<UpcomingEventListItem>) = branchAdapter.setList(upcomingEventListItem)
+    private fun showResult(upcomingEventListItem: List<UpcomingEventListItem>) {
+        branchAdapter.setList(upcomingEventListItem)
+    }
 
     private fun navigateToUpcomingEventsActivity() {
         val upcomingEventsScreenIntent = Intent(this, UpcomingEventsActivity::class.java)

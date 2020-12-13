@@ -11,39 +11,28 @@ import retrofit2.Response
 
 private const val TAG = "onFailureMessage"
 
-class AllEventsRepository (
-        private val eventsDataSource: EventsDataSource
+class AllEventsRepository(
+    private val eventsDataSource: EventsDataSource
 ) {
 
     fun loadApiData(
-            branchTitle: String,
-            branchId: String,
-            result: (List<UpcomingEventListItem>) -> Unit
-    ){
-        eventsDataSource.getDirectionEvents(branchId).enqueue(object : Callback<List<EventApiData>> {
-            override fun onResponse(call: Call<List<EventApiData>>, response: Response<List<EventApiData>>) {
-                if(response.isSuccessful){
-
-                    val upcomingEventListItem: List<UpcomingEventListItem> =
-
-                            listOf(getDirectionHeaderItem(branchTitle)) + getEventListItems(response.body()!!)
-
-                    result(upcomingEventListItem)
+        branchId: String,
+        result: (List<EventApiData>) -> Unit
+    ) {
+        eventsDataSource.getDirectionEvents(branchId)
+            .enqueue(object : Callback<List<EventApiData>> {
+                override fun onResponse(
+                    call: Call<List<EventApiData>>,
+                    response: Response<List<EventApiData>>
+                ) {
+                    if (response.isSuccessful) {
+                        result(response.body()!!)
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<List<EventApiData>>, t: Throwable) {
-                Log.d(TAG, t.localizedMessage)
-            }
-        })
+                override fun onFailure(call: Call<List<EventApiData>>, t: Throwable) {
+                    Log.d(TAG, t.localizedMessage)
+                }
+            })
     }
-
-    private fun getEventListItems(
-            eventList: List<EventApiData>
-    ): List<UpcomingEventListItem> = eventList.map { eventApiData -> EventListItem(data = eventApiData) }
-
-    private fun getDirectionHeaderItem(branchTitle: String): AllEventsHeaderItem = AllEventsHeaderItem (
-            allEventsTitle = branchTitle
-    )
-
 }

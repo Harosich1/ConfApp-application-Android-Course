@@ -15,7 +15,7 @@ import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsRepository
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
-import kz.kolesateam.confapp.events.presentation.viewModel.UpcomingEventsViewModel
+import kz.kolesateam.confapp.events.presentation.viewModel.AllEventsViewModel
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
@@ -30,7 +30,7 @@ const val TOAST_TEXT_FOR_ENTER_IN_FAVOURITE = "Это ваше избранно�
 
 class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick {
 
-    private val upcomingEventsViewModel: UpcomingEventsViewModel by viewModel()
+    private val allEventsViewModel: AllEventsViewModel by viewModel()
     private val upcomingEventsRepository: UpcomingEventsRepository by inject()
     private val userNameLocalDataSource: UserNameDataSource by inject(named(SHARED_PREFS_DATA_SOURCE))
 
@@ -79,9 +79,9 @@ class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick {
         eventsProgressBar.visibility = View.GONE
     }
 
-    private fun getSavedUser(): String = userNameLocalDataSource.getUserName() ?: ""
-
     private fun setResult(upcomingEventListItem: List<UpcomingEventListItem>) = branchAdapter.setList(upcomingEventListItem)
+
+    private fun getSavedUser(): String = userNameLocalDataSource.getUserName() ?: ""
 
     override fun onBranchClicked(branchId: Int?, title: String?) {
         val allEventsScreenIntent = Intent(this, AllEventsActivity::class.java)
