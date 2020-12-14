@@ -3,14 +3,14 @@ package kz.kolesateam.confapp.events.presentation.view
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.presentation.BaseViewHolder
 import kz.kolesateam.confapp.events.data.models.*
 import kz.kolesateam.confapp.events.presentation.*
 import kz.kolesateam.confapp.events.presentation.models.EventListItem
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
-
-const val widthOfEventCard = 750
 
 class EventViewHolder(
         itemView: View,
@@ -35,7 +35,10 @@ class EventViewHolder(
     override fun onBind(data: UpcomingEventListItem) {
         val eventApiData: EventApiData = (data as? EventListItem)?.data ?: return
 
-        event.layoutParams.width = widthOfEventCard
+        event.layoutParams = (event.layoutParams as RecyclerView.LayoutParams).apply {
+            width = ConstraintLayout.LayoutParams.MATCH_PARENT
+            height = ConstraintLayout.LayoutParams.WRAP_CONTENT
+        }
 
         setActionToast(eventApiData)
         onBindEvent(eventApiData)

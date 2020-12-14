@@ -55,6 +55,7 @@ class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick {
                 LinearLayoutManager.VERTICAL,
                 false
         )
+        recyclerView.setPadding(60, 0, 60, 240)
 
         arrowActionBack.setOnClickListener {
             navigateToUpcomingEventsActivity()
