@@ -9,19 +9,21 @@ import kz.kolesateam.confapp.events.presentation.models.UPCOMING_HEADER_TYPE
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.OnBranchClicked
 import kz.kolesateam.confapp.events.presentation.OnClick
+import kz.kolesateam.confapp.events.presentation.OnClickToastMessage
 import kz.kolesateam.confapp.events.presentation.models.BRANCH_TYPE
 import kz.kolesateam.confapp.events.presentation.models.EVENT_TYPE
 
 class BranchAdapter(
-        private val eventOnBranchClicked: OnBranchClicked,
-        private val eventOnClick: OnClick
+    private val eventOnBranchClicked: OnBranchClicked,
+    private val eventOnClick: OnClick,
+    private val eventOnClickToastMessage: OnClickToastMessage
 ) : RecyclerView.Adapter<BaseViewHolder<UpcomingEventListItem>>() {
 
     private val branchApiDataList: MutableList<UpcomingEventListItem> = mutableListOf()
 
     override fun onCreateViewHolder(
-            parent: ViewGroup,
-            viewType: Int
+        parent: ViewGroup,
+        viewType: Int
     ): BaseViewHolder<UpcomingEventListItem> {
         return when (viewType) {
             UPCOMING_HEADER_TYPE -> createUpcomingHeaderViewHolder(parent)
@@ -32,8 +34,8 @@ class BranchAdapter(
     }
 
     override fun onBindViewHolder(
-            holder: BaseViewHolder<UpcomingEventListItem>,
-            position: Int
+        holder: BaseViewHolder<UpcomingEventListItem>,
+        position: Int
     ) {
         holder.onBind(branchApiDataList[position])
     }
@@ -41,7 +43,7 @@ class BranchAdapter(
     override fun getItemCount(): Int = branchApiDataList.size
 
     override fun getItemViewType(
-            position: Int
+        position: Int
     ): Int = branchApiDataList[position].type
 
     fun setList(branchApiDataList: List<UpcomingEventListItem>) {
@@ -52,46 +54,48 @@ class BranchAdapter(
     }
 
     private fun createUpcomingHeaderViewHolder(
-            parent: ViewGroup
+        parent: ViewGroup
     ): BaseViewHolder<UpcomingEventListItem> = UpcomingHeaderViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                    R.layout.header_layout_for_upcoming_layout,
-                    parent,
-                    false
-            )
+        LayoutInflater.from(parent.context).inflate(
+            R.layout.header_layout_for_upcoming_layout,
+            parent,
+            false
+        )
     )
 
     private fun createAllEventsHeaderViewHolder(
-            parent: ViewGroup
+        parent: ViewGroup
     ): BaseViewHolder<UpcomingEventListItem> = AllEventsHeaderViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                    R.layout.header_layout_for_all_events_layout,
-                    parent,
-                    false
-            )
+        LayoutInflater.from(parent.context).inflate(
+            R.layout.header_layout_for_all_events_layout,
+            parent,
+            false
+        )
     )
 
     private fun createUpcomingViewHolder(
-            parent: ViewGroup
+        parent: ViewGroup
     ): BaseViewHolder<UpcomingEventListItem> = BranchViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                    R.layout.branch_item,
-                    parent,
-                    false
-            ),
-            eventOnBranchClicked,
-            eventOnClick
+        LayoutInflater.from(parent.context).inflate(
+            R.layout.branch_item,
+            parent,
+            false
+        ),
+        eventOnBranchClicked,
+        eventOnClick,
+        eventOnClickToastMessage
     )
 
     private fun createAllEventsViewHolder(
-            parent: ViewGroup
+        parent: ViewGroup
     ): BaseViewHolder<UpcomingEventListItem> = EventViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                    R.layout.event_card_layout,
-                    parent,
-                    false
-            ),
-            eventOnBranchClicked,
-            eventOnClick
+        LayoutInflater.from(parent.context).inflate(
+            R.layout.event_card_layout,
+            parent,
+            false
+        ),
+        eventOnBranchClicked,
+        eventOnClick,
+        eventOnClickToastMessage
     )
 }

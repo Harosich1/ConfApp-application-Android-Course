@@ -15,7 +15,8 @@ const val widthOfEventCard = 750
 class EventViewHolder(
         itemView: View,
         private val onBranchClicked: OnBranchClicked,
-        private val onItemClick: OnClick
+        private val onItemClick: OnClick,
+        private val eventOnClickToastMessage: OnClickToastMessage
 ) : BaseViewHolder<UpcomingEventListItem>(itemView) {
 
     private val event: View = itemView.findViewById(R.id.item_event_card)
@@ -43,7 +44,7 @@ class EventViewHolder(
 
     private fun setActionToast(eventApiData: EventApiData) {
         event.setOnClickListener {
-            onItemClick.onClick(TOAST_TEXT_FOR_REPORT.format(
+            eventOnClickToastMessage.onClickToastMessage(TOAST_TEXT_FOR_REPORT.format(
                     eventApiData.title
             ))
         }
@@ -72,11 +73,11 @@ class EventViewHolder(
             if (iconInFavourite.tag == R.drawable.favorite_icon_filled) {
                 iconInFavourite.setImageResource(R.drawable.favourite_icon_not_filled)
                 iconInFavourite.tag = R.drawable.favourite_icon_not_filled
-                onItemClick.onClick(TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE)
+                eventOnClickToastMessage.onClickToastMessage(TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE)
             } else {
                 iconInFavourite.setImageResource(R.drawable.favorite_icon_filled)
                 iconInFavourite.tag = R.drawable.favorite_icon_filled
-                onItemClick.onClick(TOAST_TEXT_FOR_ADD_IN_FAVOURITE)
+                eventOnClickToastMessage.onClickToastMessage(TOAST_TEXT_FOR_ADD_IN_FAVOURITE)
             }
         }
     }

@@ -1,5 +1,6 @@
 package kz.kolesateam.confapp.events.presentation
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -10,9 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.AllEventsRouter
+import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import kz.kolesateam.confapp.events.presentation.viewModel.UpcomingEventsViewModel
+import kz.kolesateam.confapp.favourite_events.presentation.FavouriteEventsActivity
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -23,7 +26,7 @@ const val TOAST_TEXT_FOR_ADD_IN_FAVOURITE = "Вы добавили в избра
 const val TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE = "Вы убрали из избранного!"
 const val TOAST_TEXT_FOR_ENTER_IN_FAVOURITE = "Это ваше избранное!"
 
-class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick {
+class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClickToastMessage {
 
     private val upcomingEventsViewModel: UpcomingEventsViewModel by viewModel()
     private val allEventsRouter: AllEventsRouter = AllEventsRouter()
@@ -49,17 +52,19 @@ class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick {
         inYourFavouriteButton = findViewById(R.id.all_events_activity_button_in_favourite)
 
         branchAdapter = BranchAdapter(
-                eventOnBranchClicked = this,
-                eventOnClick = this
+            eventOnBranchClicked = this,
+            eventOnClick = this,
+            eventOnClickToastMessage = this
         )
         recyclerView.adapter = branchAdapter
         recyclerView.layoutManager = LinearLayoutManager(
-                this,
-                LinearLayoutManager.VERTICAL,
-                false
+            this,
+            LinearLayoutManager.VERTICAL,
+            false
         )
         inYourFavouriteButton.setOnClickListener {
             Toast.makeText(this, TOAST_TEXT_FOR_ENTER_IN_FAVOURITE, Toast.LENGTH_LONG).show()
+            navigateToFavouriteEventsActivity()
         }
     }
 
@@ -77,7 +82,17 @@ class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick {
         startActivity(allEventsScreenIntent)
     }
 
-    override fun onClick(message: String) {
+    private fun navigateToFavouriteEventsActivity() {
+        val upcomingEventsScreenIntent = Intent(this, FavouriteEventsActivity::class.java)
+        finish()
+        startActivity(upcomingEventsScreenIntent)
+    }
+
+    override fun onFavouriteClick(eventApiData: EventApiData) {
+        upcomingEventsViewModel.onFavouriteClick(eventApiData)
+    }
+
+    override fun onClickToastMessage(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 }

@@ -17,8 +17,12 @@ const val nOfElementsToDrop = 3
 class BranchViewHolder(
         itemView: View,
         private val onBranchClicked: OnBranchClicked,
-        private val onItemClick: OnClick
+        private val onItemClick: OnClick,
+        private val eventOnClickToastMessage: OnClickToastMessage
 ) : BaseViewHolder<UpcomingEventListItem>(itemView) {
+
+    private lateinit var currentEvent: EventApiData
+    private lateinit var nextEvent: EventApiData
 
     private val branchCurrentEvent: View = itemView.findViewById(R.id.branch_current_event)
     private val branchNextEvent: View = itemView.findViewById(R.id.branch_next_event)
@@ -49,8 +53,15 @@ class BranchViewHolder(
 
         branchTitle.text = branchApiData.title
 
-        val currentEvent: EventApiData = branchApiData.events.first()
-        val nextEvent: EventApiData = branchApiData.events.last()
+        if(branchApiData.events.isEmpty()){
+            branchCurrentEvent.visibility = View.GONE
+            branchNextEvent.visibility = View.GONE
+
+            return
+        }
+
+        currentEvent = branchApiData.events.first()
+        nextEvent = branchApiData.events.last()
 
         setActionToast(currentEvent, nextEvent, branchApiData.title, branchApiData.id)
         onBindCurrentEvent(currentEvent)
@@ -59,26 +70,22 @@ class BranchViewHolder(
 
     private fun setActionToast(currentEvent: EventApiData, nextEvent: EventApiData, title: String?, branchId: Int?) {
         branchTitle.setOnClickListener {
-            onItemClick.onClick(TOAST_TEXT_FOR_DIRECTION.format(
+            eventOnClickToastMessage.onClickToastMessage(TOAST_TEXT_FOR_DIRECTION.format(
                     title
             ))
             onBranchClicked.onBranchClicked(branchId, title)
         }
         branchArrowTransition.setOnClickListener {
-            onItemClick.onClick(TOAST_TEXT_FOR_DIRECTION.format(
+            eventOnClickToastMessage.onClickToastMessage(TOAST_TEXT_FOR_DIRECTION.format(
                     title
             ))
             onBranchClicked.onBranchClicked(branchId, title)
         }
         branchCurrentEvent.setOnClickListener {
-            onItemClick.onClick(TOAST_TEXT_FOR_REPORT.format(
-                    currentEvent.title
-            ))
+            onItemClick.onFavouriteClick(eventApiData = currentEvent)
         }
         branchNextEvent.setOnClickListener {
-            onItemClick.onClick(TOAST_TEXT_FOR_REPORT.format(
-                    nextEvent.title
-            ))
+            onItemClick.onFavouriteClick(eventApiData = nextEvent)
         }
     }
 
@@ -95,7 +102,7 @@ class BranchViewHolder(
         speakerJobCurrent.text = currentEvent.speaker?.job
         eventDescriptionCurrent.text = currentEvent.title
 
-        setActionForChangeStateOfLikeButton(iconInFavouriteCurrent)
+        setActionForChangeStateOfLikeButton(iconInFavouriteCurrent, currentEvent)
     }
 
     private fun onBindEventNext(nextEvent: EventApiData) {
@@ -111,25 +118,27 @@ class BranchViewHolder(
         speakerJobNext.text = nextEvent.speaker?.job
         eventDescriptionNext.text = nextEvent.title
 
-        setActionForChangeStateOfLikeButton(iconInFavouriteNext)
+        setActionForChangeStateOfLikeButton(iconInFavouriteNext, nextEvent)
     }
 
-    private fun setActionForChangeStateOfLikeButton(iconInFavourite: ImageView) {
-        iconInFavourite.tag = R.drawable.favourite_icon_not_filled
+    private fun setActionForChangeStateOfLikeButton(iconInFavourite: ImageView, event: EventApiData) {
 
         iconInFavourite.setOnClickListener {
 
-            if (iconInFavourite.tag == R.drawable.favorite_icon_filled) {
+            event.isFavourite = !event.isFavourite
 
-                iconInFavourite.setImageResource(R.drawable.favourite_icon_not_filled)
-                iconInFavourite.tag = R.drawable.favourite_icon_not_filled
-                onItemClick.onClick(TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE)
-            } else {
-
-                iconInFavourite.setImageResource(R.drawable.favorite_icon_filled)
-                iconInFavourite.tag = R.drawable.favorite_icon_filled
-                onItemClick.onClick(TOAST_TEXT_FOR_ADD_IN_FAVOURITE)
+            val favouriteToastText = when(event.isFavourite){
+                true -> TOAST_TEXT_FOR_ADD_IN_FAVOURITE
+                else -> TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE
             }
+
+            val favouriteImageResource = when(event.isFavourite){
+                true -> R.drawable.favorite_icon_filled
+                else -> R.drawable.favourite_icon_not_filled
+            }
+
+            iconInFavourite.setImageResource(favouriteImageResource)
+            eventOnClickToastMessage.onClickToastMessage(favouriteToastText)
         }
     }
 }

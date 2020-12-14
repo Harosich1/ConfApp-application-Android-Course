@@ -15,3 +15,4 @@ const val JOB_FIELD = "job"
 
 const val BRANCH_ID = "branchId"
 const val BRANCH_TITLE = "branchTitle"
+

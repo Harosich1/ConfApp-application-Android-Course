@@ -8,7 +8,7 @@ interface FavouritesRepository {
     )
 
     fun removeFavouriteEvent(
-        eventId: Int
+        eventId: Int?
     )
 
     fun getAllFavouriteEvents(

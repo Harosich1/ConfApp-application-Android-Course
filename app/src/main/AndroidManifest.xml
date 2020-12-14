@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ConfApp"
         android:usesCleartextTraffic="true">
+        <activity android:name=".favourite_events.presentation.FavouriteEventsActivity"></activity>
         <activity android:name=".HelloActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

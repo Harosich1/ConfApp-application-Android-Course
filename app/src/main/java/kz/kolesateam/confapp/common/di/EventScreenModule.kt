@@ -19,6 +19,7 @@ val eventScreenModule: Module = module {
     viewModel {
         UpcomingEventsViewModel(
             upcomingEventsRepository = get(),
+            upcomingFavouritesRepository = get(),
             userNameDataSource = get(named(SHARED_PREFS_DATA_SOURCE))
         )
     }

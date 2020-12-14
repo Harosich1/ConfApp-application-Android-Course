@@ -9,14 +9,13 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.events.data.models.*
+import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import kz.kolesateam.confapp.events.presentation.viewModel.AllEventsViewModel
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick {
+class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClickToastMessage {
 
     private val allEventsViewModel: AllEventsViewModel by viewModel()
 
@@ -43,15 +42,16 @@ class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick {
         inYourFavouriteButton = findViewById(R.id.all_events_activity_button_in_favourite)
 
         branchAdapter = BranchAdapter(
-                eventOnBranchClicked = this,
-                eventOnClick = this
+            eventOnBranchClicked = this,
+            eventOnClick = this,
+            eventOnClickToastMessage = this
         )
 
         recyclerView.adapter = branchAdapter
         recyclerView.layoutManager = LinearLayoutManager(
-                this,
-                LinearLayoutManager.VERTICAL,
-                false
+            this,
+            LinearLayoutManager.VERTICAL,
+            false
         )
 
         arrowActionBack.setOnClickListener {
@@ -76,10 +76,12 @@ class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick {
         startActivity(upcomingEventsScreenIntent)
     }
 
-    override fun onClick(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    override fun onFavouriteClick(eventApiData: EventApiData) {
     }
 
     override fun onBranchClicked(branchId: Int?, title: String?) {
+    }
+
+    override fun onClickToastMessage(message: String) {
     }
 }
