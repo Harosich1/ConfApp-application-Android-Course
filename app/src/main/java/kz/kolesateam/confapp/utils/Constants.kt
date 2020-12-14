@@ -1,7 +1,5 @@
 package kz.kolesateam.confapp.utils
 
-const val HELLO_USER_FORMAT = "Привет %s!"
-
 const val ID_FIELD = "id"
 const val START_TIME_FIELD = "startTime"
 const val END_TIME_FIELD = "endTime"
