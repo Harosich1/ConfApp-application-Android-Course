@@ -6,14 +6,13 @@ import androidx.lifecycle.ViewModel
 import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsRepository
-import kz.kolesateam.confapp.events.presentation.UpcomingEventsHandler
 import kz.kolesateam.confapp.events.presentation.models.*
 import kz.kolesateam.confapp.utils.HELLO_USER_FORMAT
 
 class UpcomingEventsViewModel(
     private val upcomingEventsRepository: UpcomingEventsRepository,
     private val userNameDataSource: UserNameDataSource
-) : ViewModel(), UpcomingEventsHandler {
+) : ViewModel() {
 
     private val upcomingEventsLiveData: MutableLiveData<List<UpcomingEventListItem>> =
         MutableLiveData()
@@ -34,12 +33,12 @@ class UpcomingEventsViewModel(
     ): List<UpcomingEventListItem> =
         branchList.map { branchApiData -> BranchListItem(data = branchApiData) }
 
-    override fun setUpcomingEventsList(
+    private fun setUpcomingEventsList(
         upcomingEventsItem: List<BranchApiData>
     ) {
         upcomingEventsLiveData.value = listOf(
             UpcomingHeaderItem(
-                userName = HELLO_USER_FORMAT.format(getSavedUser())
+                userName = getSavedUser()
             )
         ) + getBranchItems(upcomingEventsItem)
     }

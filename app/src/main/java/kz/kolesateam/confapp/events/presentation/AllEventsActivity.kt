@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.common.BRANCH_ID
+import kz.kolesateam.confapp.common.BRANCH_TITLE
 import kz.kolesateam.confapp.events.data.models.*
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
@@ -29,8 +31,8 @@ class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_events_layout)
 
-        val branchId: Int? = intent.extras?.getInt("branchId")
-        val branchTitle: String? = intent.extras?.getString("branchTitle")
+        val branchId: Int? = intent.extras?.getInt(BRANCH_ID)
+        val branchTitle: String? = intent.extras?.getString(BRANCH_TITLE)
 
         bindViews()
         observeUpcomingEventsViewModel()
@@ -71,9 +73,7 @@ class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick {
     }
 
     private fun navigateToUpcomingEventsActivity() {
-        val upcomingEventsScreenIntent = Intent(this, UpcomingEventsActivity::class.java)
         finish()
-        startActivity(upcomingEventsScreenIntent)
     }
 
     override fun onClick(message: String) {

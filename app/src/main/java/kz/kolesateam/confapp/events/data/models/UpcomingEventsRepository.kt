@@ -23,6 +23,8 @@ class UpcomingEventsRepository(
             override fun onResponse(call: Call<List<BranchApiData>>, response: Response<List<BranchApiData>>) {
                 if (response.isSuccessful) {
                     result(response.body()!!)
+                } else {
+                    result(emptyList())
                 }
             }
 

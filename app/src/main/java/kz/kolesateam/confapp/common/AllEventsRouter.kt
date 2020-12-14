@@ -3,8 +3,9 @@ package kz.kolesateam.confapp.common
 import android.content.Context
 import android.content.Intent
 import kz.kolesateam.confapp.events.presentation.AllEventsActivity
-import kz.kolesateam.confapp.utils.BRANCH_ID
-import kz.kolesateam.confapp.utils.BRANCH_TITLE
+
+const val BRANCH_ID = "branchId"
+const val BRANCH_TITLE = "branchTitle"
 
 class AllEventsRouter {
 

@@ -13,6 +13,6 @@ class UpcomingHeaderViewHolder(itemView: View) : BaseViewHolder<UpcomingEventLis
 
     override fun onBind(data: UpcomingEventListItem) {
         val userName: String = (data as? UpcomingHeaderItem)?.userName ?: return
-        userNameTextView.text = userName
+        userNameTextView.text = itemView.resources.getString(R.string.hello_user_fmt).format(userName)
     }
 }

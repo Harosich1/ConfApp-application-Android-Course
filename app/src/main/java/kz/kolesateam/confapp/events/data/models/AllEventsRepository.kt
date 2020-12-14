@@ -24,6 +24,8 @@ class AllEventsRepository(
                 ) {
                     if (response.isSuccessful) {
                         result(response.body()!!)
+                    } else {
+                        result(emptyList())
                     }
                 }
 

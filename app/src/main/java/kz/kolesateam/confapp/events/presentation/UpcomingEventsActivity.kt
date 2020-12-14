@@ -73,7 +73,6 @@ class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick {
 
     override fun onBranchClicked(branchId: Int?, title: String?) {
         val allEventsScreenIntent = allEventsRouter.createIntent(this, branchId, title)
-        finish()
         startActivity(allEventsScreenIntent)
     }
 

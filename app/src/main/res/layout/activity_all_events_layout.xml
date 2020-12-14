@@ -1,83 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".events.presentation.AllEventsActivity"
     android:background="@drawable/background_events_and_direction_screen"
-    >
+    android:orientation="vertical"
+    tools:context=".events.presentation.AllEventsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:id="@+id/all_events_header_static"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:paddingTop="@dimen/padding_16x"
-        android:paddingHorizontal="@dimen/padding_16x"
-        android:paddingBottom="@dimen/padding_16x"
-        >
-
-        <ImageView
-            android:id="@+id/all_events_activity_navigation_button"
-            android:layout_width="@dimen/layout_size_14x"
-            android:layout_height="@dimen/layout_size_14x"
-            android:src="@drawable/arrow_transition_inverted"
-            android:layout_gravity="start|center"
-
-            />
-
-        <ImageView
+        <LinearLayout
+            android:id="@+id/all_events_header_static"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/layout_size_16x"
-            android:src="@drawable/header_logo_white"
-            android:layout_gravity="center"
-            />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/padding_16x"
+            android:paddingTop="@dimen/padding_16x"
+            android:paddingBottom="@dimen/padding_16x"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/all_events_activity_navigation_button"
+                android:layout_width="@dimen/layout_size_14x"
+                android:layout_height="@dimen/layout_size_14x"
+                android:layout_gravity="start|center"
+                android:src="@drawable/arrow_transition_inverted"
+
+                />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_size_16x"
+                android:layout_gravity="center"
+                android:src="@drawable/header_logo_white" />
+
+        </LinearLayout>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/activity_all_events_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/all_events_header_static"
-        android:paddingStart="@dimen/padding_40x"
-        android:paddingBottom="@dimen/padding_120x"
-        android:clipToPadding="false"
-        tools:listitem="@layout/event_card_layout"
-        tools:itemCount="5"
-        android:scrollbars="none"
-        android:overScrollMode="never"
-        />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/activity_all_events_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingStart="@dimen/padding_40x"
+            android:paddingBottom="@dimen/padding_120x"
+            android:scrollbars="none"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/all_events_header_static"
+            tools:itemCount="5"
+            tools:listitem="@layout/event_card_layout" />
 
-    <Button
-        android:id="@+id/all_events_activity_button_in_favourite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:drawableStart="@drawable/favourite_icon_not_filled"
-        android:paddingStart="@dimen/padding_12x"
-        android:paddingEnd="@dimen/padding_16x"
-        android:layout_marginBottom="@dimen/padding_16x"
-        android:drawablePadding="@dimen/padding_4x"
-        android:text="@string/event_screen_in_favourite_button_text"
-        android:textAllCaps="false"
-        android:textColor="@color/blue"
-        android:background="@drawable/in_favourite_button_selector"
-        />
+        <Button
+            android:id="@+id/all_events_activity_button_in_favourite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/padding_16x"
+            android:background="@drawable/in_favourite_button_selector"
+            android:drawableStart="@drawable/favourite_icon_not_filled"
+            android:drawablePadding="@dimen/padding_4x"
+            android:paddingStart="@dimen/padding_12x"
+            android:paddingEnd="@dimen/padding_16x"
+            android:text="@string/event_screen_in_favourite_button_text"
+            android:textAllCaps="false"
+            android:textColor="@color/blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
