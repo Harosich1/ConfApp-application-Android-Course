@@ -1,6 +1,5 @@
 package kz.kolesateam.confapp.events.presentation
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -10,16 +9,11 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.common.di.SHARED_PREFS_DATA_SOURCE
-import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
-import kz.kolesateam.confapp.events.data.models.AllEventsRepository
+import kz.kolesateam.confapp.common.AllEventsRouter
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
-import kz.kolesateam.confapp.events.presentation.viewModel.AllEventsViewModel
 import kz.kolesateam.confapp.events.presentation.viewModel.UpcomingEventsViewModel
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
-import org.koin.core.qualifier.named
 
 
 private const val TAG = "onFailureMessage"
@@ -32,6 +26,7 @@ const val TOAST_TEXT_FOR_ENTER_IN_FAVOURITE = "Это ваше избранно�
 class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick {
 
     private val upcomingEventsViewModel: UpcomingEventsViewModel by viewModel()
+    private val allEventsRouter: AllEventsRouter = AllEventsRouter()
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var branchAdapter: BranchAdapter
@@ -77,9 +72,7 @@ class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick {
     }
 
     override fun onBranchClicked(branchId: Int?, title: String?) {
-        val allEventsScreenIntent = Intent(this, AllEventsActivity::class.java)
-        allEventsScreenIntent.putExtra("branchId", branchId)
-        allEventsScreenIntent.putExtra("branchTitle", title)
+        val allEventsScreenIntent = allEventsRouter.createIntent(this, branchId, title)
         finish()
         startActivity(allEventsScreenIntent)
     }

@@ -27,7 +27,7 @@ class BranchAdapter(
             UPCOMING_HEADER_TYPE -> createUpcomingHeaderViewHolder(parent)
             BRANCH_TYPE -> createUpcomingViewHolder(parent)
             EVENT_TYPE -> createAllEventsViewHolder(parent)
-            else -> createDirectionHeaderViewHolder(parent)
+            else -> createAllEventsHeaderViewHolder(parent)
         }
     }
 
@@ -61,7 +61,7 @@ class BranchAdapter(
             )
     )
 
-    private fun createDirectionHeaderViewHolder(
+    private fun createAllEventsHeaderViewHolder(
             parent: ViewGroup
     ): BaseViewHolder<UpcomingEventListItem> = AllEventsHeaderViewHolder(
             LayoutInflater.from(parent.context).inflate(
