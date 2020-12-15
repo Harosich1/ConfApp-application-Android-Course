@@ -6,19 +6,18 @@ import android.widget.TextView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.presentation.BaseViewHolder
 import kz.kolesateam.confapp.events.data.models.BranchApiData
-import kz.kolesateam.confapp.events.presentation.models.BranchListItem
 import kz.kolesateam.confapp.events.data.models.EventApiData
+import kz.kolesateam.confapp.events.presentation.models.BranchListItem
+import kz.kolesateam.confapp.events.presentation.*
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
-import kz.kolesateam.confapp.events.presentation.ClickListener
-import kz.kolesateam.confapp.events.presentation.TOAST_TEXT_FOR_DIRECTION
-import kz.kolesateam.confapp.events.presentation.TOAST_TEXT_FOR_REPORT
 
 const val dateOfEvent = "%s - %s • %s"
 const val nOfElementsToDrop = 3
 
 class BranchViewHolder(
         itemView: View,
-        private val clickListener: ClickListener
+        private val onBranchClicked: OnBranchClicked,
+        private val onItemClick: OnClick
 ) : BaseViewHolder<UpcomingEventListItem>(itemView) {
 
     private val branchCurrentEvent: View = itemView.findViewById(R.id.branch_current_event)
@@ -53,29 +52,31 @@ class BranchViewHolder(
         val currentEvent: EventApiData = branchApiData.events.first()
         val nextEvent: EventApiData = branchApiData.events.last()
 
-        setActionToast(currentEvent, nextEvent, branchApiData.title)
+        setActionToast(currentEvent, nextEvent, branchApiData.title, branchApiData.id)
         onBindCurrentEvent(currentEvent)
         onBindEventNext(nextEvent)
     }
 
-    private fun setActionToast(currentEvent: EventApiData, nextEvent: EventApiData, title: String?) {
-        branchTitle.setOnClickListener{
-            clickListener.onClick(TOAST_TEXT_FOR_DIRECTION.format(
+    private fun setActionToast(currentEvent: EventApiData, nextEvent: EventApiData, title: String?, branchId: Int?) {
+        branchTitle.setOnClickListener {
+            onItemClick.onClick(TOAST_TEXT_FOR_DIRECTION.format(
                     title
             ))
+            onBranchClicked.onBranchClicked(branchId, title)
         }
-        branchArrowTransition.setOnClickListener{
-            clickListener.onClick(TOAST_TEXT_FOR_DIRECTION.format(
+        branchArrowTransition.setOnClickListener {
+            onItemClick.onClick(TOAST_TEXT_FOR_DIRECTION.format(
                     title
             ))
+            onBranchClicked.onBranchClicked(branchId, title)
         }
-        branchCurrentEvent.setOnClickListener{
-            clickListener.onClick(TOAST_TEXT_FOR_REPORT.format(
+        branchCurrentEvent.setOnClickListener {
+            onItemClick.onClick(TOAST_TEXT_FOR_REPORT.format(
                     currentEvent.title
             ))
         }
-        branchNextEvent.setOnClickListener{
-            clickListener.onClick(TOAST_TEXT_FOR_REPORT.format(
+        branchNextEvent.setOnClickListener {
+            onItemClick.onClick(TOAST_TEXT_FOR_REPORT.format(
                     nextEvent.title
             ))
         }
@@ -122,12 +123,12 @@ class BranchViewHolder(
 
                 iconInFavourite.setImageResource(R.drawable.favourite_icon_not_filled)
                 iconInFavourite.tag = R.drawable.favourite_icon_not_filled
-            }
-
-            else {
+                onItemClick.onClick(TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE)
+            } else {
 
                 iconInFavourite.setImageResource(R.drawable.favorite_icon_filled)
                 iconInFavourite.tag = R.drawable.favorite_icon_filled
+                onItemClick.onClick(TOAST_TEXT_FOR_ADD_IN_FAVOURITE)
             }
         }
     }

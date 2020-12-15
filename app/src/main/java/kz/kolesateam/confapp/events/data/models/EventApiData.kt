@@ -2,21 +2,22 @@ package kz.kolesateam.confapp.events.data.models
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import kz.kolesateam.confapp.utils.*
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class EventApiData(
-        @JsonProperty(value = "id")
+        @JsonProperty(value = ID_FIELD)
         val id: Int?,
-        @JsonProperty(value = "title")
+        @JsonProperty(value = TITLE_FIELD)
         val title: String?,
-        @JsonProperty(value = "startTime")
+        @JsonProperty(value = START_TIME_FIELD)
         val startTime: String?,
-        @JsonProperty(value = "endTime")
+        @JsonProperty(value = END_TIME_FIELD)
         val endTime: String?,
-        @JsonProperty(value = "description")
+        @JsonProperty(value = DESCRIPTION_FIELD)
         val description: String?,
-        @JsonProperty(value = "place")
+        @JsonProperty(value = PLACE_FIELD)
         val place: String?,
-        @JsonProperty(value = "speaker")
+        @JsonProperty(value = SPEAKER_FIELD)
         val speaker: SpeakerApiData?
 )

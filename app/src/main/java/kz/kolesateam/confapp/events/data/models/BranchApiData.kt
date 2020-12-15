@@ -2,13 +2,16 @@ package kz.kolesateam.confapp.events.data.models
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import kz.kolesateam.confapp.utils.EVENTS_FIELD
+import kz.kolesateam.confapp.utils.ID_FIELD
+import kz.kolesateam.confapp.utils.TITLE_FIELD
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class BranchApiData (
-        @JsonProperty(value = "id")
+        @JsonProperty(value = ID_FIELD)
     val id: Int?,
-        @JsonProperty(value = "title")
+        @JsonProperty(value = TITLE_FIELD)
     val title: String?,
-        @JsonProperty(value = "events")
+        @JsonProperty(value = EVENTS_FIELD)
     val events: List<EventApiData>
 )

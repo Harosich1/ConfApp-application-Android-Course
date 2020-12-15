@@ -1,19 +1,20 @@
 package kz.kolesateam.confapp
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import kz.kolesateam.confapp.events.presentation.UpcomingEventsActivity
 import kz.kolesateam.confapp.common.presentation.AbstractTextWatcher
-
-const val USER_NAME_KEY = "user_name"
-const val APPLICATION_SHARED_PREFERENCES = "application"
+import kz.kolesateam.confapp.common.di.SHARED_PREFS_DATA_SOURCE
+import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
+import org.koin.android.ext.android.inject
+import org.koin.core.qualifier.named
 
 class HelloActivity : AppCompatActivity() {
+
+    private val userNameDataSource: UserNameDataSource by inject(named(SHARED_PREFS_DATA_SOURCE))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,14 +37,7 @@ class HelloActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveUser(userName: String) {
-        val sharedPreferences: SharedPreferences = getSharedPreferences(APPLICATION_SHARED_PREFERENCES, Context.MODE_PRIVATE)
-        val editor: SharedPreferences.Editor = sharedPreferences.edit()
-
-        editor.putString(USER_NAME_KEY, userName)
-        editor.apply()
-    }
-
+    private fun saveUser(userName: String) = userNameDataSource.saveUserName(userName)
 
     private fun navigateToUpcomingEventsActivity() {
         val helloScreenIntent = Intent(this, UpcomingEventsActivity::class.java)
