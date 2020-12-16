@@ -61,9 +61,7 @@ object ConfAppNotificationManager {
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
         }
 
-        val pendingIntent = PendingIntent.getActivity(context, 0, upcomingEventsIntent, PendingIntent.FLAG_ONE_SHOT)
-
-        return pendingIntent
+        return PendingIntent.getActivity(context, 0, upcomingEventsIntent, PendingIntent.FLAG_ONE_SHOT)
     }
 
     private fun createChannelIfNeeded() {

@@ -7,12 +7,17 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.presentation.BaseViewHolder
+import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
+import kz.kolesateam.confapp.events.presentation.TOAST_TEXT_FOR_ADD_IN_FAVOURITE
+import kz.kolesateam.confapp.events.presentation.TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE
 import kz.kolesateam.confapp.events.presentation.models.EventListItem
 import kz.kolesateam.confapp.events.presentation.models.FavouriteEventsItem
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.dateOfEvent
 import kz.kolesateam.confapp.events.presentation.view.nOfElementsToDrop
+import kz.kolesateam.confapp.favourite_events.domain.model.FavouriteActionEvent
+import java.util.*
 
 class FavouriteEventsViewHolder(
     itemView: View
@@ -56,20 +61,25 @@ class FavouriteEventsViewHolder(
         speakerJob.text = eventApiData.speaker?.job
         eventDescription.text = eventApiData.title
 
-        setActionForChangeStateOfLikeButton(iconInFavourite)
+        setActionForChangeStateOfLikeButton(iconInFavourite, eventApiData)
     }
 
-    private fun setActionForChangeStateOfLikeButton(iconInFavourite: ImageView) {
-        iconInFavourite.tag = R.drawable.favourite_icon_not_filled
+    private fun setActionForChangeStateOfLikeButton(iconInFavourite: ImageView, event: EventApiData) {
 
         iconInFavourite.setOnClickListener {
-            if (iconInFavourite.tag == R.drawable.favorite_icon_filled) {
-                iconInFavourite.setImageResource(R.drawable.favourite_icon_not_filled)
-                iconInFavourite.tag = R.drawable.favourite_icon_not_filled
-            } else {
-                iconInFavourite.setImageResource(R.drawable.favorite_icon_filled)
-                iconInFavourite.tag = R.drawable.favorite_icon_filled
-            }
+
+            event.isFavourite = !event.isFavourite
+
+            val favouriteImageResource = getFavouriteImageResource(event.isFavourite)
+
+            iconInFavourite.setImageResource(favouriteImageResource)
         }
+    }
+
+    private fun getFavouriteImageResource(
+        isFavourite: Boolean
+    ): Int = when(isFavourite){
+        true -> R.drawable.favorite_icon_filled
+        else -> R.drawable.favourite_icon_not_filled
     }
 }

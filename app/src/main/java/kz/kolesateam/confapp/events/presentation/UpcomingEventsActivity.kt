@@ -102,13 +102,6 @@ class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, On
 
     override fun onFavouriteClick(eventApiData: EventApiData) {
         upcomingEventsViewModel.onFavouriteClick(eventApiData)
-        val name = "Вы добаввили в избранное:"
-        val content = eventApiData.title
-
-        ConfAppNotificationManager.sendNotification(
-            title = name,
-            content = content!!
-        )
     }
 
     override fun onClickToastMessage(message: String) {

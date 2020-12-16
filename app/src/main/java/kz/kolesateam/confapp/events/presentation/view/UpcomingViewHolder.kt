@@ -34,10 +34,16 @@ class BranchViewHolder(
             val firstEvent = branchApiData.events.first()
             val lastEvent = branchApiData.events.last()
 
-            branchApiData.events.forEach {
-                if (it.id != favouriteEventAction.eventId) return@forEach
+            if(firstEvent.id == favouriteEventAction.eventId) {
+                iconInFavouriteCurrent.setImageResource(
+                    getFavouriteImageResource(favouriteEventAction.isFavourite)
+                )
+            }
 
-                it.isFavourite = favouriteEventActionObject.isFavourite
+            if(lastEvent.id == favouriteEventAction.eventId) {
+                iconInFavouriteNext.setImageResource(
+                    getFavouriteImageResource(favouriteEventAction.isFavourite)
+                )
             }
         }
     }
@@ -155,14 +161,18 @@ class BranchViewHolder(
                 else -> TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE
             }
 
-            val favouriteImageResource = when(event.isFavourite){
-                true -> R.drawable.favorite_icon_filled
-                else -> R.drawable.favourite_icon_not_filled
-            }
+            val favouriteImageResource = getFavouriteImageResource(event.isFavourite)
 
             iconInFavourite.setImageResource(favouriteImageResource)
             eventOnClickToastMessage.onClickToastMessage(favouriteToastText)
             onItemClick.onFavouriteClick(eventApiData = event)
         }
+    }
+
+    private fun getFavouriteImageResource(
+        isFavourite: Boolean
+    ): Int = when(isFavourite){
+        true -> R.drawable.favorite_icon_filled
+        else -> R.drawable.favourite_icon_not_filled
     }
 }
