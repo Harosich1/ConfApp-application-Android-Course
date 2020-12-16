@@ -1,5 +1,6 @@
 package kz.kolesateam.confapp.events.presentation
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -15,6 +16,7 @@ import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import kz.kolesateam.confapp.events.presentation.viewModel.AllEventsViewModel
 import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
+import kz.kolesateam.confapp.favourite_events.presentation.FavouriteEventsActivity
 import kz.kolesateam.confapp.notifications.ConfAppNotificationManager
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -66,6 +68,7 @@ class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClick
         }
         inYourFavouriteButton.setOnClickListener {
             Toast.makeText(this, TOAST_TEXT_FOR_ENTER_IN_FAVOURITE, Toast.LENGTH_LONG).show()
+            navigateToFavouriteEventsActivity()
         }
     }
 
@@ -90,6 +93,12 @@ class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClick
             title = name,
             content = content!!
         )
+    }
+
+    private fun navigateToFavouriteEventsActivity() {
+        val upcomingEventsScreenIntent = Intent(this, FavouriteEventsActivity::class.java)
+        finish()
+        startActivity(upcomingEventsScreenIntent)
     }
 
     override fun onBranchClicked(branchId: Int?, title: String?) {

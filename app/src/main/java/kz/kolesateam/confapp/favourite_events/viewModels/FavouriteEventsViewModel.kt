@@ -20,8 +20,6 @@ class FavouriteEventsViewModel(
         favouriteEventsLiveData.value = getFavouriteEventsItem(eventsFavouritesRepository.getAllFavouriteEvents())
     }
 
-    fun sdf() = eventsFavouritesRepository.getAllFavouriteEvents()
-
     private fun getFavouriteEventsItem(
         eventList: List<EventApiData>
     ): List<UpcomingEventListItem> =

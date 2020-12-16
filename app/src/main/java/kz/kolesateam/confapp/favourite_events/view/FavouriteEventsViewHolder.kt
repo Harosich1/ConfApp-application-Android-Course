@@ -9,6 +9,7 @@ import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.presentation.BaseViewHolder
 import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.presentation.models.EventListItem
+import kz.kolesateam.confapp.events.presentation.models.FavouriteEventsItem
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.dateOfEvent
 import kz.kolesateam.confapp.events.presentation.view.nOfElementsToDrop
@@ -32,7 +33,7 @@ class FavouriteEventsViewHolder(
 
 
     override fun onBind(data: UpcomingEventListItem) {
-        val eventApiData: EventApiData = (data as? EventListItem)?.data ?: return
+        val eventApiData: EventApiData = (data as? FavouriteEventsItem)?.data ?: return
 
         event.layoutParams = (event.layoutParams as RecyclerView.LayoutParams).apply {
             width = ConstraintLayout.LayoutParams.MATCH_PARENT

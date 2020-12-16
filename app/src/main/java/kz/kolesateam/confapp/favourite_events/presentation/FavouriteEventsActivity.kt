@@ -35,8 +35,6 @@ class FavouriteEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, O
         bindViews()
         observeUpcomingEventsViewModel()
         favouriteEventsViewModel.onLaunch()
-        val textView: TextView = findViewById(R.id.textviewfav)
-        textView.text = favouriteEventsViewModel.sdf().toString()
     }
 
     private fun bindViews() {
