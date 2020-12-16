@@ -81,12 +81,6 @@ class BranchViewHolder(
             ))
             onBranchClicked.onBranchClicked(branchId, title)
         }
-        branchCurrentEvent.setOnClickListener {
-            onItemClick.onFavouriteClick(eventApiData = currentEvent)
-        }
-        branchNextEvent.setOnClickListener {
-            onItemClick.onFavouriteClick(eventApiData = nextEvent)
-        }
     }
 
     private fun onBindCurrentEvent(currentEvent: EventApiData) {
@@ -139,6 +133,7 @@ class BranchViewHolder(
 
             iconInFavourite.setImageResource(favouriteImageResource)
             eventOnClickToastMessage.onClickToastMessage(favouriteToastText)
+            onItemClick.onFavouriteClick(eventApiData = event)
         }
     }
 }
