@@ -13,7 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ConfApp"
         android:usesCleartextTraffic="true">
-        <activity android:name=".favourite_events.presentation.FavouriteEventsActivity"></activity>
         <activity android:name=".HelloActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,6 +22,9 @@
         </activity>
         <activity android:name=".events.presentation.UpcomingEventsActivity" />
         <activity android:name=".events.presentation.AllEventsActivity" />
+        <activity android:name=".favourite_events.presentation.FavouriteEventsActivity"/>
+
+        <receiver android:name=".notifications.NotificationAlarmBroadcastReceiver" />
     </application>
 
 </manifest>

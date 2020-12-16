@@ -20,7 +20,8 @@ val eventScreenModule: Module = module {
         UpcomingEventsViewModel(
             upcomingEventsRepository = get(),
             upcomingFavouritesRepository = get(),
-            userNameDataSource = get(named(SHARED_PREFS_DATA_SOURCE))
+            userNameDataSource = get(named(SHARED_PREFS_DATA_SOURCE)),
+            notificationAlarmManager = get()
         )
     }
 
