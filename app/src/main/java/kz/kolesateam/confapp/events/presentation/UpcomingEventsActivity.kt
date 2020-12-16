@@ -20,7 +20,6 @@ import kz.kolesateam.confapp.notifications.ConfAppNotificationManager
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
-private const val TAG = "onFailureMessage"
 const val TOAST_TEXT_FOR_DIRECTION = "Это направление %s!"
 const val TOAST_TEXT_FOR_REPORT = "Это доклад %s!"
 const val TOAST_TEXT_FOR_ADD_IN_FAVOURITE = "Вы добавили в избранное!"
@@ -79,7 +78,6 @@ class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, On
 
     override fun onBranchClicked(branchId: Int?, title: String?) {
         val allEventsScreenIntent = allEventsRouter.createIntent(this, branchId, title)
-        finish()
         startActivity(allEventsScreenIntent)
     }
 

@@ -1,6 +1,5 @@
 package kz.kolesateam.confapp.events.presentation
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -10,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.EventApiData
+import kz.kolesateam.confapp.common.BRANCH_ID
+import kz.kolesateam.confapp.common.BRANCH_TITLE
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import kz.kolesateam.confapp.events.presentation.viewModel.AllEventsViewModel
@@ -28,8 +29,8 @@ class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClick
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_events_layout)
 
-        val branchId: Int? = intent.extras?.getInt("branchId")
-        val branchTitle: String? = intent.extras?.getString("branchTitle")
+        val branchId: Int? = intent.extras?.getInt(BRANCH_ID)
+        val branchTitle: String? = intent.extras?.getString(BRANCH_TITLE)
 
         bindViews()
         observeUpcomingEventsViewModel()
@@ -53,6 +54,7 @@ class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClick
             LinearLayoutManager.VERTICAL,
             false
         )
+        recyclerView.setPadding(60, 0, 60, 240)
 
         arrowActionBack.setOnClickListener {
             navigateToUpcomingEventsActivity()
@@ -71,9 +73,7 @@ class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClick
     }
 
     private fun navigateToUpcomingEventsActivity() {
-        val upcomingEventsScreenIntent = Intent(this, UpcomingEventsActivity::class.java)
         finish()
-        startActivity(upcomingEventsScreenIntent)
     }
 
     override fun onFavouriteClick(eventApiData: EventApiData) {

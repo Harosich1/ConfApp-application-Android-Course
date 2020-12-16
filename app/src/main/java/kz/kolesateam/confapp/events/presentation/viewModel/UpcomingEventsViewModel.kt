@@ -7,17 +7,14 @@ import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsRepository
-import kz.kolesateam.confapp.events.presentation.UpcomingEventsHandler
 import kz.kolesateam.confapp.events.presentation.models.*
-import kz.kolesateam.confapp.favourite_events.data.EventsFavouritesRepository
 import kz.kolesateam.confapp.favourite_events.domain.FavouritesRepository
-import kz.kolesateam.confapp.utils.HELLO_USER_FORMAT
 
 class UpcomingEventsViewModel(
     private val upcomingEventsRepository: UpcomingEventsRepository,
     private val upcomingFavouritesRepository: FavouritesRepository,
     private val userNameDataSource: UserNameDataSource
-) : ViewModel(), UpcomingEventsHandler {
+) : ViewModel() {
 
     private val upcomingEventsLiveData: MutableLiveData<List<UpcomingEventListItem>> =
         MutableLiveData()
@@ -33,12 +30,12 @@ class UpcomingEventsViewModel(
         )
     }
 
-    override fun setUpcomingEventsList(
+    private fun setUpcomingEventsList(
         upcomingEventsItem: List<BranchApiData>
     ) {
         upcomingEventsLiveData.value = listOf(
             UpcomingHeaderItem(
-                userName = HELLO_USER_FORMAT.format(getSavedUser())
+                userName = getSavedUser()
             )
         ) + getBranchItems(upcomingEventsItem)
     }

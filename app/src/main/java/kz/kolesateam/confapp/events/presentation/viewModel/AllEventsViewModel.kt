@@ -5,14 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kz.kolesateam.confapp.events.data.models.AllEventsRepository
 import kz.kolesateam.confapp.events.data.models.EventApiData
-import kz.kolesateam.confapp.events.presentation.AllEventsHandler
 import kz.kolesateam.confapp.events.presentation.models.AllEventsHeaderItem
 import kz.kolesateam.confapp.events.presentation.models.EventListItem
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 
 class AllEventsViewModel(
     private val allEventsRepository: AllEventsRepository,
-) : ViewModel(), AllEventsHandler {
+) : ViewModel() {
 
     private val allEventsLiveData: MutableLiveData<List<UpcomingEventListItem>> =
         MutableLiveData()
@@ -32,7 +31,7 @@ class AllEventsViewModel(
         )
     }
 
-    override fun setAllEventsList(
+    private fun setAllEventsList(
         allEventsItem: List<EventApiData>,
         branchTitle: String
     ) {
