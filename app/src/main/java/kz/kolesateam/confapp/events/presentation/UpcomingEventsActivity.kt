@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.AllEventsRouter
+import kz.kolesateam.confapp.common.PUSH_NOTIFICATION_MESSAGE
 import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
@@ -44,6 +45,15 @@ class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, On
         observeUpcomingEventsViewModel()
         upcomingEventsViewModel.onLaunch()
         eventsProgressBar.visibility = View.GONE
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        val messageFromPush: String? = intent?.getStringExtra(PUSH_NOTIFICATION_MESSAGE)
+        messageFromPush?.let {
+            Toast.makeText(this, it, Toast.LENGTH_LONG)
+        }
     }
 
     private fun bindViews() {
