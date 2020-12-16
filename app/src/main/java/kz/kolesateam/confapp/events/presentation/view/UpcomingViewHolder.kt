@@ -10,16 +10,37 @@ import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.presentation.models.BranchListItem
 import kz.kolesateam.confapp.events.presentation.*
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
+import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
+import kz.kolesateam.confapp.favourite_events.domain.model.FavouriteActionEvent
+import java.util.*
 
 const val dateOfEvent = "%s - %s • %s"
 const val nOfElementsToDrop = 3
 
 class BranchViewHolder(
-        itemView: View,
-        private val onBranchClicked: OnBranchClicked,
-        private val onItemClick: OnClick,
-        private val eventOnClickToastMessage: OnClickToastMessage
+    itemView: View,
+    private val onBranchClicked: OnBranchClicked,
+    private val onItemClick: OnClick,
+    private val eventOnClickToastMessage: OnClickToastMessage,
+    private val favouriteEventActionObservable: FavouriteEventActionObservable
 ) : BaseViewHolder<UpcomingEventListItem>(itemView) {
+
+    private val favouriteObserver: Observer = object: Observer {
+        override fun update(p0: Observable?, favouriteEventActionObject: Any?) {
+            val favouriteEventAction = (favouriteEventActionObject as? FavouriteActionEvent) ?: return
+
+            if(branchApiData.events.isEmpty()) return
+
+            val firstEvent = branchApiData.events.first()
+            val lastEvent = branchApiData.events.last()
+
+            branchApiData.events.forEach {
+                if (it.id != favouriteEventAction.eventId) return@forEach
+
+                it.isFavourite = favouriteEventActionObject.isFavourite
+            }
+        }
+    }
 
     private lateinit var currentEvent: EventApiData
     private lateinit var nextEvent: EventApiData
@@ -44,12 +65,14 @@ class BranchViewHolder(
     private val eventDescriptionNext: TextView = branchNextEvent.findViewById(R.id.description_of_event)
     private val iconInFavouriteNext: ImageView = branchNextEvent.findViewById(R.id.ic_in_favourite)
 
+    private lateinit var branchApiData: BranchApiData
+
     init {
         branchCurrentEvent.findViewById<TextView>(R.id.event_state).visibility = View.INVISIBLE
     }
 
     override fun onBind(data: UpcomingEventListItem) {
-        val branchApiData: BranchApiData = (data as? BranchListItem)?.data ?: return
+        branchApiData = (data as? BranchListItem)?.data ?: return
 
         branchTitle.text = branchApiData.title
 
@@ -66,6 +89,12 @@ class BranchViewHolder(
         setActionToast(currentEvent, nextEvent, branchApiData.title, branchApiData.id)
         onBindCurrentEvent(currentEvent)
         onBindEventNext(nextEvent)
+
+        favouriteEventActionObservable.subscribe(favouriteObserver)
+    }
+
+    fun onViewRecycled() {
+        favouriteEventActionObservable.unsubscribe(favouriteObserver)
     }
 
     private fun setActionToast(currentEvent: EventApiData, nextEvent: EventApiData, title: String?, branchId: Int?) {

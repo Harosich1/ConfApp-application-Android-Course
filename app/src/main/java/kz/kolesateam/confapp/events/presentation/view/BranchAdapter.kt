@@ -12,11 +12,13 @@ import kz.kolesateam.confapp.events.presentation.OnClick
 import kz.kolesateam.confapp.events.presentation.OnClickToastMessage
 import kz.kolesateam.confapp.events.presentation.models.BRANCH_TYPE
 import kz.kolesateam.confapp.events.presentation.models.EVENT_TYPE
+import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
 
 class BranchAdapter(
     private val eventOnBranchClicked: OnBranchClicked,
     private val eventOnClick: OnClick,
-    private val eventOnClickToastMessage: OnClickToastMessage
+    private val eventOnClickToastMessage: OnClickToastMessage,
+    private val favouriteEventActionObservable: FavouriteEventActionObservable?
 ) : RecyclerView.Adapter<BaseViewHolder<UpcomingEventListItem>>() {
 
     private val branchApiDataList: MutableList<UpcomingEventListItem> = mutableListOf()
@@ -38,6 +40,11 @@ class BranchAdapter(
         position: Int
     ) {
         holder.onBind(branchApiDataList[position])
+    }
+
+    override fun onViewRecycled(holder: BaseViewHolder<UpcomingEventListItem>) {
+        super.onViewRecycled(holder)
+        (holder as? BranchViewHolder)?.onViewRecycled()
     }
 
     override fun getItemCount(): Int = branchApiDataList.size
@@ -83,7 +90,8 @@ class BranchAdapter(
         ),
         eventOnBranchClicked,
         eventOnClick,
-        eventOnClickToastMessage
+        eventOnClickToastMessage,
+        favouriteEventActionObservable!!
     )
 
     private fun createAllEventsViewHolder(

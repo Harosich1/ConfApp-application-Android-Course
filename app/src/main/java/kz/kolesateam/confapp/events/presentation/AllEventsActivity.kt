@@ -14,11 +14,14 @@ import kz.kolesateam.confapp.common.BRANCH_TITLE
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import kz.kolesateam.confapp.events.presentation.viewModel.AllEventsViewModel
+import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClickToastMessage {
 
     private val allEventsViewModel: AllEventsViewModel by viewModel()
+    private val favouriteEventActionObservable: FavouriteEventActionObservable by inject()
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var branchAdapter: BranchAdapter
@@ -45,7 +48,8 @@ class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClick
         branchAdapter = BranchAdapter(
             eventOnBranchClicked = this,
             eventOnClick = this,
-            eventOnClickToastMessage = this
+            eventOnClickToastMessage = this,
+            favouriteEventActionObservable = favouriteEventActionObservable
         )
 
         recyclerView.adapter = branchAdapter

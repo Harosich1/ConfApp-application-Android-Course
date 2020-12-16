@@ -3,8 +3,8 @@ package kz.kolesateam.confapp.favourite_events.data
 import android.content.Context
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.type.MapType
-import com.fasterxml.jackson.databind.type.TypeFactory
 import kz.kolesateam.confapp.events.data.models.EventApiData
+import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
 import kz.kolesateam.confapp.favourite_events.domain.FavouritesRepository
 import java.io.FileInputStream
 
@@ -12,7 +12,8 @@ private const val FAVOURITE_EVENTS_FILE_NAME = "favourite_events.json"
 
 class EventsFavouritesRepository(
     private val applicationContext: Context,
-    private val objectMapper: ObjectMapper
+    private val objectMapper: ObjectMapper,
+    private val favouriteEventActionObservable: FavouriteEventActionObservable
 ) : FavouritesRepository {
 
     private var favouritesEvents: MutableMap<Int, EventApiData>
@@ -27,13 +28,22 @@ class EventsFavouritesRepository(
         eventApiData.id ?: return
 
         favouritesEvents[eventApiData.id] = eventApiData
-
         saveFavouriteEventsToFile()
+
+        favouriteEventActionObservable.notifyChanged(
+            eventId = eventApiData.id,
+            isFavourite = true
+        )
     }
 
     override fun removeFavouriteEvent(eventId: Int?) {
         favouritesEvents.remove(eventId)
         saveFavouriteEventsToFile()
+
+        favouriteEventActionObservable.notifyChanged(
+            eventId = eventId!!,
+            isFavourite = false
+        )
     }
 
     override fun getAllFavouriteEvents(): List<EventApiData> {

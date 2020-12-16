@@ -16,8 +16,10 @@ import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import kz.kolesateam.confapp.events.presentation.viewModel.UpcomingEventsViewModel
+import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
 import kz.kolesateam.confapp.favourite_events.presentation.FavouriteEventsActivity
 import kz.kolesateam.confapp.notifications.ConfAppNotificationManager
+import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -30,6 +32,7 @@ const val TOAST_TEXT_FOR_ENTER_IN_FAVOURITE = "Это ваше избранно�
 class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClickToastMessage {
 
     private val upcomingEventsViewModel: UpcomingEventsViewModel by viewModel()
+    private val favouriteEventActionObservable: FavouriteEventActionObservable by inject()
     private val allEventsRouter: AllEventsRouter = AllEventsRouter()
 
     private lateinit var recyclerView: RecyclerView
@@ -64,7 +67,8 @@ class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, On
         branchAdapter = BranchAdapter(
             eventOnBranchClicked = this,
             eventOnClick = this,
-            eventOnClickToastMessage = this
+            eventOnClickToastMessage = this,
+            favouriteEventActionObservable = favouriteEventActionObservable
         )
         recyclerView.adapter = branchAdapter
         recyclerView.layoutManager = LinearLayoutManager(
