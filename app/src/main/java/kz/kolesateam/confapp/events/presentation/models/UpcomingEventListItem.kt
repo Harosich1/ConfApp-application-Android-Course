@@ -7,6 +7,7 @@ const val UPCOMING_HEADER_TYPE: Int = 0
 const val BRANCH_TYPE: Int = 1
 const val EVENT_TYPE: Int = 2
 const val ALL_EVENTS_HEADER_TYPE: Int = 3
+const val FAVOURITE_EVENTS_TYPE: Int = 4
 
 sealed class UpcomingEventListItem(
         val type: Int
@@ -27,3 +28,7 @@ data class BranchListItem (
 data class EventListItem (
         val data: EventApiData
 ): UpcomingEventListItem(EVENT_TYPE)
+
+data class FavouriteEventsItem (
+        val data: EventApiData
+): UpcomingEventListItem(FAVOURITE_EVENTS_TYPE)

@@ -8,9 +8,13 @@ import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.presentation.models.AllEventsHeaderItem
 import kz.kolesateam.confapp.events.presentation.models.EventListItem
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
+import kz.kolesateam.confapp.favourite_events.domain.FavouritesRepository
+import kz.kolesateam.confapp.notifications.NotificationAlarmManager
 
 class AllEventsViewModel(
     private val allEventsRepository: AllEventsRepository,
+    private val upcomingFavouritesRepository: FavouritesRepository,
+    private val notificationAlarmManager: NotificationAlarmManager
 ) : ViewModel() {
 
     private val allEventsLiveData: MutableLiveData<List<UpcomingEventListItem>> =
@@ -37,6 +41,24 @@ class AllEventsViewModel(
     ) {
         allEventsLiveData.value =
             listOf(getAllEventsHeaderItem(branchTitle)) + getEventListItems(allEventsItem)
+    }
+
+    fun onFavouriteClick(
+        eventApiData: EventApiData
+    ) {
+        when (eventApiData.isFavourite) {
+            true -> {
+                upcomingFavouritesRepository.saveFavourite(eventApiData)
+                scheduleEvent(eventApiData)
+            }
+            else -> upcomingFavouritesRepository.removeFavouriteEvent(eventApiData.id)
+        }
+    }
+
+    private fun scheduleEvent(eventApiData: EventApiData) {
+        notificationAlarmManager.createNotificationAlarm(
+            content = eventApiData.title.orEmpty()
+        )
     }
 
     private fun getEventListItems(

@@ -10,11 +10,61 @@
     android:background="@drawable/background_events_and_direction_screen"
     >
 
-    <TextView
-        android:id="@+id/favouriteTextView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/favourite_events_header_static"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/padding_16x"
+            android:paddingTop="@dimen/padding_16x"
+            android:paddingBottom="@dimen/padding_16x"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_size_16x"
+                android:layout_gravity="center"
+                android:src="@drawable/header_logo_white" />
+
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/activity_favourite_events_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingStart="@dimen/padding_40x"
+            android:paddingBottom="@dimen/padding_120x"
+            android:scrollbars="none"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/favourite_events_header_static"
+            tools:itemCount="5"
+            tools:listitem="@layout/event_card_layout" />
+
+        <Button
+            android:id="@+id/favourite_events_activity_button_on_main_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/padding_16x"
+            android:background="@drawable/in_favourite_button_selector"
+            android:drawableStart="@drawable/drop_list_icon"
+            android:drawablePadding="@dimen/padding_4x"
+            android:paddingStart="@dimen/padding_12x"
+            android:paddingEnd="@dimen/padding_16x"
+            android:text="@string/favourite_events_screen_on_main_page_button_text"
+            android:textAllCaps="false"
+            android:textColor="@color/blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

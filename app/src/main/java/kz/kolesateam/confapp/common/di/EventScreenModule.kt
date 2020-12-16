@@ -12,7 +12,9 @@ import org.koin.dsl.module
 val eventScreenModule: Module = module {
     viewModel {
         AllEventsViewModel(
-            allEventsRepository = get()
+            allEventsRepository = get(),
+            upcomingFavouritesRepository = get(),
+            notificationAlarmManager = get()
         )
     }
 

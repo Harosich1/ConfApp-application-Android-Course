@@ -5,14 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.presentation.BaseViewHolder
-import kz.kolesateam.confapp.events.presentation.models.UPCOMING_HEADER_TYPE
-import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.OnBranchClicked
 import kz.kolesateam.confapp.events.presentation.OnClick
 import kz.kolesateam.confapp.events.presentation.OnClickToastMessage
-import kz.kolesateam.confapp.events.presentation.models.BRANCH_TYPE
-import kz.kolesateam.confapp.events.presentation.models.EVENT_TYPE
+import kz.kolesateam.confapp.events.presentation.models.*
 import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
+import kz.kolesateam.confapp.favourite_events.view.FavouriteEventsViewHolder
 
 class BranchAdapter(
     private val eventOnBranchClicked: OnBranchClicked,
@@ -31,7 +29,8 @@ class BranchAdapter(
             UPCOMING_HEADER_TYPE -> createUpcomingHeaderViewHolder(parent)
             BRANCH_TYPE -> createUpcomingViewHolder(parent)
             EVENT_TYPE -> createAllEventsViewHolder(parent)
-            else -> createAllEventsHeaderViewHolder(parent)
+            ALL_EVENTS_HEADER_TYPE -> createAllEventsHeaderViewHolder(parent)
+            else -> createFavouriteEventsViewHolder(parent)
         }
     }
 
@@ -105,5 +104,15 @@ class BranchAdapter(
         eventOnBranchClicked,
         eventOnClick,
         eventOnClickToastMessage
+    )
+
+    private fun createFavouriteEventsViewHolder(
+        parent: ViewGroup
+    ): BaseViewHolder<UpcomingEventListItem> = FavouriteEventsViewHolder(
+        LayoutInflater.from(parent.context).inflate(
+            R.layout.event_card_layout,
+            parent,
+            false
+        )
     )
 }

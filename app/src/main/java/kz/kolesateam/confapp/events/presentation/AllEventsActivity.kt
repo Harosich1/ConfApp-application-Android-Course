@@ -15,6 +15,7 @@ import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import kz.kolesateam.confapp.events.presentation.viewModel.AllEventsViewModel
 import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
+import kz.kolesateam.confapp.notifications.ConfAppNotificationManager
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -81,6 +82,14 @@ class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClick
     }
 
     override fun onFavouriteClick(eventApiData: EventApiData) {
+        allEventsViewModel.onFavouriteClick(eventApiData)
+        val name = "Вы добаввили в избранное:"
+        val content = eventApiData.title
+
+        ConfAppNotificationManager.sendNotification(
+            title = name,
+            content = content!!
+        )
     }
 
     override fun onBranchClicked(branchId: Int?, title: String?) {

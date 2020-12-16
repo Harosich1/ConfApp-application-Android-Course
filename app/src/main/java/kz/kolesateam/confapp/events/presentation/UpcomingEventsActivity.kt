@@ -97,7 +97,6 @@ class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, On
 
     private fun navigateToFavouriteEventsActivity() {
         val upcomingEventsScreenIntent = Intent(this, FavouriteEventsActivity::class.java)
-        finish()
         startActivity(upcomingEventsScreenIntent)
     }
 

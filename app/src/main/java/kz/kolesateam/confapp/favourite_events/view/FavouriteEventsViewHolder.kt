@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.events.presentation.view
+package kz.kolesateam.confapp.favourite_events.view
 
 import android.view.View
 import android.widget.ImageView
@@ -7,16 +7,14 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.presentation.BaseViewHolder
-import kz.kolesateam.confapp.events.data.models.*
-import kz.kolesateam.confapp.events.presentation.*
+import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.presentation.models.EventListItem
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
+import kz.kolesateam.confapp.events.presentation.view.dateOfEvent
+import kz.kolesateam.confapp.events.presentation.view.nOfElementsToDrop
 
-class EventViewHolder(
-        itemView: View,
-        private val onBranchClicked: OnBranchClicked,
-        private val onItemClick: OnClick,
-        private val eventOnClickToastMessage: OnClickToastMessage
+class FavouriteEventsViewHolder(
+    itemView: View
 ) : BaseViewHolder<UpcomingEventListItem>(itemView) {
 
     private val event: View = itemView.findViewById(R.id.item_event_card)
@@ -41,24 +39,15 @@ class EventViewHolder(
             height = ConstraintLayout.LayoutParams.WRAP_CONTENT
         }
 
-        setActionToast(eventApiData)
         onBindEvent(eventApiData)
-    }
-
-    private fun setActionToast(eventApiData: EventApiData) {
-        event.setOnClickListener {
-            eventOnClickToastMessage.onClickToastMessage(TOAST_TEXT_FOR_REPORT.format(
-                    eventApiData.title
-            ))
-        }
     }
 
     private fun onBindEvent(eventApiData: EventApiData) {
 
         val eventTimeAndAuditoryString = dateOfEvent.format(
-                eventApiData.startTime?.dropLast(nOfElementsToDrop),
-                eventApiData.endTime?.dropLast(nOfElementsToDrop),
-                eventApiData.place,
+            eventApiData.startTime?.dropLast(nOfElementsToDrop),
+            eventApiData.endTime?.dropLast(nOfElementsToDrop),
+            eventApiData.place,
         )
 
         eventTimeAndAuditory.text = eventTimeAndAuditoryString
@@ -66,28 +55,20 @@ class EventViewHolder(
         speakerJob.text = eventApiData.speaker?.job
         eventDescription.text = eventApiData.title
 
-        setActionForChangeStateOfLikeButton(iconInFavourite, eventApiData)
+        setActionForChangeStateOfLikeButton(iconInFavourite)
     }
 
-    private fun setActionForChangeStateOfLikeButton(iconInFavourite: ImageView, event: EventApiData) {
+    private fun setActionForChangeStateOfLikeButton(iconInFavourite: ImageView) {
+        iconInFavourite.tag = R.drawable.favourite_icon_not_filled
 
         iconInFavourite.setOnClickListener {
-
-            event.isFavourite = !event.isFavourite
-
-            val favouriteToastText = when(event.isFavourite){
-                true -> TOAST_TEXT_FOR_ADD_IN_FAVOURITE
-                else -> TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE
+            if (iconInFavourite.tag == R.drawable.favorite_icon_filled) {
+                iconInFavourite.setImageResource(R.drawable.favourite_icon_not_filled)
+                iconInFavourite.tag = R.drawable.favourite_icon_not_filled
+            } else {
+                iconInFavourite.setImageResource(R.drawable.favorite_icon_filled)
+                iconInFavourite.tag = R.drawable.favorite_icon_filled
             }
-
-            val favouriteImageResource = when(event.isFavourite){
-                true -> R.drawable.favorite_icon_filled
-                else -> R.drawable.favourite_icon_not_filled
-            }
-
-            iconInFavourite.setImageResource(favouriteImageResource)
-            eventOnClickToastMessage.onClickToastMessage(favouriteToastText)
-            onItemClick.onFavouriteClick(eventApiData = event)
         }
     }
 }
