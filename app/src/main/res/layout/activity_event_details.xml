@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_events_and_direction_screen"
+    android:orientation="vertical"
+    tools:context=".events.presentation.AllEventsActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/event_details_header_static"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/padding_16x"
+            android:paddingTop="@dimen/padding_16x"
+            android:paddingBottom="@dimen/padding_16x"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/all_events_activity_navigation_button"
+                android:layout_width="@dimen/layout_size_14x"
+                android:layout_height="@dimen/layout_size_14x"
+                android:layout_gravity="start|center"
+                android:src="@drawable/arrow_transition_inverted"
+
+                />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_size_16x"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/header_logo_white" />
+
+            <ImageView
+                android:id="@+id/ic_in_favourite"
+                android:layout_width="@dimen/layout_size_14x"
+                android:layout_height="@dimen/layout_size_14x"
+                android:layout_gravity="start|center"
+                android:src="@drawable/favourite_icon_not_filled"
+                />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/speaker_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/event_details_header_static" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/item_event_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/padding_16x"
+            android:paddingTop="@dimen/padding_4x"
+            android:paddingBottom="@dimen/padding_16x"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/speaker_photo">
+
+            <TextView
+                android:id="@+id/event_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_event_state"
+                android:paddingHorizontal="@dimen/padding_8x"
+                android:text="@string/event_details_layout_speaker_state_text"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/name_of_speaker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8x"
+                android:textSize="@dimen/textSize_20x"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="@id/event_state"
+                app:layout_constraintTop_toBottomOf="@id/event_state"
+                tools:text="Кирилл Розов" />
+
+            <TextView
+                android:id="@+id/job_of_speaker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:maxLines="1"
+                android:minLines="1"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="@id/name_of_speaker"
+                app:layout_constraintTop_toBottomOf="@id/name_of_speaker"
+                tools:text="Event State" />
+
+            <TextView
+                android:id="@+id/upper_divider_time_and_auditory"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/layout_size_2x"
+                android:background="@color/transparent_grey"
+                app:layout_constraintBottom_toTopOf="@id/time_and_auditory"
+                app:layout_constraintLeft_toLeftOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/time_and_auditory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/job_of_speaker"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                android:padding="@dimen/padding_4x"
+                android:layout_marginTop="@dimen/margin_16x"
+                android:textColor="@color/white"
+                tools:text="14:00-16:00 Зал номер 5"
+                />
+
+            <TextView
+                android:id="@+id/lower_divider_time_and_auditory"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/layout_size_2x"
+                android:background="@color/transparent_grey"
+                app:layout_constraintTop_toBottomOf="@id/time_and_auditory"
+                app:layout_constraintLeft_toLeftOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/description_of_event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16x"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_20x"
+                app:layout_constraintStart_toStartOf="@id/time_and_auditory"
+                app:layout_constraintTop_toBottomOf="@id/time_and_auditory"
+                tools:text="Увлекательная жизнь в панели уведомлений" />
+
+            <TextView
+                android:id="@+id/event_details_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_8x"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="@id/description_of_event"
+                app:layout_constraintTop_toBottomOf="@id/description_of_event"
+                tools:text="Увлекательная жизнь в панели уведомлений" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

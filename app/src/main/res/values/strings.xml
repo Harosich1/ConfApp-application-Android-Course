@@ -12,5 +12,6 @@
     <string name="event_screen_if_shared_preferences_is_null_text">пользоатель</string>
     <string name="event_card_layout_event_state_text">Следующий доклад</string>
     <string name="favourite_events_screen_on_main_page_button_text">На главную</string>
+    <string name="event_details_layout_speaker_state_text">Приглашенный спикер</string>
 
 </resources>
