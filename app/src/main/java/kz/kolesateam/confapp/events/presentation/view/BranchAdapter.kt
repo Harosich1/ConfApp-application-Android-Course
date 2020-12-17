@@ -106,7 +106,8 @@ class BranchAdapter(
         ),
         eventOnBranchClicked,
         eventOnClick,
-        eventOnClickToastMessage
+        eventOnClickToastMessage,
+        onEventClick
     )
 
     private fun createFavouriteEventsViewHolder(
@@ -116,6 +117,7 @@ class BranchAdapter(
             R.layout.event_card_layout,
             parent,
             false
-        )
+        ),
+        onEventClick
     )
 }

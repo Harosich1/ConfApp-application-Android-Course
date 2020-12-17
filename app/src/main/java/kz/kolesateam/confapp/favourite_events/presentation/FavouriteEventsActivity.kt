@@ -6,6 +6,7 @@ import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.common.EventDetailsRouter
 import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.presentation.listeners.OnBranchClicked
 import kz.kolesateam.confapp.events.presentation.listeners.OnClick
@@ -22,6 +23,7 @@ class FavouriteEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, O
 
     private val favouriteEventsViewModel: FavouriteEventsViewModel by viewModel()
     private val favouriteEventActionObservable: FavouriteEventActionObservable by inject()
+    private val eventDetailsRouter: EventDetailsRouter = EventDetailsRouter()
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var branchAdapter: BranchAdapter
@@ -83,6 +85,7 @@ class FavouriteEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, O
     }
 
     override fun onEventClick() {
-
+        val eventDetailsActivity = eventDetailsRouter.createIntent(context = this)
+        startActivity(eventDetailsActivity)
     }
 }

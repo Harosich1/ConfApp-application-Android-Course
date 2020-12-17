@@ -97,10 +97,10 @@ class BranchViewHolder(
         currentEvent = branchApiData.events.first()
         nextEvent = branchApiData.events.last()
 
-        setNavigateToEventDetails()
-        setActionToast(branchApiData.title, branchApiData.id)
         onBindCurrentEvent(currentEvent)
         onBindEventNext(nextEvent)
+        setNavigateToEventDetails()
+        setActionToast(branchApiData.title, branchApiData.id)
 
         favouriteEventActionObservable.subscribe(favouriteObserver)
     }

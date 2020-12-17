@@ -12,6 +12,7 @@ import kz.kolesateam.confapp.events.presentation.*
 import kz.kolesateam.confapp.events.presentation.listeners.OnBranchClicked
 import kz.kolesateam.confapp.events.presentation.listeners.OnClick
 import kz.kolesateam.confapp.events.presentation.listeners.OnClickToastMessage
+import kz.kolesateam.confapp.events.presentation.listeners.OnEventClick
 import kz.kolesateam.confapp.events.presentation.models.EventListItem
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 
@@ -19,7 +20,8 @@ class EventViewHolder(
     itemView: View,
     private val onBranchClicked: OnBranchClicked,
     private val onItemClick: OnClick,
-    private val eventOnClickToastMessage: OnClickToastMessage
+    private val eventOnClickToastMessage: OnClickToastMessage,
+    private val onEventClick: OnEventClick
 ) : BaseViewHolder<UpcomingEventListItem>(itemView) {
 
     private val event: View = itemView.findViewById(R.id.item_event_card)
@@ -44,8 +46,9 @@ class EventViewHolder(
             height = ConstraintLayout.LayoutParams.WRAP_CONTENT
         }
 
-        setActionToast(eventApiData)
         onBindEvent(eventApiData)
+        setNavigateToEventDetails()
+        setActionToast(eventApiData)
     }
 
     private fun setActionToast(eventApiData: EventApiData) {
@@ -53,6 +56,12 @@ class EventViewHolder(
             eventOnClickToastMessage.onClickToastMessage(TOAST_TEXT_FOR_REPORT.format(
                     eventApiData.title
             ))
+        }
+    }
+
+    private fun setNavigateToEventDetails() {
+        event.setOnClickListener {
+            onEventClick.onEventClick()
         }
     }
 

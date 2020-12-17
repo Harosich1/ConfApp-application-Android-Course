@@ -116,5 +116,6 @@ class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, On
 
     override fun onEventClick() {
         val eventDetailsActivity = eventDetailsRouter.createIntent(context = this)
+        startActivity(eventDetailsActivity)
     }
 }
