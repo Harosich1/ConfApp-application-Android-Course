@@ -11,14 +11,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.AllEventsRouter
+import kz.kolesateam.confapp.common.EventDetailsRouter
 import kz.kolesateam.confapp.common.PUSH_NOTIFICATION_MESSAGE
 import kz.kolesateam.confapp.events.data.models.EventApiData
+import kz.kolesateam.confapp.events.presentation.listeners.OnBranchClicked
+import kz.kolesateam.confapp.events.presentation.listeners.OnClick
+import kz.kolesateam.confapp.events.presentation.listeners.OnClickToastMessage
+import kz.kolesateam.confapp.events.presentation.listeners.OnEventClick
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import kz.kolesateam.confapp.events.presentation.viewModel.UpcomingEventsViewModel
 import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
 import kz.kolesateam.confapp.favourite_events.presentation.FavouriteEventsActivity
-import kz.kolesateam.confapp.notifications.ConfAppNotificationManager
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -29,11 +33,12 @@ const val TOAST_TEXT_FOR_ADD_IN_FAVOURITE = "Вы добавили в избра
 const val TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE = "Вы убрали из избранного!"
 const val TOAST_TEXT_FOR_ENTER_IN_FAVOURITE = "Это ваше избранное!"
 
-class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClickToastMessage {
+class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClickToastMessage, OnEventClick {
 
     private val upcomingEventsViewModel: UpcomingEventsViewModel by viewModel()
     private val favouriteEventActionObservable: FavouriteEventActionObservable by inject()
     private val allEventsRouter: AllEventsRouter = AllEventsRouter()
+    private val eventDetailsRouter: EventDetailsRouter = EventDetailsRouter()
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var branchAdapter: BranchAdapter
@@ -68,7 +73,8 @@ class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, On
             eventOnBranchClicked = this,
             eventOnClick = this,
             eventOnClickToastMessage = this,
-            favouriteEventActionObservable = favouriteEventActionObservable
+            favouriteEventActionObservable = favouriteEventActionObservable,
+            onEventClick = this
         )
         recyclerView.adapter = branchAdapter
         recyclerView.layoutManager = LinearLayoutManager(
@@ -106,5 +112,9 @@ class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, On
 
     override fun onClickToastMessage(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onEventClick() {
+        val eventDetailsActivity = eventDetailsRouter.createIntent(context = this)
     }
 }

@@ -12,16 +12,19 @@ import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.common.BRANCH_ID
 import kz.kolesateam.confapp.common.BRANCH_TITLE
+import kz.kolesateam.confapp.events.presentation.listeners.OnBranchClicked
+import kz.kolesateam.confapp.events.presentation.listeners.OnClick
+import kz.kolesateam.confapp.events.presentation.listeners.OnClickToastMessage
+import kz.kolesateam.confapp.events.presentation.listeners.OnEventClick
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import kz.kolesateam.confapp.events.presentation.viewModel.AllEventsViewModel
 import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
 import kz.kolesateam.confapp.favourite_events.presentation.FavouriteEventsActivity
-import kz.kolesateam.confapp.notifications.ConfAppNotificationManager
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClickToastMessage {
+class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClickToastMessage, OnEventClick {
 
     private val allEventsViewModel: AllEventsViewModel by viewModel()
     private val favouriteEventActionObservable: FavouriteEventActionObservable by inject()
@@ -52,7 +55,8 @@ class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClick
             eventOnBranchClicked = this,
             eventOnClick = this,
             eventOnClickToastMessage = this,
-            favouriteEventActionObservable = favouriteEventActionObservable
+            favouriteEventActionObservable = favouriteEventActionObservable,
+            onEventClick = this
         )
 
         recyclerView.adapter = branchAdapter
@@ -98,5 +102,8 @@ class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClick
     }
 
     override fun onClickToastMessage(message: String) {
+    }
+
+    override fun onEventClick() {
     }
 }

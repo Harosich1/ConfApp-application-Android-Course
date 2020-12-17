@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.events.presentation
+package kz.kolesateam.confapp.events.presentation.listeners
 
 import kz.kolesateam.confapp.events.data.models.EventApiData
 

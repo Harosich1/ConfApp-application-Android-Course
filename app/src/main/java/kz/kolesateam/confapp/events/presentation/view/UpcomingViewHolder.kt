@@ -9,6 +9,10 @@ import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.presentation.models.BranchListItem
 import kz.kolesateam.confapp.events.presentation.*
+import kz.kolesateam.confapp.events.presentation.listeners.OnBranchClicked
+import kz.kolesateam.confapp.events.presentation.listeners.OnClick
+import kz.kolesateam.confapp.events.presentation.listeners.OnClickToastMessage
+import kz.kolesateam.confapp.events.presentation.listeners.OnEventClick
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
 import kz.kolesateam.confapp.favourite_events.domain.model.FavouriteActionEvent
@@ -22,7 +26,8 @@ class BranchViewHolder(
     private val onBranchClicked: OnBranchClicked,
     private val onItemClick: OnClick,
     private val eventOnClickToastMessage: OnClickToastMessage,
-    private val favouriteEventActionObservable: FavouriteEventActionObservable
+    private val favouriteEventActionObservable: FavouriteEventActionObservable,
+    private val onEventClick: OnEventClick
 ) : BaseViewHolder<UpcomingEventListItem>(itemView) {
 
     private val favouriteObserver: Observer = object: Observer {
@@ -92,7 +97,8 @@ class BranchViewHolder(
         currentEvent = branchApiData.events.first()
         nextEvent = branchApiData.events.last()
 
-        setActionToast(currentEvent, nextEvent, branchApiData.title, branchApiData.id)
+        setNavigateToEventDetails()
+        setActionToast(branchApiData.title, branchApiData.id)
         onBindCurrentEvent(currentEvent)
         onBindEventNext(nextEvent)
 
@@ -103,7 +109,7 @@ class BranchViewHolder(
         favouriteEventActionObservable.unsubscribe(favouriteObserver)
     }
 
-    private fun setActionToast(currentEvent: EventApiData, nextEvent: EventApiData, title: String?, branchId: Int?) {
+    private fun setActionToast(title: String?, branchId: Int?) {
         branchTitle.setOnClickListener {
             eventOnClickToastMessage.onClickToastMessage(TOAST_TEXT_FOR_DIRECTION.format(
                     title
@@ -115,6 +121,15 @@ class BranchViewHolder(
                     title
             ))
             onBranchClicked.onBranchClicked(branchId, title)
+        }
+    }
+
+    private fun setNavigateToEventDetails() {
+        branchCurrentEvent.setOnClickListener {
+            onEventClick.onEventClick()
+        }
+        branchNextEvent.setOnClickListener {
+            onEventClick.onEventClick()
         }
     }
 

@@ -9,14 +9,17 @@ import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.presentation.BaseViewHolder
 import kz.kolesateam.confapp.events.data.models.*
 import kz.kolesateam.confapp.events.presentation.*
+import kz.kolesateam.confapp.events.presentation.listeners.OnBranchClicked
+import kz.kolesateam.confapp.events.presentation.listeners.OnClick
+import kz.kolesateam.confapp.events.presentation.listeners.OnClickToastMessage
 import kz.kolesateam.confapp.events.presentation.models.EventListItem
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 
 class EventViewHolder(
-        itemView: View,
-        private val onBranchClicked: OnBranchClicked,
-        private val onItemClick: OnClick,
-        private val eventOnClickToastMessage: OnClickToastMessage
+    itemView: View,
+    private val onBranchClicked: OnBranchClicked,
+    private val onItemClick: OnClick,
+    private val eventOnClickToastMessage: OnClickToastMessage
 ) : BaseViewHolder<UpcomingEventListItem>(itemView) {
 
     private val event: View = itemView.findViewById(R.id.item_event_card)
