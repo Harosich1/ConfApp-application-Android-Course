@@ -1,8 +1,10 @@
 package kz.kolesateam.confapp.common.di
 
 import kz.kolesateam.confapp.events.data.models.AllEventsRepository
+import kz.kolesateam.confapp.events.data.models.EventDetailsRepository
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsRepository
 import kz.kolesateam.confapp.events.presentation.viewModel.AllEventsViewModel
+import kz.kolesateam.confapp.events.presentation.viewModel.EventDetailsViewModel
 import kz.kolesateam.confapp.events.presentation.viewModel.UpcomingEventsViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
@@ -27,6 +29,14 @@ val eventScreenModule: Module = module {
         )
     }
 
+    viewModel {
+        EventDetailsViewModel(
+            eventDetailsRepository = get(),
+            upcomingFavouritesRepository = get(),
+            notificationAlarmManager = get()
+        )
+    }
+
     factory {
         AllEventsRepository(
             eventsDataSource = get()
@@ -35,6 +45,12 @@ val eventScreenModule: Module = module {
 
     factory {
         UpcomingEventsRepository(
+            eventsDataSource = get()
+        )
+    }
+
+    factory {
+        EventDetailsRepository(
             eventsDataSource = get()
         )
     }

@@ -99,7 +99,7 @@ class BranchViewHolder(
 
         onBindCurrentEvent(currentEvent)
         onBindEventNext(nextEvent)
-        setNavigateToEventDetails()
+        setNavigateToEventDetails(currentEvent.id, nextEvent.id)
         setActionToast(branchApiData.title, branchApiData.id)
 
         favouriteEventActionObservable.subscribe(favouriteObserver)
@@ -124,12 +124,12 @@ class BranchViewHolder(
         }
     }
 
-    private fun setNavigateToEventDetails() {
+    private fun setNavigateToEventDetails(CurrentBranchId: Int?, NextBranchId: Int?) {
         branchCurrentEvent.setOnClickListener {
-            onEventClick.onEventClick()
+            onEventClick.onEventClick(CurrentBranchId)
         }
         branchNextEvent.setOnClickListener {
-            onEventClick.onEventClick()
+            onEventClick.onEventClick(NextBranchId)
         }
     }
 

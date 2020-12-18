@@ -7,18 +7,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.presentation.BaseViewHolder
-import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
-import kz.kolesateam.confapp.events.presentation.TOAST_TEXT_FOR_ADD_IN_FAVOURITE
-import kz.kolesateam.confapp.events.presentation.TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE
 import kz.kolesateam.confapp.events.presentation.listeners.OnEventClick
-import kz.kolesateam.confapp.events.presentation.models.EventListItem
 import kz.kolesateam.confapp.events.presentation.models.FavouriteEventsItem
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.dateOfEvent
 import kz.kolesateam.confapp.events.presentation.view.nOfElementsToDrop
-import kz.kolesateam.confapp.favourite_events.domain.model.FavouriteActionEvent
-import java.util.*
 
 class FavouriteEventsViewHolder(
     itemView: View,
@@ -47,12 +41,12 @@ class FavouriteEventsViewHolder(
         }
 
         onBindEvent(eventApiData)
-        setNavigateToEventDetails()
+        setNavigateToEventDetails(eventApiData.id)
     }
 
-    private fun setNavigateToEventDetails() {
+    private fun setNavigateToEventDetails(branchId: Int?) {
         event.setOnClickListener {
-            onEventClick.onEventClick()
+            onEventClick.onEventClick(branchId)
         }
     }
 

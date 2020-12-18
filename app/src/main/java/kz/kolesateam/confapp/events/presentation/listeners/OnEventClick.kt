@@ -1,5 +1,5 @@
 package kz.kolesateam.confapp.events.presentation.listeners
 
 interface OnEventClick {
-    fun onEventClick()
+    fun onEventClick(branchId: Int?)
 }

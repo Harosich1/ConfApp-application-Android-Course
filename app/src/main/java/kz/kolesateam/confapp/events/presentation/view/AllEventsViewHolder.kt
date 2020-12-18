@@ -47,21 +47,16 @@ class EventViewHolder(
         }
 
         onBindEvent(eventApiData)
-        setNavigateToEventDetails()
+        setNavigateToEventDetails(eventApiData.id)
         setActionToast(eventApiData)
     }
 
     private fun setActionToast(eventApiData: EventApiData) {
-        event.setOnClickListener {
-            eventOnClickToastMessage.onClickToastMessage(TOAST_TEXT_FOR_REPORT.format(
-                    eventApiData.title
-            ))
-        }
     }
 
-    private fun setNavigateToEventDetails() {
+    private fun setNavigateToEventDetails(branchId: Int?) {
         event.setOnClickListener {
-            onEventClick.onEventClick()
+            onEventClick.onEventClick(branchId)
         }
     }
 

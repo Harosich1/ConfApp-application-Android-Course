@@ -84,8 +84,8 @@ class FavouriteEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, O
     override fun onClickToastMessage(message: String) {
     }
 
-    override fun onEventClick() {
-        val eventDetailsActivity = eventDetailsRouter.createIntent(context = this)
+    override fun onEventClick(branchId: Int?) {
+        val eventDetailsActivity = eventDetailsRouter.createIntent(context = this, branchId)
         startActivity(eventDetailsActivity)
     }
 }

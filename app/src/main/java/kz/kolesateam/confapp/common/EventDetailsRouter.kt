@@ -8,5 +8,8 @@ class EventDetailsRouter {
 
     fun createIntent(
         context: Context,
-    ) = Intent(context, EventDetailsActivity::class.java)
+        branchId: Int?,
+    ) = Intent(context, EventDetailsActivity::class.java).apply {
+        putExtra(BRANCH_ID, branchId)
+    }
 }

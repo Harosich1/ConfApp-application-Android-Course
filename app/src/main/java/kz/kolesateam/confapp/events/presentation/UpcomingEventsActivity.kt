@@ -114,8 +114,8 @@ class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, On
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
-    override fun onEventClick() {
-        val eventDetailsActivity = eventDetailsRouter.createIntent(context = this)
+    override fun onEventClick(branchId: Int?) {
+        val eventDetailsActivity = eventDetailsRouter.createIntent(context = this, branchId)
         startActivity(eventDetailsActivity)
     }
 }
