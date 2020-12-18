@@ -66,14 +66,14 @@ class BranchViewHolder(
     private val eventTimeAndAuditoryCurrent: TextView = branchCurrentEvent.findViewById(R.id.time_and_auditory)
     private val nameOfSpeakerCurrent: TextView = branchCurrentEvent.findViewById(R.id.name_of_speaker)
     private val speakerJobCurrent: TextView = branchCurrentEvent.findViewById(R.id.job_of_speaker)
-    private val eventDescriptionCurrent: TextView = branchCurrentEvent.findViewById(R.id.description_of_event)
+    private val eventDescriptionCurrent: TextView = branchCurrentEvent.findViewById(R.id.title_of_event)
     private val iconInFavouriteCurrent: ImageView = branchCurrentEvent.findViewById(R.id.ic_in_favourite)
 
     private val eventStateNext: TextView = branchNextEvent.findViewById(R.id.event_state)
     private val eventTimeAndAuditoryNext: TextView = branchNextEvent.findViewById(R.id.time_and_auditory)
     private val nameOfSpeakerNext: TextView = branchNextEvent.findViewById(R.id.name_of_speaker)
     private val speakerJobNext: TextView = branchNextEvent.findViewById(R.id.job_of_speaker)
-    private val eventDescriptionNext: TextView = branchNextEvent.findViewById(R.id.description_of_event)
+    private val eventDescriptionNext: TextView = branchNextEvent.findViewById(R.id.title_of_event)
     private val iconInFavouriteNext: ImageView = branchNextEvent.findViewById(R.id.ic_in_favourite)
 
     private lateinit var branchApiData: BranchApiData

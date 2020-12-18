@@ -135,7 +135,7 @@
                 />
 
             <TextView
-                android:id="@+id/description_of_event"
+                android:id="@+id/title_of_event"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_16x"
@@ -151,8 +151,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_8x"
                 android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="@id/description_of_event"
-                app:layout_constraintTop_toBottomOf="@id/description_of_event"
+                app:layout_constraintStart_toStartOf="@id/title_of_event"
+                app:layout_constraintTop_toBottomOf="@id/title_of_event"
                 tools:text="Увлекательная жизнь в панели уведомлений" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

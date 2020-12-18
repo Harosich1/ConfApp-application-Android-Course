@@ -30,7 +30,7 @@ class EventViewHolder(
     private val eventTimeAndAuditory: TextView = event.findViewById(R.id.time_and_auditory)
     private val nameOfSpeaker: TextView = event.findViewById(R.id.name_of_speaker)
     private val speakerJob: TextView = event.findViewById(R.id.job_of_speaker)
-    private val eventDescription: TextView = event.findViewById(R.id.description_of_event)
+    private val eventDescription: TextView = event.findViewById(R.id.title_of_event)
     private val iconInFavourite: ImageView = event.findViewById(R.id.ic_in_favourite)
 
     init {

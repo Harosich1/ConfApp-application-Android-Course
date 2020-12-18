@@ -16,10 +16,10 @@ class EventDetailsViewModel(
     private val notificationAlarmManager: NotificationAlarmManager
 ) : ViewModel() {
 
-    private val eventDetailsLiveData: MutableLiveData<List<UpcomingEventListItem>> =
+    private val eventDetailsLiveData: MutableLiveData<EventApiData> =
         MutableLiveData()
 
-    fun getEventDetailsLiveData(): LiveData<List<UpcomingEventListItem>> = eventDetailsLiveData
+    fun getEventDetailsLiveData(): LiveData<EventApiData> = eventDetailsLiveData
 
     fun onLaunch(
         branchId: String
@@ -34,9 +34,9 @@ class EventDetailsViewModel(
     }
 
     private fun setEventDetailsList(
-        eventDetailsItem: List<EventApiData>,
+        eventDetailsItem: EventApiData
     ) {
-        eventDetailsLiveData.value = getEventDetailsListItems(eventDetailsItem)
+        eventDetailsLiveData.value = eventDetailsItem
     }
 
     fun onFavouriteClick(
@@ -56,9 +56,4 @@ class EventDetailsViewModel(
             content = eventApiData.title.orEmpty()
         )
     }
-
-    private fun getEventDetailsListItems(
-        eventList: List<EventApiData>
-    ): List<UpcomingEventListItem> =
-        eventList.map { eventApiData -> EventDetailsItem(data = eventApiData) }
 }

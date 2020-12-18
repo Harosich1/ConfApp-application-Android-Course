@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import kz.kolesateam.confapp.utils.FULL_NAME_FIELD
 import kz.kolesateam.confapp.utils.ID_FIELD
 import kz.kolesateam.confapp.utils.JOB_FIELD
+import kz.kolesateam.confapp.utils.PHOTO_URL_FIELD
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class SpeakerApiData (

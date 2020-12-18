@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.BRANCH_ID
 import kz.kolesateam.confapp.events.data.models.EventApiData
+import kz.kolesateam.confapp.events.presentation.listeners.OnEventClick
 import kz.kolesateam.confapp.events.presentation.models.EventDetailsItem
 import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.events.presentation.view.EventDetailsViewHolder
@@ -28,7 +29,7 @@ class EventDetailsActivity : AppCompatActivity() {
 
         eventDetailsViewModel.onLaunch(intent.extras?.getInt(BRANCH_ID).toString())
         eventDetailsViewHolder = EventDetailsViewHolder(window.decorView.rootView)
-        eventDetailsViewHolder.onBind(EventDetailsItem)
+        observeUpcomingEventsViewModel()
     }
 
     private fun observeUpcomingEventsViewModel() {
