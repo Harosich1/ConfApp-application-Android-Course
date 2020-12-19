@@ -16,8 +16,9 @@ import kz.kolesateam.confapp.common.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.upcomingEvents.presentation.TOAST_TEXT_FOR_ADD_IN_FAVOURITE
 import kz.kolesateam.confapp.upcomingEvents.presentation.TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE
 import kz.kolesateam.confapp.upcomingEvents.presentation.TOAST_TEXT_FOR_REPORT
-import kz.kolesateam.confapp.upcomingEvents.presentation.view.dateOfEvent
-import kz.kolesateam.confapp.upcomingEvents.presentation.view.nOfElementsToDrop
+import kz.kolesateam.confapp.utils.DATE_OF_EVENT
+import kz.kolesateam.confapp.utils.extensions.getEventFormattedDateTime
+import org.threeten.bp.ZonedDateTime
 
 class EventViewHolder(
     itemView: View,
@@ -57,16 +58,19 @@ class EventViewHolder(
             eventOnClickToastMessage.onClickToastMessage(
                 TOAST_TEXT_FOR_REPORT.format(
                     eventApiData.title
-            ))
+                )
+            )
         }
     }
 
     private fun onBindEvent(eventApiData: EventApiData) {
+        val formattedStartTime = ZonedDateTime.parse(eventApiData.startTime).getEventFormattedDateTime()
+        val formattedEndTime = ZonedDateTime.parse(eventApiData.endTime).getEventFormattedDateTime()
 
-        val eventTimeAndAuditoryString = dateOfEvent.format(
-                eventApiData.startTime?.dropLast(nOfElementsToDrop),
-                eventApiData.endTime?.dropLast(nOfElementsToDrop),
-                eventApiData.place,
+        val eventTimeAndAuditoryString = DATE_OF_EVENT.format(
+            formattedStartTime,
+            formattedEndTime,
+            eventApiData.place
         )
 
         eventTimeAndAuditory.text = eventTimeAndAuditoryString
@@ -77,18 +81,21 @@ class EventViewHolder(
         setActionForChangeStateOfLikeButton(iconInFavourite, eventApiData)
     }
 
-    private fun setActionForChangeStateOfLikeButton(iconInFavourite: ImageView, event: EventApiData) {
+    private fun setActionForChangeStateOfLikeButton(
+        iconInFavourite: ImageView,
+        event: EventApiData
+    ) {
 
         iconInFavourite.setOnClickListener {
 
             event.isFavourite = !event.isFavourite
 
-            val favouriteToastText = when(event.isFavourite){
+            val favouriteToastText = when (event.isFavourite) {
                 true -> TOAST_TEXT_FOR_ADD_IN_FAVOURITE
                 else -> TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE
             }
 
-            val favouriteImageResource = when(event.isFavourite){
+            val favouriteImageResource = when (event.isFavourite) {
                 true -> R.drawable.favorite_icon_filled
                 else -> R.drawable.favourite_icon_not_filled
             }

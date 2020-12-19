@@ -10,8 +10,9 @@ import kz.kolesateam.confapp.common.presentation.domain.BaseViewHolder
 import kz.kolesateam.confapp.common.models.EventApiData
 import kz.kolesateam.confapp.common.presentation.models.FavouriteEventsItem
 import kz.kolesateam.confapp.common.presentation.models.UpcomingEventListItem
-import kz.kolesateam.confapp.upcomingEvents.presentation.view.dateOfEvent
-import kz.kolesateam.confapp.upcomingEvents.presentation.view.nOfElementsToDrop
+import kz.kolesateam.confapp.utils.DATE_OF_EVENT
+import kz.kolesateam.confapp.utils.extensions.getEventFormattedDateTime
+import org.threeten.bp.ZonedDateTime
 
 class FavouriteEventsViewHolder(
     itemView: View
@@ -44,10 +45,13 @@ class FavouriteEventsViewHolder(
 
     private fun onBindEvent(eventApiData: EventApiData) {
 
-        val eventTimeAndAuditoryString = dateOfEvent.format(
-            eventApiData.startTime?.dropLast(nOfElementsToDrop),
-            eventApiData.endTime?.dropLast(nOfElementsToDrop),
-            eventApiData.place,
+        val formattedStartTime = ZonedDateTime.parse(eventApiData.startTime).getEventFormattedDateTime()
+        val formattedEndTime = ZonedDateTime.parse(eventApiData.endTime).getEventFormattedDateTime()
+
+        val eventTimeAndAuditoryString = DATE_OF_EVENT.format(
+            formattedStartTime,
+            formattedEndTime,
+            eventApiData.place
         )
 
         eventTimeAndAuditory.text = eventTimeAndAuditoryString
