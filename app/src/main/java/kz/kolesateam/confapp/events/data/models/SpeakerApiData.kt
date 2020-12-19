@@ -14,5 +14,7 @@ data class SpeakerApiData (
         @JsonProperty(value = FULL_NAME_FIELD)
         val fullName: String?,
         @JsonProperty(value = JOB_FIELD)
-        val job: String?
+        val job: String?,
+        @JsonProperty(value = PHOTO_URL_FIELD)
+        val photoUrl: String?
 )
