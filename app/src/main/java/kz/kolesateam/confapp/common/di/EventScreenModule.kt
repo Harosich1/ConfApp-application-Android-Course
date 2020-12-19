@@ -1,9 +1,9 @@
 package kz.kolesateam.confapp.common.di
 
-import kz.kolesateam.confapp.events.data.models.AllEventsRepository
-import kz.kolesateam.confapp.events.data.models.UpcomingEventsRepository
-import kz.kolesateam.confapp.events.presentation.viewModel.AllEventsViewModel
-import kz.kolesateam.confapp.events.presentation.viewModel.UpcomingEventsViewModel
+import kz.kolesateam.confapp.allEvents.data.AllEventsRepository
+import kz.kolesateam.confapp.upcomingEvents.data.UpcomingEventsRepository
+import kz.kolesateam.confapp.allEvents.presentation.viewModdel.AllEventsViewModel
+import kz.kolesateam.confapp.upcomingEvents.presentation.viewModel.UpcomingEventsViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named

@@ -1,7 +1,7 @@
 package kz.kolesateam.confapp.common.di
 
-import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
-import kz.kolesateam.confapp.events.data.datasource.UserNameLocalDataSource
+import kz.kolesateam.confapp.common.datasource.UserNameDataSource
+import kz.kolesateam.confapp.common.datasource.UserNameLocalDataSource
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
