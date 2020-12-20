@@ -10,6 +10,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.eventDetails.presentation.EventDetailsRouter
 import kz.kolesateam.confapp.upcomingEvents.presentation.UpcomingEventsRouter
 
 object ConfAppNotificationManager {
@@ -24,10 +25,12 @@ object ConfAppNotificationManager {
 
     fun sendNotification(
         title: String,
+        branchId: Int?,
         content: String
     ) {
         val notification: Notification = createNotification(
             title = title,
+            branchId,
             content = content
         )
         val notificationId = notificationId++
@@ -39,29 +42,32 @@ object ConfAppNotificationManager {
 
     private fun createNotification(
         title: String,
+        branchId: Int?,
         content: String
     ): Notification = NotificationCompat.Builder(context, getChannelId())
         .setSmallIcon(R.drawable.favorite_icon_filled)
         .setContentTitle(title)
         .setContentText(content)
         .setPriority(NotificationCompat.PRIORITY_HIGH)
-        .setContentIntent(getPendingIntent(content = content))
+        .setContentIntent(getPendingIntent(content = content, branchId = branchId))
         .setAutoCancel(true)
         .build()
 
     private fun getChannelId(): String = context.packageName + "push_channel"
 
     private fun getPendingIntent(
-        content: String
+        content: String,
+        branchId: Int?
     ): PendingIntent {
-        val upcomingEventsIntent = UpcomingEventsRouter().createNotificationIntent(
+        val eventDetailsIntent = EventDetailsRouter().createNotificationIntent(
             context = context,
+            branchId,
             messageFromPush = content
         ).apply {
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
         }
 
-        return PendingIntent.getActivity(context, 0, upcomingEventsIntent, PendingIntent.FLAG_ONE_SHOT)
+        return PendingIntent.getActivity(context, 0, eventDetailsIntent, PendingIntent.FLAG_ONE_SHOT)
     }
 
     private fun createChannelIfNeeded() {

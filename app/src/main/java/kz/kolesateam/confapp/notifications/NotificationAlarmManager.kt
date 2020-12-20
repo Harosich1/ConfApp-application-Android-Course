@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import java.util.*
+import kz.kolesateam.confapp.AllEvents.presentation.BRANCH_ID
 import kz.kolesateam.confapp.common.models.EventApiData
 import kz.kolesateam.confapp.utils.extensions.getEventFormattedDateTime
 import org.threeten.bp.ZonedDateTime
@@ -28,6 +29,7 @@ class NotificationAlarmManager(
             NotificationAlarmBroadcastReceiver::class.java
         ).apply {
             putExtra(NOTIFICATION_CONTENT_KEY, eventApiData.title.orEmpty())
+            putExtra(BRANCH_ID, eventApiData.id)
         }.let {
                 PendingIntent.getBroadcast(application, 0, it ,PendingIntent.FLAG_ONE_SHOT)
         }
