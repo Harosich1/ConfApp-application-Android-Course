@@ -72,7 +72,7 @@ class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClick
             navigateToFavouriteEventsActivity()
         }
     }
-
+    
     private fun observeUpcomingEventsViewModel() {
         allEventsViewModel.getAllEventsLiveData().observe(this, ::showResult)
     }

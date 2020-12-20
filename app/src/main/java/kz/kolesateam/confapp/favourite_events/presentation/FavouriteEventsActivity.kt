@@ -69,14 +69,17 @@ class FavouriteEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, O
 
     private fun observeUpcomingEventsViewModel() {
         favouriteEventsViewModel.getAllEventsLiveData().observe(this, ::showResult)
-        favouriteEventsViewModel.getAllEventsLiveData().let {
-            emptyFavouritesTextView.visibility = View.VISIBLE
-            emptyFavouritesImageView.visibility = View.VISIBLE
-        }
     }
 
     private fun showResult(upcomingEventListItem: List<UpcomingEventListItem>) {
-        branchAdapter.setList(upcomingEventListItem)
+        branchAdapter.setList(
+            upcomingEventListItem.apply {
+                if(this.isEmpty()){
+                    emptyFavouritesTextView.visibility = View.VISIBLE
+                    emptyFavouritesImageView.visibility = View.VISIBLE
+                }
+            }
+        )
     }
 
     private fun navigateToUpcomingEventsActivity() {
