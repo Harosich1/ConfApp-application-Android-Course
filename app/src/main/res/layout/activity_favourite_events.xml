@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".AllEvents.presentation.AllEventsActivity"
+    tools:context=".allEvents.presentation.AllEventsActivity"
     android:background="@drawable/background_events_and_direction_screen"
     >
 

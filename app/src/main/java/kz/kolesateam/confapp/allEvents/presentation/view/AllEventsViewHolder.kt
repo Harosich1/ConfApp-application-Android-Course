@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.AllEvents.presentation.view
+package kz.kolesateam.confapp.allEvents.presentation.view
 
 import android.view.View
 import android.widget.ImageView
@@ -7,7 +7,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.common.interactions.BranchListener
 import kz.kolesateam.confapp.common.interactions.EventListener
 import kz.kolesateam.confapp.common.interactions.FavoriteListener
 import kz.kolesateam.confapp.common.presentation.domain.BaseViewHolder

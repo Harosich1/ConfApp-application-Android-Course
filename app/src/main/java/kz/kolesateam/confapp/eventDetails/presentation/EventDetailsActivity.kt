@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.AllEvents.presentation.BRANCH_ID
+import kz.kolesateam.confapp.allEvents.presentation.BRANCH_ID
 import kz.kolesateam.confapp.common.interactions.FavoriteListener
 import kz.kolesateam.confapp.common.models.EventApiData
 import kz.kolesateam.confapp.eventDetails.presentation.view.EventDetailsViewHolder
@@ -16,7 +16,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class EventDetailsActivity : AppCompatActivity(), FavoriteListener {
 
     private val eventDetailsViewModel: EventDetailsViewModel by viewModel()
-    private val favouriteEventActionObservable: FavouriteEventActionObservable by inject()
 
     private lateinit var eventDetailsViewHolder: EventDetailsViewHolder
 
@@ -26,17 +25,16 @@ class EventDetailsActivity : AppCompatActivity(), FavoriteListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event_details)
 
+        initViews()
+        observeUpcomingEventsViewModel()
         eventDetailsViewModel.onLaunch(intent.extras?.getInt(BRANCH_ID).toString())
         eventDetailsViewHolder = EventDetailsViewHolder(
             window.decorView.rootView,
             this
         )
-
-        oBind()
-        observeUpcomingEventsViewModel()
     }
 
-    private fun oBind() {
+    private fun initViews() {
         branchArrowTransition = findViewById(R.id.event_details_activity_navigation_button)
 
         branchArrowTransition.setOnClickListener {

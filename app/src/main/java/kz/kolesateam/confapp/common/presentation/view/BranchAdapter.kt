@@ -3,9 +3,9 @@ package kz.kolesateam.confapp.common.presentation.view
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kz.kolesateam.confapp.AllEvents.presentation.view.AllEventsHeaderViewHolder
+import kz.kolesateam.confapp.allEvents.presentation.view.AllEventsHeaderViewHolder
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.AllEvents.presentation.view.EventViewHolder
+import kz.kolesateam.confapp.allEvents.presentation.view.EventViewHolder
 import kz.kolesateam.confapp.common.presentation.domain.BaseViewHolder
 import kz.kolesateam.confapp.common.interactions.BranchListener
 import kz.kolesateam.confapp.common.interactions.EventListener

@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.AllEvents.data
+package kz.kolesateam.confapp.allEvents.data
 
 import android.util.Log
 import kz.kolesateam.confapp.common.datasource.EventsDataSource

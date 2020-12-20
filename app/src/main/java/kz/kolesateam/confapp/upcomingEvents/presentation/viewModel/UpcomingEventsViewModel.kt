@@ -50,14 +50,17 @@ class UpcomingEventsViewModel(
         when (eventApiData.isFavourite) {
             true -> {
                 upcomingFavouritesRepository.saveFavourite(eventApiData)
-                scheduleEvent(eventApiData)
+                scheduleEvent(eventApiData, true)
             }
-            else -> upcomingFavouritesRepository.removeFavouriteEvent(eventApiData.id)
+            else -> {
+                upcomingFavouritesRepository.removeFavouriteEvent(eventApiData.id)
+                scheduleEvent(eventApiData, false)
+            }
         }
     }
 
-    private fun scheduleEvent(eventApiData: EventApiData) {
-        notificationAlarmManager.createNotificationAlarm(eventApiData)
+    private fun scheduleEvent(eventApiData: EventApiData, isNotCancelled: Boolean) {
+        notificationAlarmManager.createNotificationAlarm(eventApiData, isNotCancelled)
     }
 
     private fun getBranchItems(

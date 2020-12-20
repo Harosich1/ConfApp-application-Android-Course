@@ -1,9 +1,9 @@
-package kz.kolesateam.confapp.AllEvents.presentation.viewModel
+package kz.kolesateam.confapp.allEvents.presentation.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kz.kolesateam.confapp.AllEvents.data.AllEventsRepository
+import kz.kolesateam.confapp.allEvents.data.AllEventsRepository
 import kz.kolesateam.confapp.common.models.EventApiData
 import kz.kolesateam.confapp.common.presentation.models.AllEventsHeaderItem
 import kz.kolesateam.confapp.common.presentation.models.EventListItem
@@ -40,9 +40,12 @@ class AllEventsViewModel(
         when (eventApiData.isFavourite) {
             true -> {
                 upcomingFavouritesRepository.saveFavourite(eventApiData)
-                scheduleEvent(eventApiData)
+                scheduleEvent(eventApiData, true)
             }
-            else -> upcomingFavouritesRepository.removeFavouriteEvent(eventApiData.id)
+            else -> {
+                upcomingFavouritesRepository.removeFavouriteEvent(eventApiData.id)
+                scheduleEvent(eventApiData, false)
+            }
         }
     }
 
@@ -57,8 +60,8 @@ class AllEventsViewModel(
             )
     }
 
-    private fun scheduleEvent(eventApiData: EventApiData) {
-        notificationAlarmManager.createNotificationAlarm(eventApiData)
+    private fun scheduleEvent(eventApiData: EventApiData, isNotCancelled: Boolean) {
+        notificationAlarmManager.createNotificationAlarm(eventApiData, isNotCancelled)
     }
 
     private fun getEventListItems(

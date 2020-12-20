@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.AllEvents.presentation.view
+package kz.kolesateam.confapp.allEvents.presentation.view
 
 import android.view.View
 import android.widget.TextView

@@ -9,8 +9,8 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kz.kolesateam.confapp.AllEvents.presentation.AllEventsRouter
-import kz.kolesateam.confapp.AllEvents.presentation.PUSH_NOTIFICATION_MESSAGE
+import kz.kolesateam.confapp.allEvents.presentation.AllEventsRouter
+import kz.kolesateam.confapp.allEvents.presentation.PUSH_NOTIFICATION_MESSAGE
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.models.EventApiData
 import kz.kolesateam.confapp.common.interactions.BranchListener

@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.AllEvents.presentation
+package kz.kolesateam.confapp.allEvents.presentation
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,7 +7,7 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kz.kolesateam.confapp.AllEvents.presentation.viewModel.AllEventsViewModel
+import kz.kolesateam.confapp.allEvents.presentation.viewModel.AllEventsViewModel
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.models.EventApiData
 import kz.kolesateam.confapp.common.presentation.models.UpcomingEventListItem

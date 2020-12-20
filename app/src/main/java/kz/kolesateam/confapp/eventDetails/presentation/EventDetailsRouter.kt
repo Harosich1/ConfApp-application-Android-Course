@@ -2,8 +2,8 @@ package kz.kolesateam.confapp.eventDetails.presentation
 
 import android.content.Context
 import android.content.Intent
-import kz.kolesateam.confapp.AllEvents.presentation.BRANCH_ID
-import kz.kolesateam.confapp.AllEvents.presentation.PUSH_NOTIFICATION_MESSAGE
+import kz.kolesateam.confapp.allEvents.presentation.BRANCH_ID
+import kz.kolesateam.confapp.allEvents.presentation.PUSH_NOTIFICATION_MESSAGE
 
 class EventDetailsRouter {
 

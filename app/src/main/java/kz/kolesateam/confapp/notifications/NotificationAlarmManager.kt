@@ -6,9 +6,8 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import java.util.*
-import kz.kolesateam.confapp.AllEvents.presentation.BRANCH_ID
+import kz.kolesateam.confapp.allEvents.presentation.BRANCH_ID
 import kz.kolesateam.confapp.common.models.EventApiData
-import kz.kolesateam.confapp.utils.extensions.getEventFormattedDateTime
 import org.threeten.bp.ZonedDateTime
 
 const val NOTIFICATION_CONTENT_KEY = "notification_title"
@@ -18,7 +17,8 @@ class NotificationAlarmManager(
 ) {
 
     fun createNotificationAlarm(
-        eventApiData: EventApiData
+        eventApiData: EventApiData,
+        isNotCancelled: Boolean
     ) {
         val alarmManager: AlarmManager? = application.getSystemService(
             Context.ALARM_SERVICE
@@ -50,5 +50,9 @@ class NotificationAlarmManager(
             calendar.timeInMillis - 300000,
             pendingIntent
         )
+
+        if(!isNotCancelled) {
+            alarmManager?.cancel(pendingIntent)
+        }
     }
 }

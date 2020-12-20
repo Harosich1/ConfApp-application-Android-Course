@@ -33,6 +33,21 @@ class EventDetailsViewModel(
         )
     }
 
+    fun onFavouriteClick(
+        eventApiData: EventApiData
+    ) {
+        when (eventApiData.isFavourite) {
+            true -> {
+                upcomingFavouritesRepository.saveFavourite(eventApiData)
+                scheduleEvent(eventApiData, true)
+            }
+            else -> {
+                upcomingFavouritesRepository.removeFavouriteEvent(eventApiData.id)
+                scheduleEvent(eventApiData, false)
+            }
+        }
+    }
+
     private fun setEventDetailsList(
         eventDetailsItem: EventApiData
     ) {
@@ -40,18 +55,6 @@ class EventDetailsViewModel(
             eventDetailsItem,
             upcomingFavouritesRepository.getAllFavouriteEvents()
         )
-    }
-
-    fun onFavouriteClick(
-        eventApiData: EventApiData
-    ) {
-        when (eventApiData.isFavourite) {
-            true -> {
-                upcomingFavouritesRepository.saveFavourite(eventApiData)
-                scheduleEvent(eventApiData)
-            }
-            else -> upcomingFavouritesRepository.removeFavouriteEvent(eventApiData.id)
-        }
     }
 
     private fun getEventDDetailsListItems(
@@ -72,7 +75,7 @@ class EventDetailsViewModel(
         return event
     }
 
-    private fun scheduleEvent(eventApiData: EventApiData) {
-        notificationAlarmManager.createNotificationAlarm(eventApiData)
+    private fun scheduleEvent(eventApiData: EventApiData, isNotCancelled: Boolean) {
+        notificationAlarmManager.createNotificationAlarm(eventApiData, isNotCancelled)
     }
 }

@@ -3,7 +3,7 @@ package kz.kolesateam.confapp.notifications
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import kz.kolesateam.confapp.AllEvents.presentation.BRANCH_ID
+import kz.kolesateam.confapp.allEvents.presentation.BRANCH_ID
 
 const val NOTIFICATION_TITLE = "Не пропустите доклад!"
 

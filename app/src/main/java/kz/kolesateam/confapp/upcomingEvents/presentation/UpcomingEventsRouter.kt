@@ -2,7 +2,7 @@ package kz.kolesateam.confapp.upcomingEvents.presentation
 
 import android.content.Context
 import android.content.Intent
-import kz.kolesateam.confapp.AllEvents.presentation.PUSH_NOTIFICATION_MESSAGE
+import kz.kolesateam.confapp.allEvents.presentation.PUSH_NOTIFICATION_MESSAGE
 
 class UpcomingEventsRouter {
 
