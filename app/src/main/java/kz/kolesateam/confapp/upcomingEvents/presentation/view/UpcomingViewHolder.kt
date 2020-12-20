@@ -154,6 +154,7 @@ class BranchViewHolder(
         speakerJobCurrent.text = currentEvent.speaker?.job
         eventDescriptionCurrent.text = currentEvent.title
 
+        iconInFavouriteCurrent.setImageResource(getFavouriteImageResource(currentEvent.isFavourite))
         setActionForChangeStateOfLikeButton(iconInFavouriteCurrent, currentEvent)
     }
 
@@ -173,6 +174,7 @@ class BranchViewHolder(
         speakerJobNext.text = nextEvent.speaker?.job
         eventDescriptionNext.text = nextEvent.title
 
+        iconInFavouriteNext.setImageResource(getFavouriteImageResource(nextEvent.isFavourite))
         setActionForChangeStateOfLikeButton(iconInFavouriteNext, nextEvent)
     }
 

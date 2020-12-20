@@ -10,9 +10,7 @@ import kz.kolesateam.confapp.favourite_events.domain.FavouritesRepository
 import kz.kolesateam.confapp.notifications.NotificationAlarmManager
 
 class FavouriteEventsViewModel(
-    private val eventsFavouritesRepository: FavouritesRepository,
-    private val upcomingFavouritesRepository: FavouritesRepository,
-    private val notificationAlarmManager: NotificationAlarmManager
+    private val eventsFavouritesRepository: FavouritesRepository
 ) : ViewModel() {
 
     private val favouriteEventsLiveData: MutableLiveData<List<UpcomingEventListItem>> = MutableLiveData()
@@ -27,9 +25,9 @@ class FavouriteEventsViewModel(
         eventApiData: EventApiData
     ) {
         when (eventApiData.isFavourite) {
-            true -> upcomingFavouritesRepository.saveFavourite(eventApiData)
+            true -> eventsFavouritesRepository.saveFavourite(eventApiData)
 
-            else -> upcomingFavouritesRepository.removeFavouriteEvent(eventApiData.id)
+            else -> eventsFavouritesRepository.removeFavouriteEvent(eventApiData.id)
         }
     }
 

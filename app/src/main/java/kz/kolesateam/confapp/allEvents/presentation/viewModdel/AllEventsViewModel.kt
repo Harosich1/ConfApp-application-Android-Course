@@ -40,7 +40,7 @@ class AllEventsViewModel(
         branchTitle: String
     ) {
         allEventsLiveData.value =
-            listOf(getAllEventsHeaderItem(branchTitle)) + getEventListItems(allEventsItem)
+            listOf(getAllEventsHeaderItem(branchTitle)) + getEventListItems(allEventsItem, upcomingFavouritesRepository.getAllFavouriteEvents())
     }
 
     fun onFavouriteClick(
@@ -62,9 +62,25 @@ class AllEventsViewModel(
     }
 
     private fun getEventListItems(
-        eventList: List<EventApiData>
-    ): List<UpcomingEventListItem> =
-        eventList.map { eventApiData -> EventListItem(data = eventApiData) }
+        eventList: List<EventApiData>,
+        favouriteEventList: List<EventApiData>
+    ): List<UpcomingEventListItem> {
+
+        if(favouriteEventList.isNotEmpty()) {
+
+            for (i in eventList.indices) {
+                for (j in favouriteEventList.indices) {
+
+                    if (eventList[i].id == favouriteEventList[j].id){
+                        eventList[i].isFavourite = favouriteEventList[j].isFavourite
+                        break
+                    }
+                }
+            }
+        }
+
+       return eventList.map { eventApiData -> EventListItem(data = eventApiData) }
+    }
 
     private fun getAllEventsHeaderItem(branchTitle: String): AllEventsHeaderItem =
         AllEventsHeaderItem(

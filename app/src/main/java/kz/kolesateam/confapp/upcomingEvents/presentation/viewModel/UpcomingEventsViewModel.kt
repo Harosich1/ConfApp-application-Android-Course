@@ -39,7 +39,7 @@ class UpcomingEventsViewModel(
             UpcomingHeaderItem(
                 userName = getSavedUser()
             )
-        ) + getBranchItems(upcomingEventsItem)
+        ) + getBranchItems(upcomingEventsItem, upcomingFavouritesRepository.getAllFavouriteEvents())
     }
 
     fun onFavouriteClick(
@@ -61,9 +61,32 @@ class UpcomingEventsViewModel(
     }
 
     private fun getBranchItems(
-        branchList: List<BranchApiData>
-    ): List<UpcomingEventListItem> =
-        branchList.map { branchApiData -> BranchListItem(data = branchApiData) }
+        branchList: List<BranchApiData>,
+        favouriteEventList: List<EventApiData>
+    ): List<UpcomingEventListItem> {
+
+        var eventList: List<EventApiData>
+
+        if(favouriteEventList.isNotEmpty()) {
+
+            for (i in branchList.indices) {
+
+                eventList = branchList[i].events
+
+                for (j in eventList.indices) {
+                    for (z in favouriteEventList.indices) {
+
+                        if (eventList[j].id == favouriteEventList[z].id) {
+                            eventList[j].isFavourite = favouriteEventList[z].isFavourite
+                            break
+                        }
+                    }
+                }
+            }
+        }
+
+        return branchList.map { branchApiData -> BranchListItem(data = branchApiData) }
+    }
 
     private fun getSavedUser(): String = userNameDataSource.getUserName() ?: ""
 }
