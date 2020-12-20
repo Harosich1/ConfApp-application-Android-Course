@@ -44,7 +44,8 @@ class FavouriteEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, O
     private fun bindViews() {
         recyclerView = findViewById(R.id.activity_favourite_events_recycler)
         onMainPageButton = findViewById(R.id.favourite_events_activity_button_on_main_page)
-        emptyFavouritesTextView = findViewById(R.id.favourite_events_screen_empty_favourites_text_view)
+        emptyFavouritesTextView =
+            findViewById(R.id.favourite_events_screen_empty_favourites_text_view)
         emptyFavouritesImageView = findViewById(R.id.icon_favourite_events_space_astronaut)
 
         branchAdapter = BranchAdapter(
@@ -74,7 +75,7 @@ class FavouriteEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, O
     private fun showResult(upcomingEventListItem: List<UpcomingEventListItem>) {
         branchAdapter.setList(
             upcomingEventListItem.apply {
-                if(this.isEmpty()){
+                if (this.isEmpty()) {
                     emptyFavouritesTextView.visibility = View.VISIBLE
                     emptyFavouritesImageView.visibility = View.VISIBLE
                 }
@@ -91,8 +92,15 @@ class FavouriteEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, O
 
     override fun onFavouriteClick(eventApiData: EventApiData) {
         favouriteEventsViewModel.onFavouriteClick(eventApiData)
+        updateFavouriteAdapter()
     }
 
     override fun onClickToastMessage(message: String) {
+    }
+
+    private fun updateFavouriteAdapter() {
+        favouriteEventsViewModel.onLaunch()
+        observeUpcomingEventsViewModel()
+        branchAdapter.notifyDataSetChanged()
     }
 }

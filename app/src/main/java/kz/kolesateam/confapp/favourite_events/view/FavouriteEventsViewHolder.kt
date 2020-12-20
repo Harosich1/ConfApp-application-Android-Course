@@ -57,6 +57,8 @@ class FavouriteEventsViewHolder(
     override fun onBind(data: UpcomingEventListItem) {
         eventApiData = (data as? FavouriteEventsItem)?.data ?: return
 
+        iconInFavourite.setImageResource(getFavouriteImageResource(eventApiData.isFavourite))
+
         event.layoutParams = (event.layoutParams as RecyclerView.LayoutParams).apply {
             width = ConstraintLayout.LayoutParams.MATCH_PARENT
             height = ConstraintLayout.LayoutParams.WRAP_CONTENT
