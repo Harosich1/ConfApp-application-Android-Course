@@ -181,11 +181,6 @@ class BranchViewHolder(
 
             event.isFavourite = !event.isFavourite
 
-            val favouriteToastText = when (event.isFavourite) {
-                true -> TOAST_TEXT_FOR_ADD_IN_FAVOURITE
-                else -> TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE
-            }
-
             val favouriteImageResource = getFavouriteImageResource(event.isFavourite)
 
             iconInFavourite.setImageResource(favouriteImageResource)
