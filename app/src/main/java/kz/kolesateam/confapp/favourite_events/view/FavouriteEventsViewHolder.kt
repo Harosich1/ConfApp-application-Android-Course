@@ -7,8 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.common.interaction.OnClick
-import kz.kolesateam.confapp.common.interaction.OnClickToastMessage
+import kz.kolesateam.confapp.common.interaction.FavoriteListener
 import kz.kolesateam.confapp.common.presentation.domain.BaseViewHolder
 import kz.kolesateam.confapp.common.models.EventApiData
 import kz.kolesateam.confapp.common.presentation.models.FavouriteEventsItem
@@ -21,7 +20,7 @@ import org.threeten.bp.ZonedDateTime
 
 class FavouriteEventsViewHolder(
     itemView: View,
-    private val onItemClick: OnClick,
+    private val favoriteListener: FavoriteListener,
     private val favouriteEventActionObservable: FavouriteEventActionObservable
 ) : BaseViewHolder<UpcomingEventListItem>(itemView) {
 
@@ -100,7 +99,7 @@ class FavouriteEventsViewHolder(
             val favouriteImageResource = getFavouriteImageResource(event.isFavourite)
 
             iconInFavourite.setImageResource(favouriteImageResource)
-            onItemClick.onFavouriteClick(eventApiData = event)
+            favoriteListener.onFavouriteClick(eventApiData = event)
         }
     }
 

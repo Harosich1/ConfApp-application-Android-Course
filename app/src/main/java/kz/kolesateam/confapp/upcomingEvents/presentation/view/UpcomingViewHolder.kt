@@ -13,9 +13,8 @@ import kz.kolesateam.confapp.common.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
 import kz.kolesateam.confapp.favourite_events.domain.model.FavouriteActionEvent
 import java.util.*
-import kz.kolesateam.confapp.common.interaction.OnBranchClicked
-import kz.kolesateam.confapp.common.interaction.OnClick
-import kz.kolesateam.confapp.common.interaction.OnClickToastMessage
+import kz.kolesateam.confapp.common.interaction.BranchListener
+import kz.kolesateam.confapp.common.interaction.FavoriteListener
 import kz.kolesateam.confapp.upcomingEvents.presentation.TOAST_TEXT_FOR_ADD_IN_FAVOURITE
 import kz.kolesateam.confapp.upcomingEvents.presentation.TOAST_TEXT_FOR_DIRECTION
 import kz.kolesateam.confapp.upcomingEvents.presentation.TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE
@@ -24,9 +23,8 @@ import kz.kolesateam.confapp.utils.extensions.getEventFormattedDateTime
 
 class BranchViewHolder(
     itemView: View,
-    private val onBranchClicked: OnBranchClicked,
-    private val onItemClick: OnClick,
-    private val eventOnClickToastMessage: OnClickToastMessage,
+    private val branchListener: BranchListener,
+    private val favoriteListener: FavoriteListener,
     private val favouriteEventActionObservable: FavouriteEventActionObservable
 ) : BaseViewHolder<UpcomingEventListItem>(itemView) {
 
@@ -122,20 +120,10 @@ class BranchViewHolder(
         branchId: Int?
     ) {
         branchTitle.setOnClickListener {
-            eventOnClickToastMessage.onClickToastMessage(
-                TOAST_TEXT_FOR_DIRECTION.format(
-                    title
-                )
-            )
-            onBranchClicked.onBranchClicked(branchId, title)
+            branchListener.onBranchClicked(branchId, title)
         }
         branchArrowTransition.setOnClickListener {
-            eventOnClickToastMessage.onClickToastMessage(
-                TOAST_TEXT_FOR_DIRECTION.format(
-                    title
-                )
-            )
-            onBranchClicked.onBranchClicked(branchId, title)
+            branchListener.onBranchClicked(branchId, title)
         }
     }
 
@@ -195,8 +183,7 @@ class BranchViewHolder(
             val favouriteImageResource = getFavouriteImageResource(event.isFavourite)
 
             iconInFavourite.setImageResource(favouriteImageResource)
-            eventOnClickToastMessage.onClickToastMessage(favouriteToastText)
-            onItemClick.onFavouriteClick(eventApiData = event)
+            favoriteListener.onFavouriteClick(eventApiData = event)
         }
     }
 

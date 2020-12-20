@@ -13,9 +13,8 @@ import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.allEvents.presentation.AllEventsRouter
 import kz.kolesateam.confapp.allEvents.presentation.PUSH_NOTIFICATION_MESSAGE
 import kz.kolesateam.confapp.common.models.EventApiData
-import kz.kolesateam.confapp.common.interaction.OnBranchClicked
-import kz.kolesateam.confapp.common.interaction.OnClick
-import kz.kolesateam.confapp.common.interaction.OnClickToastMessage
+import kz.kolesateam.confapp.common.interaction.BranchListener
+import kz.kolesateam.confapp.common.interaction.FavoriteListener
 import kz.kolesateam.confapp.common.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.common.presentation.view.BranchAdapter
 import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
@@ -31,7 +30,7 @@ const val TOAST_TEXT_FOR_ADD_IN_FAVOURITE = "Вы добавили в избра
 const val TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE = "Вы убрали из избранного!"
 const val TOAST_TEXT_FOR_ENTER_IN_FAVOURITE = "Это ваше избранное!"
 
-class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClickToastMessage {
+class UpcomingEventsActivity : AppCompatActivity(), BranchListener, FavoriteListener {
 
     private val upcomingEventsViewModel: UpcomingEventsViewModel by viewModel()
     private val favouriteEventActionObservable: FavouriteEventActionObservable by inject()
@@ -67,9 +66,8 @@ class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, On
         inYourFavouriteButton = findViewById(R.id.all_events_activity_button_in_favourite)
 
         branchAdapter = BranchAdapter(
-            eventOnBranchClicked = this,
-            eventOnClick = this,
-            eventOnClickToastMessage = this,
+            eventBranchListener = this,
+            eventFavoriteListener = this,
             favouriteEventActionObservable = favouriteEventActionObservable
         )
         recyclerView.adapter = branchAdapter
@@ -104,9 +102,5 @@ class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, On
 
     override fun onFavouriteClick(eventApiData: EventApiData) {
         upcomingEventsViewModel.onFavouriteClick(eventApiData)
-    }
-
-    override fun onClickToastMessage(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 }

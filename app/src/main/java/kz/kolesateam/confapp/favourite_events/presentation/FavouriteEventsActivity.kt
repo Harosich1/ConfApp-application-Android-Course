@@ -4,16 +4,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.models.EventApiData
-import kz.kolesateam.confapp.common.interaction.OnBranchClicked
-import kz.kolesateam.confapp.common.interaction.OnClick
-import kz.kolesateam.confapp.common.interaction.OnClickToastMessage
+import kz.kolesateam.confapp.common.interaction.BranchListener
+import kz.kolesateam.confapp.common.interaction.FavoriteListener
 import kz.kolesateam.confapp.common.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.common.presentation.view.BranchAdapter
 import kz.kolesateam.confapp.favourite_events.viewModels.FavouriteEventsViewModel
@@ -21,7 +19,7 @@ import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObserva
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class FavouriteEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClickToastMessage {
+class FavouriteEventsActivity : AppCompatActivity(), BranchListener, FavoriteListener {
 
     private val favouriteEventsViewModel: FavouriteEventsViewModel by viewModel()
     private val favouriteEventActionObservable: FavouriteEventActionObservable by inject()
@@ -49,9 +47,8 @@ class FavouriteEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, O
         emptyFavouritesImageView = findViewById(R.id.icon_favourite_events_space_astronaut)
 
         branchAdapter = BranchAdapter(
-            eventOnBranchClicked = this,
-            eventOnClick = this,
-            eventOnClickToastMessage = this,
+            eventBranchListener = this,
+            eventFavoriteListener = this,
             favouriteEventActionObservable = favouriteEventActionObservable
         )
 
@@ -93,9 +90,6 @@ class FavouriteEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, O
     override fun onFavouriteClick(eventApiData: EventApiData) {
         favouriteEventsViewModel.onFavouriteClick(eventApiData)
         updateFavouriteAdapter()
-    }
-
-    override fun onClickToastMessage(message: String) {
     }
 
     private fun updateFavouriteAdapter() {

@@ -13,16 +13,15 @@ import kz.kolesateam.confapp.common.models.EventApiData
 import kz.kolesateam.confapp.common.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.common.presentation.view.BranchAdapter
 import kz.kolesateam.confapp.allEvents.presentation.viewModdel.AllEventsViewModel
-import kz.kolesateam.confapp.common.interaction.OnBranchClicked
-import kz.kolesateam.confapp.common.interaction.OnClick
-import kz.kolesateam.confapp.common.interaction.OnClickToastMessage
+import kz.kolesateam.confapp.common.interaction.BranchListener
+import kz.kolesateam.confapp.common.interaction.FavoriteListener
 import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
 import kz.kolesateam.confapp.favourite_events.presentation.FavouriteEventsActivity
 import kz.kolesateam.confapp.upcomingEvents.presentation.TOAST_TEXT_FOR_ENTER_IN_FAVOURITE
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClickToastMessage {
+class AllEventsActivity : AppCompatActivity(), BranchListener, FavoriteListener{
 
     private val allEventsViewModel: AllEventsViewModel by viewModel()
     private val favouriteEventActionObservable: FavouriteEventActionObservable by inject()
@@ -50,9 +49,8 @@ class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClick
         inYourFavouriteButton = findViewById(R.id.all_events_activity_button_in_favourite)
 
         branchAdapter = BranchAdapter(
-            eventOnBranchClicked = this,
-            eventOnClick = this,
-            eventOnClickToastMessage = this,
+            eventBranchListener = this,
+            eventFavoriteListener = this,
             favouriteEventActionObservable = favouriteEventActionObservable
         )
 
@@ -91,13 +89,9 @@ class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClick
 
     private fun navigateToFavouriteEventsActivity() {
         val upcomingEventsScreenIntent = Intent(this, FavouriteEventsActivity::class.java)
-        finish()
         startActivity(upcomingEventsScreenIntent)
     }
 
     override fun onBranchClicked(branchId: Int?, title: String?) {
-    }
-
-    override fun onClickToastMessage(message: String) {
     }
 }

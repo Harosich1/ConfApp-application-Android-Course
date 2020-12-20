@@ -7,9 +7,8 @@ import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.allEvents.presentation.view.AllEventsHeaderViewHolder
 import kz.kolesateam.confapp.allEvents.presentation.view.EventViewHolder
 import kz.kolesateam.confapp.common.presentation.domain.BaseViewHolder
-import kz.kolesateam.confapp.common.interaction.OnBranchClicked
-import kz.kolesateam.confapp.common.interaction.OnClick
-import kz.kolesateam.confapp.common.interaction.OnClickToastMessage
+import kz.kolesateam.confapp.common.interaction.BranchListener
+import kz.kolesateam.confapp.common.interaction.FavoriteListener
 import kz.kolesateam.confapp.common.presentation.models.*
 import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
 import kz.kolesateam.confapp.favourite_events.view.FavouriteEventsViewHolder
@@ -17,9 +16,8 @@ import kz.kolesateam.confapp.upcomingEvents.presentation.view.BranchViewHolder
 import kz.kolesateam.confapp.upcomingEvents.presentation.view.UpcomingHeaderViewHolder
 
 class BranchAdapter(
-    private val eventOnBranchClicked: OnBranchClicked,
-    private val eventOnClick: OnClick,
-    private val eventOnClickToastMessage: OnClickToastMessage,
+    private val eventBranchListener: BranchListener,
+    private val eventFavoriteListener: FavoriteListener,
     private val favouriteEventActionObservable: FavouriteEventActionObservable?
 ) : RecyclerView.Adapter<BaseViewHolder<UpcomingEventListItem>>() {
 
@@ -93,9 +91,8 @@ class BranchAdapter(
             parent,
             false
         ),
-        eventOnBranchClicked,
-        eventOnClick,
-        eventOnClickToastMessage,
+        eventBranchListener,
+        eventFavoriteListener,
         favouriteEventActionObservable!!
     )
 
@@ -107,9 +104,8 @@ class BranchAdapter(
             parent,
             false
         ),
-        eventOnBranchClicked,
-        eventOnClick,
-        eventOnClickToastMessage,
+        eventBranchListener,
+        eventFavoriteListener,
         favouriteEventActionObservable!!
     )
 
@@ -121,7 +117,7 @@ class BranchAdapter(
             parent,
             false
         ),
-        eventOnClick,
+        eventFavoriteListener,
         favouriteEventActionObservable!!
     )
 }
