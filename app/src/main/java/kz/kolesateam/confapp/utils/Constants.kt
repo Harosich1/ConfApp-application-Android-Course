@@ -13,3 +13,5 @@ const val JOB_FIELD = "job"
 const val PHOTO_URL_FIELD = "photoUrl"
 
 const val DATE_OF_EVENT = "%s - %s • %s"
+
+const val DEFAULT_BRANCH_ID = 0

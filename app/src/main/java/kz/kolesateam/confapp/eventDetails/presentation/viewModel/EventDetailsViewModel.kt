@@ -9,6 +9,9 @@ import kz.kolesateam.confapp.common.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.eventDetails.data.EventDetailsRepository
 import kz.kolesateam.confapp.favourite_events.domain.FavouritesRepository
 import kz.kolesateam.confapp.notifications.NotificationAlarmManager
+import kz.kolesateam.confapp.utils.DATE_OF_EVENT
+import kz.kolesateam.confapp.utils.extensions.getEventFormattedDateTime
+import org.threeten.bp.ZonedDateTime
 
 class EventDetailsViewModel(
     private val eventDetailsRepository: EventDetailsRepository,
@@ -61,6 +64,15 @@ class EventDetailsViewModel(
         event: EventApiData,
         favouriteEventList: List<EventApiData>
     ): EventApiData {
+
+        val formattedStartTime = ZonedDateTime.parse(event.startTime).getEventFormattedDateTime()
+        val formattedEndTime = ZonedDateTime.parse(event.endTime).getEventFormattedDateTime()
+
+        event.dateOfEvent = DATE_OF_EVENT.format(
+            formattedStartTime,
+            formattedEndTime,
+            event.place
+        )
 
         if (favouriteEventList.isNotEmpty()) {
 

@@ -24,4 +24,6 @@ data class EventApiData(
 ) {
     @JsonIgnore
     var isFavourite: Boolean = false
+    @JsonIgnore
+    var dateOfEvent: String = ""
 }
