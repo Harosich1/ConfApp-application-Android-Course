@@ -106,7 +106,6 @@ class BranchAdapter(
             parent,
             false
         ),
-        eventBranchListener,
         eventFavoriteListener,
         favouriteEventActionObservable!!,
         eventListener
@@ -121,7 +120,6 @@ class BranchAdapter(
             false
         ),
         eventFavoriteListener,
-        favouriteEventActionObservable!!,
         eventListener
     )
 }

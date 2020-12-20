@@ -22,7 +22,6 @@ import org.threeten.bp.ZonedDateTime
 
 class EventViewHolder(
     itemView: View,
-    private val branchListener: BranchListener,
     private val favoriteListener: FavoriteListener,
     private val favouriteEventActionObservable: FavouriteEventActionObservable,
     private val eventListener: EventListener
