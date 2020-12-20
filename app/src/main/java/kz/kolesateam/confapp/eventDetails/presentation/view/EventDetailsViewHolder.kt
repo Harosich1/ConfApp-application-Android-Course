@@ -67,17 +67,17 @@ class EventDetailsViewHolder(
             .load(eventApiData.speaker?.photoUrl)
             .into(imageViewSpeakerPhoto)
 
-        setActionForChangeStateOfLikeButton(favoriteImageView, eventApiData)
+        setActionForChangeStateOfLikeButton(favoriteImageView)
     }
 
-    private fun setActionForChangeStateOfLikeButton(iconInFavourite: ImageView, event: EventApiData) {
+    private fun setActionForChangeStateOfLikeButton(iconInFavourite: ImageView) {
 
         iconInFavourite.setOnClickListener {
 
-            event.isFavourite = !event.isFavourite
+            eventApiData.isFavourite = !eventApiData.isFavourite
 
-            iconInFavourite.setImageResource(getFavouriteImageResource(event.isFavourite))
-            onItemClick.onFavouriteClick(eventApiData = event)
+            iconInFavourite.setImageResource(getFavouriteImageResource(eventApiData.isFavourite))
+            onItemClick.onFavouriteClick(eventApiData = eventApiData)
         }
     }
 

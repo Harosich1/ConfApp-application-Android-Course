@@ -49,7 +49,6 @@ class BranchAdapter(
         super.onViewRecycled(holder)
         (holder as? BranchViewHolder)?.onViewRecycled()
         (holder as? EventViewHolder)?.onViewRecycled()
-        (holder as? FavouriteEventsViewHolder)?.onViewRecycled()
     }
 
     override fun getItemCount(): Int = branchApiDataList.size

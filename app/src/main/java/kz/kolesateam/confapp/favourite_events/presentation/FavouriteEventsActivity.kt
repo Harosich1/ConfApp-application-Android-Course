@@ -96,7 +96,6 @@ class FavouriteEventsActivity : AppCompatActivity(), BranchListener, FavoriteLis
 
     private fun updateFavouriteAdapter() {
         favouriteEventsViewModel.onLaunch()
-        branchAdapter.notifyDataSetChanged()
     }
 
     override fun onEventClick(branchId: Int?) {

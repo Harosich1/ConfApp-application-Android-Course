@@ -98,20 +98,18 @@ class EventViewHolder(
         speakerJob.text = eventApiData.speaker?.job
         eventDescription.text = eventApiData.title
 
-        setActionForChangeStateOfLikeButton(favoriteImageView, eventApiData)
+        setActionForChangeStateOfLikeButton(favoriteImageView)
     }
 
     private fun setActionForChangeStateOfLikeButton(
         iconInFavourite: ImageView,
-        event: EventApiData
     ) {
-
         iconInFavourite.setOnClickListener {
 
-            event.isFavourite = !event.isFavourite
+            eventApiData.isFavourite = !eventApiData.isFavourite
 
-            iconInFavourite.setImageResource(getFavouriteImageResource(event.isFavourite))
-            favoriteListener.onFavouriteClick(eventApiData = event)
+            iconInFavourite.setImageResource(getFavouriteImageResource(eventApiData.isFavourite))
+            favoriteListener.onFavouriteClick(eventApiData = eventApiData)
         }
     }
 

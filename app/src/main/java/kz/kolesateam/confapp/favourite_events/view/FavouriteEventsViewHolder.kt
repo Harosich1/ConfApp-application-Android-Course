@@ -26,19 +26,6 @@ class FavouriteEventsViewHolder(
     private val eventListener: EventListener
 ) : BaseViewHolder<UpcomingEventListItem>(itemView) {
 
-    private val favouriteObserver: Observer = object : Observer {
-        override fun update(p0: Observable?, favouriteEventActionObject: Any?) {
-            val favouriteEventAction =
-                (favouriteEventActionObject as? FavouriteActionEvent) ?: return
-
-            if (eventApiData.id == favouriteEventAction.eventId) {
-                favoriteImageView.setImageResource(
-                    getFavouriteImageResource(favouriteEventAction.isFavourite)
-                )
-            }
-        }
-    }
-
     private val event: View = itemView.findViewById(R.id.item_event_card)
 
     private val eventState: TextView = event.findViewById(R.id.event_state)
@@ -66,11 +53,6 @@ class FavouriteEventsViewHolder(
 
         onBindEvent(eventApiData)
         setNavigateToEventDetails(eventApiData.id)
-        favouriteEventActionObservable.subscribe(favouriteObserver)
-    }
-
-    fun onViewRecycled() {
-        favouriteEventActionObservable.unsubscribe(favouriteObserver)
     }
 
     private fun setNavigateToEventDetails(branchId: Int?) {
@@ -95,19 +77,19 @@ class FavouriteEventsViewHolder(
         speakerJob.text = eventApiData.speaker?.job
         eventDescription.text = eventApiData.title
 
-        setActionForChangeStateOfLikeButton(favoriteImageView, eventApiData)
+        setActionForChangeStateOfLikeButton(favoriteImageView)
     }
 
-    private fun setActionForChangeStateOfLikeButton(iconInFavourite: ImageView, event: EventApiData) {
+    private fun setActionForChangeStateOfLikeButton(iconInFavourite: ImageView) {
 
         iconInFavourite.setOnClickListener {
 
-            event.isFavourite = !event.isFavourite
+            eventApiData.isFavourite = !eventApiData.isFavourite
 
-            val favouriteImageResource = getFavouriteImageResource(event.isFavourite)
+            val favouriteImageResource = getFavouriteImageResource(eventApiData.isFavourite)
 
             iconInFavourite.setImageResource(favouriteImageResource)
-            favoriteListener.onFavouriteClick(eventApiData = event)
+            favoriteListener.onFavouriteClick(eventApiData = eventApiData)
         }
     }
 
