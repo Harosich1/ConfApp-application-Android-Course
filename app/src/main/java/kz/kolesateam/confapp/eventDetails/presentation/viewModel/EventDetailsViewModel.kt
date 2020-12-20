@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kz.kolesateam.confapp.common.models.EventApiData
+import kz.kolesateam.confapp.common.presentation.models.EventListItem
+import kz.kolesateam.confapp.common.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.eventDetails.data.EventDetailsRepository
 import kz.kolesateam.confapp.favourite_events.domain.FavouritesRepository
 import kz.kolesateam.confapp.notifications.NotificationAlarmManager
@@ -34,7 +36,10 @@ class EventDetailsViewModel(
     private fun setEventDetailsList(
         eventDetailsItem: EventApiData
     ) {
-        eventDetailsLiveData.value = eventDetailsItem
+        eventDetailsLiveData.value = getEventDDetailsListItems(
+            eventDetailsItem,
+            upcomingFavouritesRepository.getAllFavouriteEvents()
+        )
     }
 
     fun onFavouriteClick(
@@ -47,6 +52,24 @@ class EventDetailsViewModel(
             }
             else -> upcomingFavouritesRepository.removeFavouriteEvent(eventApiData.id)
         }
+    }
+
+    private fun getEventDDetailsListItems(
+        event: EventApiData,
+        favouriteEventList: List<EventApiData>
+    ): EventApiData {
+
+        if (favouriteEventList.isNotEmpty()) {
+
+            for (i in favouriteEventList.indices) {
+
+                if (event.id == favouriteEventList[i].id) {
+                    event.isFavourite = favouriteEventList[i].isFavourite
+                    break
+                }
+            }
+        }
+        return event
     }
 
     private fun scheduleEvent(eventApiData: EventApiData) {

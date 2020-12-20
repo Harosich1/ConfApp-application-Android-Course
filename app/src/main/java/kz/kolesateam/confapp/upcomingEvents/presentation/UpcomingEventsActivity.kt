@@ -13,8 +13,8 @@ import kz.kolesateam.confapp.AllEvents.presentation.AllEventsRouter
 import kz.kolesateam.confapp.AllEvents.presentation.PUSH_NOTIFICATION_MESSAGE
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.models.EventApiData
-import kz.kolesateam.confapp.common.interaction.BranchListener
-import kz.kolesateam.confapp.common.interaction.EventListener
+import kz.kolesateam.confapp.common.interactions.BranchListener
+import kz.kolesateam.confapp.common.interactions.EventListener
 import kz.kolesateam.confapp.common.interactions.FavoriteListener
 import kz.kolesateam.confapp.common.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.common.presentation.view.BranchAdapter

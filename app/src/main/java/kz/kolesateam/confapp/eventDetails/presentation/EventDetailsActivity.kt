@@ -2,6 +2,7 @@ package kz.kolesateam.confapp.eventDetails.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.AllEvents.presentation.BRANCH_ID
 import kz.kolesateam.confapp.common.interactions.FavoriteListener
@@ -19,6 +20,8 @@ class EventDetailsActivity : AppCompatActivity(), FavoriteListener {
 
     private lateinit var eventDetailsViewHolder: EventDetailsViewHolder
 
+    private lateinit var branchArrowTransition: ImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_event_details)
@@ -28,7 +31,21 @@ class EventDetailsActivity : AppCompatActivity(), FavoriteListener {
             window.decorView.rootView,
             this
         )
+
+        oBind()
         observeUpcomingEventsViewModel()
+    }
+
+    private fun oBind() {
+        branchArrowTransition = findViewById(R.id.event_details_activity_navigation_button)
+
+        branchArrowTransition.setOnClickListener {
+            finishActivity()
+        }
+    }
+
+    private fun finishActivity() {
+        finish()
     }
 
     private fun observeUpcomingEventsViewModel() {

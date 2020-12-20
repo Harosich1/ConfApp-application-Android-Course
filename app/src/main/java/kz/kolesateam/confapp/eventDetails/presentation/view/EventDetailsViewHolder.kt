@@ -24,12 +24,15 @@ class EventDetailsViewHolder(
     private lateinit var speakerJob: TextView
     private lateinit var eventDescription: TextView
     private lateinit var imageViewSpeakerPhoto: ImageView
-    private lateinit var iconInFavourite: ImageView
+    private lateinit var favoriteImageView: ImageView
+
+    private lateinit var eventApiData: EventApiData
 
     fun onBind(eventApiData: EventApiData) {
+        this.eventApiData = eventApiData
 
         onBindViews()
-        onBindEvent(eventApiData)
+        onBindEvent(this.eventApiData)
     }
 
     private fun onBindViews() {
@@ -39,7 +42,9 @@ class EventDetailsViewHolder(
         speakerJob = event.findViewById(R.id.job_of_speaker)
         eventDescription = event.findViewById(R.id.event_details_text)
         imageViewSpeakerPhoto = event.findViewById(R.id.speaker_photo)
-        iconInFavourite = event.findViewById(R.id.ic_in_favourite)
+        favoriteImageView = event.findViewById(R.id.ic_in_favourite)
+
+        favoriteImageView.setImageResource(getFavouriteImageResource(eventApiData.isFavourite))
     }
 
     private fun onBindEvent(eventApiData: EventApiData) {
@@ -62,7 +67,7 @@ class EventDetailsViewHolder(
             .load(eventApiData.speaker?.photoUrl)
             .into(imageViewSpeakerPhoto)
 
-        setActionForChangeStateOfLikeButton(iconInFavourite, eventApiData)
+        setActionForChangeStateOfLikeButton(favoriteImageView, eventApiData)
     }
 
     private fun setActionForChangeStateOfLikeButton(iconInFavourite: ImageView, event: EventApiData) {
@@ -71,13 +76,15 @@ class EventDetailsViewHolder(
 
             event.isFavourite = !event.isFavourite
 
-            val favouriteImageResource = when(event.isFavourite){
-                true -> R.drawable.favorite_icon_filled
-                else -> R.drawable.favourite_icon_not_filled
-            }
-
-            iconInFavourite.setImageResource(favouriteImageResource)
+            iconInFavourite.setImageResource(getFavouriteImageResource(event.isFavourite))
             onItemClick.onFavouriteClick(eventApiData = event)
         }
+    }
+
+    private fun getFavouriteImageResource(
+        isFavourite: Boolean
+    ): Int = when (isFavourite) {
+        true -> R.drawable.favorite_icon_filled
+        else -> R.drawable.favourite_icon_not_filled
     }
 }

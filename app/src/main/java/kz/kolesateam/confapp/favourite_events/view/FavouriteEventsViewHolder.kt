@@ -7,7 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.common.interaction.EventListener
+import kz.kolesateam.confapp.common.interactions.EventListener
 import kz.kolesateam.confapp.common.interactions.FavoriteListener
 import kz.kolesateam.confapp.common.presentation.domain.BaseViewHolder
 import kz.kolesateam.confapp.common.models.EventApiData
@@ -32,7 +32,7 @@ class FavouriteEventsViewHolder(
                 (favouriteEventActionObject as? FavouriteActionEvent) ?: return
 
             if (eventApiData.id == favouriteEventAction.eventId) {
-                iconInFavourite.setImageResource(
+                favoriteImageView.setImageResource(
                     getFavouriteImageResource(favouriteEventAction.isFavourite)
                 )
             }
@@ -46,7 +46,7 @@ class FavouriteEventsViewHolder(
     private val nameOfSpeaker: TextView = event.findViewById(R.id.name_of_speaker)
     private val speakerJob: TextView = event.findViewById(R.id.job_of_speaker)
     private val eventDescription: TextView = event.findViewById(R.id.title_of_event)
-    private val iconInFavourite: ImageView = event.findViewById(R.id.ic_in_favourite)
+    private val favoriteImageView: ImageView = event.findViewById(R.id.ic_in_favourite)
 
     private lateinit var eventApiData: EventApiData
 
@@ -57,7 +57,7 @@ class FavouriteEventsViewHolder(
     override fun onBind(data: UpcomingEventListItem) {
         eventApiData = (data as? FavouriteEventsItem)?.data ?: return
 
-        iconInFavourite.setImageResource(getFavouriteImageResource(eventApiData.isFavourite))
+        favoriteImageView.setImageResource(getFavouriteImageResource(eventApiData.isFavourite))
 
         event.layoutParams = (event.layoutParams as RecyclerView.LayoutParams).apply {
             width = ConstraintLayout.LayoutParams.MATCH_PARENT
@@ -95,7 +95,7 @@ class FavouriteEventsViewHolder(
         speakerJob.text = eventApiData.speaker?.job
         eventDescription.text = eventApiData.title
 
-        setActionForChangeStateOfLikeButton(iconInFavourite, eventApiData)
+        setActionForChangeStateOfLikeButton(favoriteImageView, eventApiData)
     }
 
     private fun setActionForChangeStateOfLikeButton(iconInFavourite: ImageView, event: EventApiData) {

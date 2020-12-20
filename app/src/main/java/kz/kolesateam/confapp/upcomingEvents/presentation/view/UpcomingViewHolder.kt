@@ -13,8 +13,8 @@ import kz.kolesateam.confapp.common.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
 import kz.kolesateam.confapp.favourite_events.domain.model.FavouriteActionEvent
 import java.util.*
-import kz.kolesateam.confapp.common.interaction.BranchListener
-import kz.kolesateam.confapp.common.interaction.EventListener
+import kz.kolesateam.confapp.common.interactions.BranchListener
+import kz.kolesateam.confapp.common.interactions.EventListener
 import kz.kolesateam.confapp.common.interactions.FavoriteListener
 import kz.kolesateam.confapp.utils.DATE_OF_EVENT
 import kz.kolesateam.confapp.utils.extensions.getEventFormattedDateTime
@@ -38,13 +38,13 @@ class BranchViewHolder(
             val lastEvent = branchApiData.events.last()
 
             if (firstEvent.id == favouriteEventAction.eventId) {
-                iconInFavouriteCurrent.setImageResource(
+                favoriteImageViewCurrent.setImageResource(
                     getFavouriteImageResource(favouriteEventAction.isFavourite)
                 )
             }
 
             if (lastEvent.id == favouriteEventAction.eventId) {
-                iconInFavouriteNext.setImageResource(
+                favoriteImageViewNext.setImageResource(
                     getFavouriteImageResource(favouriteEventAction.isFavourite)
                 )
             }
@@ -68,7 +68,7 @@ class BranchViewHolder(
     private val speakerJobCurrent: TextView = branchCurrentEvent.findViewById(R.id.job_of_speaker)
     private val eventDescriptionCurrent: TextView =
         branchCurrentEvent.findViewById(R.id.title_of_event)
-    private val iconInFavouriteCurrent: ImageView =
+    private val favoriteImageViewCurrent: ImageView =
         branchCurrentEvent.findViewById(R.id.ic_in_favourite)
 
     private val eventStateNext: TextView = branchNextEvent.findViewById(R.id.event_state)
@@ -78,7 +78,7 @@ class BranchViewHolder(
     private val speakerJobNext: TextView = branchNextEvent.findViewById(R.id.job_of_speaker)
     private val eventDescriptionNext: TextView =
         branchNextEvent.findViewById(R.id.title_of_event)
-    private val iconInFavouriteNext: ImageView = branchNextEvent.findViewById(R.id.ic_in_favourite)
+    private val favoriteImageViewNext: ImageView = branchNextEvent.findViewById(R.id.ic_in_favourite)
 
     private lateinit var branchApiData: BranchApiData
 
@@ -149,8 +149,8 @@ class BranchViewHolder(
         speakerJobCurrent.text = currentEvent.speaker?.job
         eventDescriptionCurrent.text = currentEvent.title
 
-        iconInFavouriteCurrent.setImageResource(getFavouriteImageResource(currentEvent.isFavourite))
-        setActionForChangeStateOfLikeButton(iconInFavouriteCurrent, currentEvent)
+        favoriteImageViewCurrent.setImageResource(getFavouriteImageResource(currentEvent.isFavourite))
+        setActionForChangeStateOfLikeButton(favoriteImageViewCurrent, currentEvent)
     }
 
     private fun onBindEventNext(nextEvent: EventApiData) {
@@ -169,8 +169,8 @@ class BranchViewHolder(
         speakerJobNext.text = nextEvent.speaker?.job
         eventDescriptionNext.text = nextEvent.title
 
-        iconInFavouriteNext.setImageResource(getFavouriteImageResource(nextEvent.isFavourite))
-        setActionForChangeStateOfLikeButton(iconInFavouriteNext, nextEvent)
+        favoriteImageViewNext.setImageResource(getFavouriteImageResource(nextEvent.isFavourite))
+        setActionForChangeStateOfLikeButton(favoriteImageViewNext, nextEvent)
     }
 
     private fun setActionForChangeStateOfLikeButton(
