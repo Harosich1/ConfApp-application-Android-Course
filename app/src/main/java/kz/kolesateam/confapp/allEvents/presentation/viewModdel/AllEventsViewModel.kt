@@ -26,21 +26,12 @@ class AllEventsViewModel(
         branchTitle: String,
         branchId: String
     ) {
-
         allEventsRepository.loadApiData(
             branchId = branchId,
             result = { allEventsItem ->
                 setAllEventsList(allEventsItem, branchTitle)
             }
         )
-    }
-
-    private fun setAllEventsList(
-        allEventsItem: List<EventApiData>,
-        branchTitle: String
-    ) {
-        allEventsLiveData.value =
-            listOf(getAllEventsHeaderItem(branchTitle)) + getEventListItems(allEventsItem, upcomingFavouritesRepository.getAllFavouriteEvents())
     }
 
     fun onFavouriteClick(
@@ -55,6 +46,17 @@ class AllEventsViewModel(
         }
     }
 
+    private fun setAllEventsList(
+        allEventsItem: List<EventApiData>,
+        branchTitle: String
+    ) {
+        allEventsLiveData.value =
+            listOf(getAllEventsHeaderItem(branchTitle)) + getEventListItems(
+                allEventsItem,
+                upcomingFavouritesRepository.getAllFavouriteEvents()
+            )
+    }
+
     private fun scheduleEvent(eventApiData: EventApiData) {
         notificationAlarmManager.createNotificationAlarm(eventApiData)
     }
@@ -64,12 +66,12 @@ class AllEventsViewModel(
         favouriteEventList: List<EventApiData>
     ): List<UpcomingEventListItem> {
 
-        if(favouriteEventList.isNotEmpty()) {
+        if (favouriteEventList.isNotEmpty()) {
 
             for (i in eventList.indices) {
                 for (j in favouriteEventList.indices) {
 
-                    if (eventList[i].id == favouriteEventList[j].id){
+                    if (eventList[i].id == favouriteEventList[j].id) {
                         eventList[i].isFavourite = favouriteEventList[j].isFavourite
                         break
                     }
@@ -77,7 +79,7 @@ class AllEventsViewModel(
             }
         }
 
-       return eventList.map { eventApiData -> EventListItem(data = eventApiData) }
+        return eventList.map { eventApiData -> EventListItem(data = eventApiData) }
     }
 
     private fun getAllEventsHeaderItem(branchTitle: String): AllEventsHeaderItem =
