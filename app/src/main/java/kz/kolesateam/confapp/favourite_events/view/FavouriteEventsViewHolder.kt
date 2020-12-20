@@ -7,6 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.common.interaction.EventListener
 import kz.kolesateam.confapp.common.interaction.FavoriteListener
 import kz.kolesateam.confapp.common.presentation.domain.BaseViewHolder
 import kz.kolesateam.confapp.common.models.EventApiData
@@ -21,7 +22,8 @@ import org.threeten.bp.ZonedDateTime
 class FavouriteEventsViewHolder(
     itemView: View,
     private val favoriteListener: FavoriteListener,
-    private val favouriteEventActionObservable: FavouriteEventActionObservable
+    private val favouriteEventActionObservable: FavouriteEventActionObservable,
+    private val eventListener: EventListener
 ) : BaseViewHolder<UpcomingEventListItem>(itemView) {
 
     private val favouriteObserver: Observer = object : Observer {
@@ -61,6 +63,10 @@ class FavouriteEventsViewHolder(
         event.layoutParams = (event.layoutParams as RecyclerView.LayoutParams).apply {
             width = ConstraintLayout.LayoutParams.MATCH_PARENT
             height = ConstraintLayout.LayoutParams.WRAP_CONTENT
+        }
+
+        event.setOnClickListener{
+            eventListener.onEventClick()
         }
 
         onBindEvent(eventApiData)

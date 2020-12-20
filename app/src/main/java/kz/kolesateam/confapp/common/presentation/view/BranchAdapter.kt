@@ -8,6 +8,7 @@ import kz.kolesateam.confapp.allEvents.presentation.view.AllEventsHeaderViewHold
 import kz.kolesateam.confapp.allEvents.presentation.view.EventViewHolder
 import kz.kolesateam.confapp.common.presentation.domain.BaseViewHolder
 import kz.kolesateam.confapp.common.interaction.BranchListener
+import kz.kolesateam.confapp.common.interaction.EventListener
 import kz.kolesateam.confapp.common.interaction.FavoriteListener
 import kz.kolesateam.confapp.common.presentation.models.*
 import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
@@ -18,6 +19,7 @@ import kz.kolesateam.confapp.upcomingEvents.presentation.view.UpcomingHeaderView
 class BranchAdapter(
     private val eventBranchListener: BranchListener,
     private val eventFavoriteListener: FavoriteListener,
+    private val eventListener: EventListener,
     private val favouriteEventActionObservable: FavouriteEventActionObservable?
 ) : RecyclerView.Adapter<BaseViewHolder<UpcomingEventListItem>>() {
 
@@ -93,7 +95,8 @@ class BranchAdapter(
         ),
         eventBranchListener,
         eventFavoriteListener,
-        favouriteEventActionObservable!!
+        favouriteEventActionObservable!!,
+        eventListener
     )
 
     private fun createAllEventsViewHolder(
@@ -106,7 +109,8 @@ class BranchAdapter(
         ),
         eventBranchListener,
         eventFavoriteListener,
-        favouriteEventActionObservable!!
+        favouriteEventActionObservable!!,
+        eventListener
     )
 
     private fun createFavouriteEventsViewHolder(
@@ -118,6 +122,7 @@ class BranchAdapter(
             false
         ),
         eventFavoriteListener,
-        favouriteEventActionObservable!!
+        favouriteEventActionObservable!!,
+        eventListener
     )
 }

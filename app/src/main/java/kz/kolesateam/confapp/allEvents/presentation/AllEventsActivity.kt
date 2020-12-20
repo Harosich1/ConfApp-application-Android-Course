@@ -14,17 +14,20 @@ import kz.kolesateam.confapp.common.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.common.presentation.view.BranchAdapter
 import kz.kolesateam.confapp.allEvents.presentation.viewModdel.AllEventsViewModel
 import kz.kolesateam.confapp.common.interaction.BranchListener
+import kz.kolesateam.confapp.common.interaction.EventListener
 import kz.kolesateam.confapp.common.interaction.FavoriteListener
+import kz.kolesateam.confapp.eventDetails.presentation.EventDetailsRouter
 import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
 import kz.kolesateam.confapp.favourite_events.presentation.FavouriteEventsActivity
 import kz.kolesateam.confapp.upcomingEvents.presentation.TOAST_TEXT_FOR_ENTER_IN_FAVOURITE
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class AllEventsActivity : AppCompatActivity(), BranchListener, FavoriteListener{
+class AllEventsActivity : AppCompatActivity(), BranchListener, FavoriteListener, EventListener{
 
     private val allEventsViewModel: AllEventsViewModel by viewModel()
     private val favouriteEventActionObservable: FavouriteEventActionObservable by inject()
+    private val eventDetailsRouter: EventDetailsRouter = EventDetailsRouter()
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var branchAdapter: BranchAdapter
@@ -51,7 +54,8 @@ class AllEventsActivity : AppCompatActivity(), BranchListener, FavoriteListener{
         branchAdapter = BranchAdapter(
             eventBranchListener = this,
             eventFavoriteListener = this,
-            favouriteEventActionObservable = favouriteEventActionObservable
+            favouriteEventActionObservable = favouriteEventActionObservable,
+            eventListener = this
         )
 
         recyclerView.adapter = branchAdapter
@@ -93,5 +97,10 @@ class AllEventsActivity : AppCompatActivity(), BranchListener, FavoriteListener{
     }
 
     override fun onBranchClicked(branchId: Int?, title: String?) {
+    }
+
+    override fun onEventClick() {
+        val eventDetailsActivity = eventDetailsRouter.createIntent(context = this)
+        startActivity(eventDetailsActivity)
     }
 }

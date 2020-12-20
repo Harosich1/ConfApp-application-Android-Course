@@ -14,6 +14,7 @@ import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObserva
 import kz.kolesateam.confapp.favourite_events.domain.model.FavouriteActionEvent
 import java.util.*
 import kz.kolesateam.confapp.common.interaction.BranchListener
+import kz.kolesateam.confapp.common.interaction.EventListener
 import kz.kolesateam.confapp.common.interaction.FavoriteListener
 import kz.kolesateam.confapp.upcomingEvents.presentation.TOAST_TEXT_FOR_ADD_IN_FAVOURITE
 import kz.kolesateam.confapp.upcomingEvents.presentation.TOAST_TEXT_FOR_DIRECTION
@@ -25,7 +26,8 @@ class BranchViewHolder(
     itemView: View,
     private val branchListener: BranchListener,
     private val favoriteListener: FavoriteListener,
-    private val favouriteEventActionObservable: FavouriteEventActionObservable
+    private val favouriteEventActionObservable: FavouriteEventActionObservable,
+    private val eventListener: EventListener
 ) : BaseViewHolder<UpcomingEventListItem>(itemView) {
 
     private val favouriteObserver: Observer = object : Observer {
@@ -102,7 +104,7 @@ class BranchViewHolder(
         currentEvent = branchApiData.events.first()
         nextEvent = branchApiData.events.last()
 
-        setActionToast(currentEvent, nextEvent, branchApiData.title, branchApiData.id)
+        setAction(branchApiData.title, branchApiData.id)
         onBindCurrentEvent(currentEvent)
         onBindEventNext(nextEvent)
 
@@ -113,9 +115,7 @@ class BranchViewHolder(
         favouriteEventActionObservable.unsubscribe(favouriteObserver)
     }
 
-    private fun setActionToast(
-        currentEvent: EventApiData,
-        nextEvent: EventApiData,
+    private fun setAction(
         title: String?,
         branchId: Int?
     ) {
@@ -124,6 +124,12 @@ class BranchViewHolder(
         }
         branchArrowTransition.setOnClickListener {
             branchListener.onBranchClicked(branchId, title)
+        }
+        branchCurrentEvent.setOnClickListener {
+            eventListener.onEventClick()
+        }
+        branchNextEvent.setOnClickListener {
+            eventListener.onEventClick()
         }
     }
 

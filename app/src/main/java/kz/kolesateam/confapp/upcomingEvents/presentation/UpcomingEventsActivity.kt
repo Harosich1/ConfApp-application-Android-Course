@@ -14,9 +14,11 @@ import kz.kolesateam.confapp.allEvents.presentation.AllEventsRouter
 import kz.kolesateam.confapp.allEvents.presentation.PUSH_NOTIFICATION_MESSAGE
 import kz.kolesateam.confapp.common.models.EventApiData
 import kz.kolesateam.confapp.common.interaction.BranchListener
+import kz.kolesateam.confapp.common.interaction.EventListener
 import kz.kolesateam.confapp.common.interaction.FavoriteListener
 import kz.kolesateam.confapp.common.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.common.presentation.view.BranchAdapter
+import kz.kolesateam.confapp.eventDetails.presentation.EventDetailsRouter
 import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
 import kz.kolesateam.confapp.favourite_events.presentation.FavouriteEventsActivity
 import kz.kolesateam.confapp.upcomingEvents.presentation.viewModel.UpcomingEventsViewModel
@@ -30,11 +32,12 @@ const val TOAST_TEXT_FOR_ADD_IN_FAVOURITE = "Вы добавили в избра
 const val TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE = "Вы убрали из избранного!"
 const val TOAST_TEXT_FOR_ENTER_IN_FAVOURITE = "Это ваше избранное!"
 
-class UpcomingEventsActivity : AppCompatActivity(), BranchListener, FavoriteListener {
+class UpcomingEventsActivity : AppCompatActivity(), BranchListener, FavoriteListener, EventListener {
 
     private val upcomingEventsViewModel: UpcomingEventsViewModel by viewModel()
     private val favouriteEventActionObservable: FavouriteEventActionObservable by inject()
     private val allEventsRouter: AllEventsRouter = AllEventsRouter()
+    private val eventDetailsRouter: EventDetailsRouter = EventDetailsRouter()
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var branchAdapter: BranchAdapter
@@ -77,7 +80,8 @@ class UpcomingEventsActivity : AppCompatActivity(), BranchListener, FavoriteList
         branchAdapter = BranchAdapter(
             eventBranchListener = this,
             eventFavoriteListener = this,
-            favouriteEventActionObservable = favouriteEventActionObservable
+            favouriteEventActionObservable = favouriteEventActionObservable,
+            eventListener = this
         )
         recyclerView.adapter = branchAdapter
         recyclerView.layoutManager = LinearLayoutManager(
@@ -102,5 +106,10 @@ class UpcomingEventsActivity : AppCompatActivity(), BranchListener, FavoriteList
     private fun navigateToFavouriteEventsActivity() {
         val upcomingEventsScreenIntent = Intent(this, FavouriteEventsActivity::class.java)
         startActivity(upcomingEventsScreenIntent)
+    }
+
+    override fun onEventClick() {
+        val eventDetailsActivity = eventDetailsRouter.createIntent(context = this)
+        startActivity(eventDetailsActivity)
     }
 }

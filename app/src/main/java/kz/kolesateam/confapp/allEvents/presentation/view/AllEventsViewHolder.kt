@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.interaction.BranchListener
+import kz.kolesateam.confapp.common.interaction.EventListener
 import kz.kolesateam.confapp.common.interaction.FavoriteListener
 import kz.kolesateam.confapp.common.presentation.domain.BaseViewHolder
 import kz.kolesateam.confapp.common.models.*
@@ -23,7 +24,8 @@ class EventViewHolder(
     itemView: View,
     private val branchListener: BranchListener,
     private val favoriteListener: FavoriteListener,
-    private val favouriteEventActionObservable: FavouriteEventActionObservable
+    private val favouriteEventActionObservable: FavouriteEventActionObservable,
+    private val eventListener: EventListener
 ) : BaseViewHolder<UpcomingEventListItem>(itemView) {
 
     private val favouriteObserver: Observer = object : Observer {
@@ -50,8 +52,6 @@ class EventViewHolder(
 
     private lateinit var eventApiData: EventApiData
 
-    private var isFavourite: Boolean = false
-
     init {
         event.findViewById<TextView>(R.id.event_state).visibility = View.INVISIBLE
     }
@@ -65,6 +65,12 @@ class EventViewHolder(
         event.layoutParams = (event.layoutParams as RecyclerView.LayoutParams).apply {
             width = ConstraintLayout.LayoutParams.MATCH_PARENT
             height = ConstraintLayout.LayoutParams.WRAP_CONTENT
+        }
+
+        event.setOnClickListener {
+            event.setOnClickListener{
+                eventListener.onEventClick()
+            }
         }
 
         onBindEvent()
@@ -101,9 +107,9 @@ class EventViewHolder(
 
         iconInFavourite.setOnClickListener {
 
-            isFavourite = !isFavourite
+            event.isFavourite = !event.isFavourite
 
-            iconInFavourite.setImageResource(getFavouriteImageResource(isFavourite))
+            iconInFavourite.setImageResource(getFavouriteImageResource(event.isFavourite))
             favoriteListener.onFavouriteClick(eventApiData = event)
         }
     }

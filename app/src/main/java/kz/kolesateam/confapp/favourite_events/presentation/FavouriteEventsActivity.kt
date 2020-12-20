@@ -11,18 +11,21 @@ import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.models.EventApiData
 import kz.kolesateam.confapp.common.interaction.BranchListener
+import kz.kolesateam.confapp.common.interaction.EventListener
 import kz.kolesateam.confapp.common.interaction.FavoriteListener
 import kz.kolesateam.confapp.common.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.common.presentation.view.BranchAdapter
+import kz.kolesateam.confapp.eventDetails.presentation.EventDetailsRouter
 import kz.kolesateam.confapp.favourite_events.viewModels.FavouriteEventsViewModel
 import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class FavouriteEventsActivity : AppCompatActivity(), BranchListener, FavoriteListener {
+class FavouriteEventsActivity : AppCompatActivity(), BranchListener, FavoriteListener, EventListener {
 
     private val favouriteEventsViewModel: FavouriteEventsViewModel by viewModel()
     private val favouriteEventActionObservable: FavouriteEventActionObservable by inject()
+    private val eventDetailsRouter: EventDetailsRouter = EventDetailsRouter()
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var branchAdapter: BranchAdapter
@@ -49,7 +52,8 @@ class FavouriteEventsActivity : AppCompatActivity(), BranchListener, FavoriteLis
         branchAdapter = BranchAdapter(
             eventBranchListener = this,
             eventFavoriteListener = this,
-            favouriteEventActionObservable = favouriteEventActionObservable
+            favouriteEventActionObservable = favouriteEventActionObservable,
+            eventListener = this
         )
 
         recyclerView.adapter = branchAdapter
@@ -84,6 +88,7 @@ class FavouriteEventsActivity : AppCompatActivity(), BranchListener, FavoriteLis
     }
 
     override fun onBranchClicked(branchId: Int?, title: String?) {
+
     }
 
     override fun onFavouriteClick(eventApiData: EventApiData) {
@@ -93,7 +98,11 @@ class FavouriteEventsActivity : AppCompatActivity(), BranchListener, FavoriteLis
 
     private fun updateFavouriteAdapter() {
         favouriteEventsViewModel.onLaunch()
-        observeUpcomingEventsViewModel()
         branchAdapter.notifyDataSetChanged()
+    }
+
+    override fun onEventClick() {
+        val eventDetailsActivity = eventDetailsRouter.createIntent(context = this)
+        startActivity(eventDetailsActivity)
     }
 }
