@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import java.util.*
+import kz.kolesateam.confapp.common.models.EventApiData
 
 const val NOTIFICATION_CONTENT_KEY = "notification_title"
 
@@ -14,7 +15,7 @@ class NotificationAlarmManager(
 ) {
 
     fun createNotificationAlarm(
-        content: String
+        eventApiData: EventApiData
     ) {
         val alarmManager: AlarmManager? = application.getSystemService(
             Context.ALARM_SERVICE
@@ -24,7 +25,7 @@ class NotificationAlarmManager(
             application,
             NotificationAlarmBroadcastReceiver::class.java
         ).apply {
-            putExtra(NOTIFICATION_CONTENT_KEY, content)
+            putExtra(NOTIFICATION_CONTENT_KEY, eventApiData.title.orEmpty())
         }.let {
                 PendingIntent.getBroadcast(application, 0, it ,PendingIntent.FLAG_ONE_SHOT)
         }
