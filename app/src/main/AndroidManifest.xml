@@ -13,17 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ConfApp"
         android:usesCleartextTraffic="true">
-        <activity android:name=".events.presentation.EventDetailsActivity"></activity>
-        <activity android:name=".HelloActivity">
+        <activity android:name=".hello.presentation.HelloActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".events.presentation.UpcomingEventsActivity" />
-        <activity android:name=".events.presentation.AllEventsActivity" />
+        <activity android:name=".upcomingEvents.presentation.UpcomingEventsActivity" />
+        <activity android:name=".AllEvents.presentation.AllEventsActivity" />
         <activity android:name=".favourite_events.presentation.FavouriteEventsActivity" />
+        <activity android:name=".eventDetails.presentation.EventDetailsActivity" />
 
         <receiver android:name=".notifications.NotificationAlarmBroadcastReceiver" />
     </application>

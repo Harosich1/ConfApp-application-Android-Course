@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_events_and_direction_screen"
     android:orientation="vertical"
-    tools:context=".events.presentation.AllEventsActivity">
+    tools:context=".AllEvents.presentation.AllEventsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

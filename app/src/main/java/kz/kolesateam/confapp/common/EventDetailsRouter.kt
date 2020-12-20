@@ -2,7 +2,8 @@ package kz.kolesateam.confapp.common
 
 import android.content.Context
 import android.content.Intent
-import kz.kolesateam.confapp.events.presentation.EventDetailsActivity
+import kz.kolesateam.confapp.AllEvents.presentation.BRANCH_ID
+import kz.kolesateam.confapp.eventDetails.presentation.EventDetailsActivity
 
 class EventDetailsRouter {
 

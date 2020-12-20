@@ -3,7 +3,7 @@ package kz.kolesateam.confapp.favourite_events.data
 import android.content.Context
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.type.MapType
-import kz.kolesateam.confapp.events.data.models.EventApiData
+import kz.kolesateam.confapp.common.models.EventApiData
 import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
 import kz.kolesateam.confapp.favourite_events.domain.FavouritesRepository
 import java.io.FileInputStream

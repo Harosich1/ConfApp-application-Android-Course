@@ -3,9 +3,9 @@ package kz.kolesateam.confapp.favourite_events.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kz.kolesateam.confapp.events.data.models.EventApiData
-import kz.kolesateam.confapp.events.presentation.models.FavouriteEventsItem
-import kz.kolesateam.confapp.events.presentation.models.UpcomingEventListItem
+import kz.kolesateam.confapp.common.models.EventApiData
+import kz.kolesateam.confapp.common.presentation.models.FavouriteEventsItem
+import kz.kolesateam.confapp.common.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.favourite_events.domain.FavouritesRepository
 
 class FavouriteEventsViewModel(

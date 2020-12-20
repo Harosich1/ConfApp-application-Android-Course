@@ -10,7 +10,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.common.UpcomingEventsRouter
+import kz.kolesateam.confapp.upcomingEvents.presentation.UpcomingEventsRouter
 
 object ConfAppNotificationManager {
 

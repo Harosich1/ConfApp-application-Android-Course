@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.favourite_events.view
+package kz.kolesateam.confapp.AllEvents.presentation.view
 
 import android.view.View
 import android.widget.ImageView
@@ -7,15 +7,23 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.presentation.domain.BaseViewHolder
-import kz.kolesateam.confapp.common.models.EventApiData
+import kz.kolesateam.confapp.common.interactions.OnBranchClicked
+import kz.kolesateam.confapp.common.interactions.OnClick
+import kz.kolesateam.confapp.common.interactions.OnClickToastMessage
 import kz.kolesateam.confapp.common.interactions.OnEventClick
-import kz.kolesateam.confapp.common.presentation.models.FavouriteEventsItem
+import kz.kolesateam.confapp.common.models.EventApiData
+import kz.kolesateam.confapp.common.presentation.models.EventListItem
 import kz.kolesateam.confapp.common.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.upcomingEvents.presentation.view.dateOfEvent
 import kz.kolesateam.confapp.upcomingEvents.presentation.view.nOfElementsToDrop
+import kz.kolesateam.confapp.upcomingEvents.presentation.TOAST_TEXT_FOR_ADD_IN_FAVOURITE
+import kz.kolesateam.confapp.upcomingEvents.presentation.TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE
 
-class FavouriteEventsViewHolder(
+class EventViewHolder(
     itemView: View,
+    private val onBranchClicked: OnBranchClicked,
+    private val onItemClick: OnClick,
+    private val eventOnClickToastMessage: OnClickToastMessage,
     private val onEventClick: OnEventClick
 ) : BaseViewHolder<UpcomingEventListItem>(itemView) {
 
@@ -32,8 +40,9 @@ class FavouriteEventsViewHolder(
         event.findViewById<TextView>(R.id.event_state).visibility = View.INVISIBLE
     }
 
+
     override fun onBind(data: UpcomingEventListItem) {
-        val eventApiData: EventApiData = (data as? FavouriteEventsItem)?.data ?: return
+        val eventApiData: EventApiData = (data as? EventListItem)?.data ?: return
 
         event.layoutParams = (event.layoutParams as RecyclerView.LayoutParams).apply {
             width = ConstraintLayout.LayoutParams.MATCH_PARENT
@@ -42,6 +51,10 @@ class FavouriteEventsViewHolder(
 
         onBindEvent(eventApiData)
         setNavigateToEventDetails(eventApiData.id)
+        setActionToast(eventApiData)
+    }
+
+    private fun setActionToast(eventApiData: EventApiData) {
     }
 
     private fun setNavigateToEventDetails(branchId: Int?) {
@@ -53,9 +66,9 @@ class FavouriteEventsViewHolder(
     private fun onBindEvent(eventApiData: EventApiData) {
 
         val eventTimeAndAuditoryString = dateOfEvent.format(
-            eventApiData.startTime?.dropLast(nOfElementsToDrop),
-            eventApiData.endTime?.dropLast(nOfElementsToDrop),
-            eventApiData.place,
+                eventApiData.startTime?.dropLast(nOfElementsToDrop),
+                eventApiData.endTime?.dropLast(nOfElementsToDrop),
+                eventApiData.place,
         )
 
         eventTimeAndAuditory.text = eventTimeAndAuditoryString
@@ -72,16 +85,19 @@ class FavouriteEventsViewHolder(
 
             event.isFavourite = !event.isFavourite
 
-            val favouriteImageResource = getFavouriteImageResource(event.isFavourite)
+            val favouriteToastText = when(event.isFavourite){
+                true -> TOAST_TEXT_FOR_ADD_IN_FAVOURITE
+                else -> TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE
+            }
+
+            val favouriteImageResource = when(event.isFavourite){
+                true -> R.drawable.favorite_icon_filled
+                else -> R.drawable.favourite_icon_not_filled
+            }
 
             iconInFavourite.setImageResource(favouriteImageResource)
+            eventOnClickToastMessage.onClickToastMessage(favouriteToastText)
+            onItemClick.onFavouriteClick(eventApiData = event)
         }
-    }
-
-    private fun getFavouriteImageResource(
-        isFavourite: Boolean
-    ): Int = when(isFavourite){
-        true -> R.drawable.favorite_icon_filled
-        else -> R.drawable.favourite_icon_not_filled
     }
 }
