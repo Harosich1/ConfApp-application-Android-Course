@@ -1,6 +1,6 @@
 package kz.kolesateam.confapp.common.di
 
-import kz.kolesateam.confapp.events.data.datasource.EventsDataSource
+import kz.kolesateam.confapp.common.datasource.EventsDataSource
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import retrofit2.Retrofit
