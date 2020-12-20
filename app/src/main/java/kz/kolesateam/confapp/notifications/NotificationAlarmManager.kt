@@ -26,7 +26,7 @@ class NotificationAlarmManager(
         ).apply {
             putExtra(NOTIFICATION_CONTENT_KEY, content)
         }.let {
-                PendingIntent.getBroadcast(application, 0, it ,0)
+                PendingIntent.getBroadcast(application, 0, it ,PendingIntent.FLAG_ONE_SHOT)
         }
 
         val calendar: Calendar = Calendar.getInstance()
@@ -36,7 +36,7 @@ class NotificationAlarmManager(
 
         alarmManager?.setExact(
             AlarmManager.RTC_WAKEUP,
-            System.currentTimeMillis()+ 6000,
+            System.currentTimeMillis()+ 1000,
             pendingIntent
         )
     }

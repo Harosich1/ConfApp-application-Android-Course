@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/favourite_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -33,6 +34,30 @@
 
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/icon_favourite_events_space_astronaut"
+            android:layout_width="@dimen/layout_size_280x"
+            android:layout_height="@dimen/layout_size_280x"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/background_space_astronaut"
+            android:visibility="gone"
+            />
+        <TextView
+            android:id="@+id/favourite_events_screen_empty_favourites_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_24x"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/icon_favourite_events_space_astronaut"
+            android:text="@string/favourite_events_screen_empty_favourites_text"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_24x"
+            android:visibility="gone"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/activity_favourite_events_recycler"
@@ -46,7 +71,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/favourite_events_header_static"
             tools:itemCount="5"
-            tools:listitem="@layout/event_card_layout" />
+            tools:listitem="@layout/event_card_layout"
+            />
 
         <Button
             android:id="@+id/favourite_events_activity_button_on_main_page"

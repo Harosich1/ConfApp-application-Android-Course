@@ -48,6 +48,8 @@ class BranchAdapter(
     override fun onViewRecycled(holder: BaseViewHolder<UpcomingEventListItem>) {
         super.onViewRecycled(holder)
         (holder as? BranchViewHolder)?.onViewRecycled()
+        (holder as? EventViewHolder)?.onViewRecycled()
+        (holder as? FavouriteEventsViewHolder)?.onViewRecycled()
     }
 
     override fun getItemCount(): Int = branchApiDataList.size
@@ -107,7 +109,8 @@ class BranchAdapter(
         ),
         eventOnBranchClicked,
         eventOnClick,
-        eventOnClickToastMessage
+        eventOnClickToastMessage,
+        favouriteEventActionObservable!!
     )
 
     private fun createFavouriteEventsViewHolder(
@@ -117,6 +120,8 @@ class BranchAdapter(
             R.layout.event_card_layout,
             parent,
             false
-        )
+        ),
+        eventOnClick,
+        favouriteEventActionObservable!!
     )
 }

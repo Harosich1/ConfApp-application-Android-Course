@@ -2,7 +2,11 @@ package kz.kolesateam.confapp.favourite_events.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
@@ -25,19 +29,23 @@ class FavouriteEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, O
     private lateinit var recyclerView: RecyclerView
     private lateinit var branchAdapter: BranchAdapter
     private lateinit var onMainPageButton: Button
+    private lateinit var emptyFavouritesTextView: TextView
+    private lateinit var emptyFavouritesImageView: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favourite_events)
 
         bindViews()
-        observeUpcomingEventsViewModel()
         favouriteEventsViewModel.onLaunch()
+        observeUpcomingEventsViewModel()
     }
 
     private fun bindViews() {
         recyclerView = findViewById(R.id.activity_favourite_events_recycler)
         onMainPageButton = findViewById(R.id.favourite_events_activity_button_on_main_page)
+        emptyFavouritesTextView = findViewById(R.id.favourite_events_screen_empty_favourites_text_view)
+        emptyFavouritesImageView = findViewById(R.id.icon_favourite_events_space_astronaut)
 
         branchAdapter = BranchAdapter(
             eventOnBranchClicked = this,
@@ -61,6 +69,10 @@ class FavouriteEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, O
 
     private fun observeUpcomingEventsViewModel() {
         favouriteEventsViewModel.getAllEventsLiveData().observe(this, ::showResult)
+        favouriteEventsViewModel.getAllEventsLiveData().let {
+            emptyFavouritesTextView.visibility = View.VISIBLE
+            emptyFavouritesImageView.visibility = View.VISIBLE
+        }
     }
 
     private fun showResult(upcomingEventListItem: List<UpcomingEventListItem>) {
@@ -75,6 +87,7 @@ class FavouriteEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, O
     }
 
     override fun onFavouriteClick(eventApiData: EventApiData) {
+        favouriteEventsViewModel.onFavouriteClick(eventApiData)
     }
 
     override fun onClickToastMessage(message: String) {

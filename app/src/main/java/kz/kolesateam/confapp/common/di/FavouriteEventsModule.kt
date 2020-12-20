@@ -13,7 +13,9 @@ val favouriteEventsModule: Module = module {
 
     viewModel {
         FavouriteEventsViewModel(
-            eventsFavouritesRepository =  get()
+            eventsFavouritesRepository =  get(),
+            upcomingFavouritesRepository = get(),
+            notificationAlarmManager = get()
         )
     }
 

@@ -5,6 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import java.util.*
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.interaction.OnBranchClicked
 import kz.kolesateam.confapp.common.interaction.OnClick
@@ -13,6 +14,8 @@ import kz.kolesateam.confapp.common.presentation.domain.BaseViewHolder
 import kz.kolesateam.confapp.common.models.*
 import kz.kolesateam.confapp.common.presentation.models.EventListItem
 import kz.kolesateam.confapp.common.presentation.models.UpcomingEventListItem
+import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
+import kz.kolesateam.confapp.favourite_events.domain.model.FavouriteActionEvent
 import kz.kolesateam.confapp.upcomingEvents.presentation.TOAST_TEXT_FOR_ADD_IN_FAVOURITE
 import kz.kolesateam.confapp.upcomingEvents.presentation.TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE
 import kz.kolesateam.confapp.upcomingEvents.presentation.TOAST_TEXT_FOR_REPORT
@@ -24,8 +27,22 @@ class EventViewHolder(
     itemView: View,
     private val onBranchClicked: OnBranchClicked,
     private val onItemClick: OnClick,
-    private val eventOnClickToastMessage: OnClickToastMessage
+    private val eventOnClickToastMessage: OnClickToastMessage,
+    private val favouriteEventActionObservable: FavouriteEventActionObservable
 ) : BaseViewHolder<UpcomingEventListItem>(itemView) {
+
+    private val favouriteObserver: Observer = object : Observer {
+        override fun update(p0: Observable?, favouriteEventActionObject: Any?) {
+            val favouriteEventAction =
+                (favouriteEventActionObject as? FavouriteActionEvent) ?: return
+
+            if (eventApiData.id == favouriteEventAction.eventId) {
+                iconInFavourite.setImageResource(
+                    getFavouriteImageResource(favouriteEventAction.isFavourite)
+                )
+            }
+        }
+    }
 
     private val event: View = itemView.findViewById(R.id.item_event_card)
 
@@ -36,13 +53,15 @@ class EventViewHolder(
     private val eventDescription: TextView = event.findViewById(R.id.description_of_event)
     private val iconInFavourite: ImageView = event.findViewById(R.id.ic_in_favourite)
 
+    private lateinit var eventApiData: EventApiData
+
     init {
         event.findViewById<TextView>(R.id.event_state).visibility = View.INVISIBLE
     }
 
 
     override fun onBind(data: UpcomingEventListItem) {
-        val eventApiData: EventApiData = (data as? EventListItem)?.data ?: return
+        eventApiData = (data as? EventListItem)?.data ?: return
 
         event.layoutParams = (event.layoutParams as RecyclerView.LayoutParams).apply {
             width = ConstraintLayout.LayoutParams.MATCH_PARENT
@@ -51,6 +70,12 @@ class EventViewHolder(
 
         setActionToast(eventApiData)
         onBindEvent(eventApiData)
+
+        favouriteEventActionObservable.subscribe(favouriteObserver)
+    }
+
+    fun onViewRecycled() {
+        favouriteEventActionObservable.unsubscribe(favouriteObserver)
     }
 
     private fun setActionToast(eventApiData: EventApiData) {
@@ -95,14 +120,16 @@ class EventViewHolder(
                 else -> TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE
             }
 
-            val favouriteImageResource = when (event.isFavourite) {
-                true -> R.drawable.favorite_icon_filled
-                else -> R.drawable.favourite_icon_not_filled
-            }
-
-            iconInFavourite.setImageResource(favouriteImageResource)
+            iconInFavourite.setImageResource(getFavouriteImageResource(event.isFavourite))
             eventOnClickToastMessage.onClickToastMessage(favouriteToastText)
             onItemClick.onFavouriteClick(eventApiData = event)
         }
+    }
+
+    private fun getFavouriteImageResource(
+        isFavourite: Boolean
+    ): Int = when (isFavourite) {
+        true -> R.drawable.favorite_icon_filled
+        else -> R.drawable.favourite_icon_not_filled
     }
 }
