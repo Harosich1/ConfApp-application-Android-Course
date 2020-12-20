@@ -20,6 +20,16 @@ class FavouriteEventsViewModel(
         favouriteEventsLiveData.value = getFavouriteEventsItem(eventsFavouritesRepository.getAllFavouriteEvents())
     }
 
+    fun onFavouriteClick(
+        eventApiData: EventApiData
+    ) {
+        when (eventApiData.isFavourite) {
+            true -> eventsFavouritesRepository.saveFavourite(eventApiData)
+
+            else -> eventsFavouritesRepository.removeFavouriteEvent(eventApiData.id)
+        }
+    }
+
     private fun getFavouriteEventsItem(
         eventList: List<EventApiData>
     ): List<UpcomingEventListItem> =

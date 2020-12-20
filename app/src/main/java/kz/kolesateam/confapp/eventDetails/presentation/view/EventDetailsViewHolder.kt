@@ -5,14 +5,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.common.interactions.FavoriteListener
 import kz.kolesateam.confapp.common.models.EventApiData
-import kz.kolesateam.confapp.common.interactions.OnClick
-import kz.kolesateam.confapp.upcomingEvents.presentation.view.dateOfEvent
-import kz.kolesateam.confapp.upcomingEvents.presentation.view.nOfElementsToDrop
+import kz.kolesateam.confapp.utils.DATE_OF_EVENT
+import kz.kolesateam.confapp.utils.extensions.getEventFormattedDateTime
+import org.threeten.bp.ZonedDateTime
 
 class EventDetailsViewHolder(
     itemView: View,
-    private val onItemClick: OnClick
+    private val onItemClick: FavoriteListener
 ) {
 
     private val event: View = itemView.findViewById(R.id.event_details)
@@ -42,10 +43,13 @@ class EventDetailsViewHolder(
     }
 
     private fun onBindEvent(eventApiData: EventApiData) {
-        val eventTimeAndAuditoryString = dateOfEvent.format(
-            eventApiData.startTime?.dropLast(nOfElementsToDrop),
-            eventApiData.endTime?.dropLast(nOfElementsToDrop),
-            eventApiData.place,
+        val formattedStartTime = ZonedDateTime.parse(eventApiData.startTime).getEventFormattedDateTime()
+        val formattedEndTime = ZonedDateTime.parse(eventApiData.endTime).getEventFormattedDateTime()
+
+        val eventTimeAndAuditoryString = DATE_OF_EVENT.format(
+            formattedStartTime,
+            formattedEndTime,
+            eventApiData.place
         )
 
         eventTimeAndAuditory.text = eventTimeAndAuditoryString

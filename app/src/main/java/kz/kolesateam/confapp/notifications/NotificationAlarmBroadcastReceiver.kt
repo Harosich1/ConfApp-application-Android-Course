@@ -15,6 +15,4 @@ class NotificationAlarmBroadcastReceiver: BroadcastReceiver() {
             content = content
         )
     }
-
-
 }

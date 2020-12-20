@@ -50,8 +50,6 @@ class EventDetailsViewModel(
     }
 
     private fun scheduleEvent(eventApiData: EventApiData) {
-        notificationAlarmManager.createNotificationAlarm(
-            content = eventApiData.title.orEmpty()
-        )
+        notificationAlarmManager.createNotificationAlarm(eventApiData)
     }
 }

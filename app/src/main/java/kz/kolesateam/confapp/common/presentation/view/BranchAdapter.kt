@@ -4,29 +4,23 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.AllEvents.presentation.view.AllEventsHeaderViewHolder
-import kz.kolesateam.confapp.AllEvents.presentation.view.EventViewHolder
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.AllEvents.presentation.view.EventViewHolder
 import kz.kolesateam.confapp.common.presentation.domain.BaseViewHolder
-import kz.kolesateam.confapp.common.interactions.OnBranchClicked
-import kz.kolesateam.confapp.common.interactions.OnClick
-import kz.kolesateam.confapp.common.interactions.OnClickToastMessage
-import kz.kolesateam.confapp.common.interactions.OnEventClick
-import kz.kolesateam.confapp.common.presentation.models.ALL_EVENTS_HEADER_TYPE
-import kz.kolesateam.confapp.common.presentation.models.BRANCH_TYPE
-import kz.kolesateam.confapp.common.presentation.models.EVENT_TYPE
-import kz.kolesateam.confapp.common.presentation.models.UPCOMING_HEADER_TYPE
-import kz.kolesateam.confapp.common.presentation.models.UpcomingEventListItem
+import kz.kolesateam.confapp.common.interaction.BranchListener
+import kz.kolesateam.confapp.common.interaction.EventListener
+import kz.kolesateam.confapp.common.interactions.FavoriteListener
+import kz.kolesateam.confapp.common.presentation.models.*
 import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
 import kz.kolesateam.confapp.favourite_events.view.FavouriteEventsViewHolder
 import kz.kolesateam.confapp.upcomingEvents.presentation.view.BranchViewHolder
 import kz.kolesateam.confapp.upcomingEvents.presentation.view.UpcomingHeaderViewHolder
 
 class BranchAdapter(
-    private val eventOnBranchClicked: OnBranchClicked,
-    private val eventOnClick: OnClick,
-    private val eventOnClickToastMessage: OnClickToastMessage,
-    private val favouriteEventActionObservable: FavouriteEventActionObservable?,
-    private val onEventClick: OnEventClick
+    private val eventBranchListener: BranchListener,
+    private val eventFavoriteListener: FavoriteListener,
+    private val eventListener: EventListener,
+    private val favouriteEventActionObservable: FavouriteEventActionObservable?
 ) : RecyclerView.Adapter<BaseViewHolder<UpcomingEventListItem>>() {
 
     private val branchApiDataList: MutableList<UpcomingEventListItem> = mutableListOf()
@@ -54,6 +48,8 @@ class BranchAdapter(
     override fun onViewRecycled(holder: BaseViewHolder<UpcomingEventListItem>) {
         super.onViewRecycled(holder)
         (holder as? BranchViewHolder)?.onViewRecycled()
+        (holder as? EventViewHolder)?.onViewRecycled()
+        (holder as? FavouriteEventsViewHolder)?.onViewRecycled()
     }
 
     override fun getItemCount(): Int = branchApiDataList.size
@@ -97,11 +93,10 @@ class BranchAdapter(
             parent,
             false
         ),
-        eventOnBranchClicked,
-        eventOnClick,
-        eventOnClickToastMessage,
+        eventBranchListener,
+        eventFavoriteListener,
         favouriteEventActionObservable!!,
-        onEventClick
+        eventListener
     )
 
     private fun createAllEventsViewHolder(
@@ -112,10 +107,10 @@ class BranchAdapter(
             parent,
             false
         ),
-        eventOnBranchClicked,
-        eventOnClick,
-        eventOnClickToastMessage,
-        onEventClick
+        eventBranchListener,
+        eventFavoriteListener,
+        favouriteEventActionObservable!!,
+        eventListener
     )
 
     private fun createFavouriteEventsViewHolder(
@@ -126,6 +121,8 @@ class BranchAdapter(
             parent,
             false
         ),
-        onEventClick
+        eventFavoriteListener,
+        favouriteEventActionObservable!!,
+        eventListener
     )
 }

@@ -3,51 +3,47 @@ package kz.kolesateam.confapp.upcomingEvents.presentation.view
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import org.threeten.bp.ZonedDateTime
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.presentation.domain.BaseViewHolder
 import kz.kolesateam.confapp.common.models.BranchApiData
 import kz.kolesateam.confapp.common.models.EventApiData
 import kz.kolesateam.confapp.common.presentation.models.BranchListItem
-import kz.kolesateam.confapp.common.interactions.OnBranchClicked
-import kz.kolesateam.confapp.common.interactions.OnClick
-import kz.kolesateam.confapp.common.interactions.OnClickToastMessage
-import kz.kolesateam.confapp.common.interactions.OnEventClick
 import kz.kolesateam.confapp.common.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
 import kz.kolesateam.confapp.favourite_events.domain.model.FavouriteActionEvent
 import java.util.*
-import kz.kolesateam.confapp.upcomingEvents.presentation.TOAST_TEXT_FOR_ADD_IN_FAVOURITE
-import kz.kolesateam.confapp.upcomingEvents.presentation.TOAST_TEXT_FOR_DIRECTION
-import kz.kolesateam.confapp.upcomingEvents.presentation.TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE
-
-const val dateOfEvent = "%s - %s • %s"
-const val nOfElementsToDrop = 3
+import kz.kolesateam.confapp.common.interaction.BranchListener
+import kz.kolesateam.confapp.common.interaction.EventListener
+import kz.kolesateam.confapp.common.interactions.FavoriteListener
+import kz.kolesateam.confapp.utils.DATE_OF_EVENT
+import kz.kolesateam.confapp.utils.extensions.getEventFormattedDateTime
 
 class BranchViewHolder(
     itemView: View,
-    private val onBranchClicked: OnBranchClicked,
-    private val onItemClick: OnClick,
-    private val eventOnClickToastMessage: OnClickToastMessage,
+    private val branchListener: BranchListener,
+    private val favoriteListener: FavoriteListener,
     private val favouriteEventActionObservable: FavouriteEventActionObservable,
-    private val onEventClick: OnEventClick
+    private val eventListener: EventListener
 ) : BaseViewHolder<UpcomingEventListItem>(itemView) {
 
-    private val favouriteObserver: Observer = object: Observer {
+    private val favouriteObserver: Observer = object : Observer {
         override fun update(p0: Observable?, favouriteEventActionObject: Any?) {
-            val favouriteEventAction = (favouriteEventActionObject as? FavouriteActionEvent) ?: return
+            val favouriteEventAction =
+                (favouriteEventActionObject as? FavouriteActionEvent) ?: return
 
-            if(branchApiData.events.isEmpty()) return
+            if (branchApiData.events.isEmpty()) return
 
             val firstEvent = branchApiData.events.first()
             val lastEvent = branchApiData.events.last()
 
-            if(firstEvent.id == favouriteEventAction.eventId) {
+            if (firstEvent.id == favouriteEventAction.eventId) {
                 iconInFavouriteCurrent.setImageResource(
                     getFavouriteImageResource(favouriteEventAction.isFavourite)
                 )
             }
 
-            if(lastEvent.id == favouriteEventAction.eventId) {
+            if (lastEvent.id == favouriteEventAction.eventId) {
                 iconInFavouriteNext.setImageResource(
                     getFavouriteImageResource(favouriteEventAction.isFavourite)
                 )
@@ -65,17 +61,23 @@ class BranchViewHolder(
     private val branchArrowTransition: ImageView = itemView.findViewById(R.id.about_branch)
 
     private val eventStateCurrent: TextView = branchCurrentEvent.findViewById(R.id.event_state)
-    private val eventTimeAndAuditoryCurrent: TextView = branchCurrentEvent.findViewById(R.id.time_and_auditory)
-    private val nameOfSpeakerCurrent: TextView = branchCurrentEvent.findViewById(R.id.name_of_speaker)
+    private val eventTimeAndAuditoryCurrent: TextView =
+        branchCurrentEvent.findViewById(R.id.time_and_auditory)
+    private val nameOfSpeakerCurrent: TextView =
+        branchCurrentEvent.findViewById(R.id.name_of_speaker)
     private val speakerJobCurrent: TextView = branchCurrentEvent.findViewById(R.id.job_of_speaker)
-    private val eventDescriptionCurrent: TextView = branchCurrentEvent.findViewById(R.id.title_of_event)
-    private val iconInFavouriteCurrent: ImageView = branchCurrentEvent.findViewById(R.id.ic_in_favourite)
+    private val eventDescriptionCurrent: TextView =
+        branchCurrentEvent.findViewById(R.id.title_of_event)
+    private val iconInFavouriteCurrent: ImageView =
+        branchCurrentEvent.findViewById(R.id.ic_in_favourite)
 
     private val eventStateNext: TextView = branchNextEvent.findViewById(R.id.event_state)
-    private val eventTimeAndAuditoryNext: TextView = branchNextEvent.findViewById(R.id.time_and_auditory)
+    private val eventTimeAndAuditoryNext: TextView =
+        branchNextEvent.findViewById(R.id.time_and_auditory)
     private val nameOfSpeakerNext: TextView = branchNextEvent.findViewById(R.id.name_of_speaker)
     private val speakerJobNext: TextView = branchNextEvent.findViewById(R.id.job_of_speaker)
-    private val eventDescriptionNext: TextView = branchNextEvent.findViewById(R.id.title_of_event)
+    private val eventDescriptionNext: TextView =
+        branchNextEvent.findViewById(R.id.title_of_event)
     private val iconInFavouriteNext: ImageView = branchNextEvent.findViewById(R.id.ic_in_favourite)
 
     private lateinit var branchApiData: BranchApiData
@@ -89,7 +91,7 @@ class BranchViewHolder(
 
         branchTitle.text = branchApiData.title
 
-        if(branchApiData.events.isEmpty()){
+        if (branchApiData.events.isEmpty()) {
             branchCurrentEvent.visibility = View.GONE
             branchNextEvent.visibility = View.GONE
 
@@ -99,10 +101,10 @@ class BranchViewHolder(
         currentEvent = branchApiData.events.first()
         nextEvent = branchApiData.events.last()
 
+        setAction(branchApiData.title, branchApiData.id)
         onBindCurrentEvent(currentEvent)
         onBindEventNext(nextEvent)
         setNavigateToEventDetails(currentEvent.id, nextEvent.id)
-        setActionToast(branchApiData.title, branchApiData.id)
 
         favouriteEventActionObservable.subscribe(favouriteObserver)
     }
@@ -111,38 +113,35 @@ class BranchViewHolder(
         favouriteEventActionObservable.unsubscribe(favouriteObserver)
     }
 
-    private fun setActionToast(title: String?, branchId: Int?) {
+    private fun setAction(
+        title: String?,
+        branchId: Int?
+    ) {
         branchTitle.setOnClickListener {
-            eventOnClickToastMessage.onClickToastMessage(
-                TOAST_TEXT_FOR_DIRECTION.format(
-                    title
-            ))
-            onBranchClicked.onBranchClicked(branchId, title)
+            branchListener.onBranchClicked(branchId, title)
         }
         branchArrowTransition.setOnClickListener {
-            eventOnClickToastMessage.onClickToastMessage(
-                TOAST_TEXT_FOR_DIRECTION.format(
-                    title
-            ))
-            onBranchClicked.onBranchClicked(branchId, title)
+            branchListener.onBranchClicked(branchId, title)
         }
     }
 
     private fun setNavigateToEventDetails(CurrentBranchId: Int?, NextBranchId: Int?) {
         branchCurrentEvent.setOnClickListener {
-            onEventClick.onEventClick(CurrentBranchId)
+            eventListener.onEventClick(CurrentBranchId)
         }
         branchNextEvent.setOnClickListener {
-            onEventClick.onEventClick(NextBranchId)
+            eventListener.onEventClick(NextBranchId)
         }
     }
 
     private fun onBindCurrentEvent(currentEvent: EventApiData) {
+        val formattedStartTime = ZonedDateTime.parse(currentEvent.startTime).getEventFormattedDateTime()
+        val formattedEndTime = ZonedDateTime.parse(currentEvent.endTime).getEventFormattedDateTime()
 
-        val currentEventTimeAndAuditoryString = dateOfEvent.format(
-                currentEvent.startTime?.dropLast(nOfElementsToDrop),
-                currentEvent.endTime?.dropLast(nOfElementsToDrop),
-                currentEvent.place,
+        val currentEventTimeAndAuditoryString = DATE_OF_EVENT.format(
+            formattedStartTime,
+            formattedEndTime,
+            currentEvent.place
         )
 
         eventTimeAndAuditoryCurrent.text = currentEventTimeAndAuditoryString
@@ -150,15 +149,19 @@ class BranchViewHolder(
         speakerJobCurrent.text = currentEvent.speaker?.job
         eventDescriptionCurrent.text = currentEvent.title
 
+        iconInFavouriteCurrent.setImageResource(getFavouriteImageResource(currentEvent.isFavourite))
         setActionForChangeStateOfLikeButton(iconInFavouriteCurrent, currentEvent)
     }
 
     private fun onBindEventNext(nextEvent: EventApiData) {
 
-        val nextEventTimeAndAuditoryString = dateOfEvent.format(
-                nextEvent.startTime?.dropLast(nOfElementsToDrop),
-                nextEvent.endTime?.dropLast(nOfElementsToDrop),
-                nextEvent.place,
+        val formattedStartTime = ZonedDateTime.parse(nextEvent.startTime).getEventFormattedDateTime()
+        val formattedEndTime = ZonedDateTime.parse(nextEvent.endTime).getEventFormattedDateTime()
+
+        val nextEventTimeAndAuditoryString = DATE_OF_EVENT.format(
+            formattedStartTime,
+            formattedEndTime,
+            nextEvent.place
         )
 
         eventTimeAndAuditoryNext.text = nextEventTimeAndAuditoryString
@@ -166,31 +169,29 @@ class BranchViewHolder(
         speakerJobNext.text = nextEvent.speaker?.job
         eventDescriptionNext.text = nextEvent.title
 
+        iconInFavouriteNext.setImageResource(getFavouriteImageResource(nextEvent.isFavourite))
         setActionForChangeStateOfLikeButton(iconInFavouriteNext, nextEvent)
     }
 
-    private fun setActionForChangeStateOfLikeButton(iconInFavourite: ImageView, event: EventApiData) {
+    private fun setActionForChangeStateOfLikeButton(
+        iconInFavourite: ImageView,
+        event: EventApiData
+    ) {
 
         iconInFavourite.setOnClickListener {
 
             event.isFavourite = !event.isFavourite
 
-            val favouriteToastText = when(event.isFavourite){
-                true -> TOAST_TEXT_FOR_ADD_IN_FAVOURITE
-                else -> TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE
-            }
-
             val favouriteImageResource = getFavouriteImageResource(event.isFavourite)
 
             iconInFavourite.setImageResource(favouriteImageResource)
-            eventOnClickToastMessage.onClickToastMessage(favouriteToastText)
-            onItemClick.onFavouriteClick(eventApiData = event)
+            favoriteListener.onFavouriteClick(eventApiData = event)
         }
     }
 
     private fun getFavouriteImageResource(
         isFavourite: Boolean
-    ): Int = when(isFavourite){
+    ): Int = when (isFavourite) {
         true -> R.drawable.favorite_icon_filled
         else -> R.drawable.favourite_icon_not_filled
     }

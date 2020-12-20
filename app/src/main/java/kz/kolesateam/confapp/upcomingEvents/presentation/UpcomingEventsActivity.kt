@@ -9,32 +9,25 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.AllEvents.presentation.AllEventsRouter
-import kz.kolesateam.confapp.common.EventDetailsRouter
 import kz.kolesateam.confapp.AllEvents.presentation.PUSH_NOTIFICATION_MESSAGE
+import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.models.EventApiData
-import kz.kolesateam.confapp.common.interactions.OnBranchClicked
-import kz.kolesateam.confapp.common.interactions.OnClick
-import kz.kolesateam.confapp.common.interactions.OnClickToastMessage
-import kz.kolesateam.confapp.common.interactions.OnEventClick
+import kz.kolesateam.confapp.common.interaction.BranchListener
+import kz.kolesateam.confapp.common.interaction.EventListener
+import kz.kolesateam.confapp.common.interactions.FavoriteListener
 import kz.kolesateam.confapp.common.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.common.presentation.view.BranchAdapter
-import kz.kolesateam.confapp.upcomingEvents.presentation.viewModel.UpcomingEventsViewModel
+import kz.kolesateam.confapp.eventDetails.presentation.EventDetailsRouter
 import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
 import kz.kolesateam.confapp.favourite_events.presentation.FavouriteEventsActivity
+import kz.kolesateam.confapp.upcomingEvents.presentation.viewModel.UpcomingEventsViewModel
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
-
-const val TOAST_TEXT_FOR_DIRECTION = "Это направление %s!"
-const val TOAST_TEXT_FOR_REPORT = "Это доклад %s!"
-const val TOAST_TEXT_FOR_ADD_IN_FAVOURITE = "Вы добавили в избранное!"
-const val TOAST_TEXT_FOR_REMOVE_FROM_FAVOURITE = "Вы убрали из избранного!"
 const val TOAST_TEXT_FOR_ENTER_IN_FAVOURITE = "Это ваше избранное!"
 
-class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClickToastMessage,
-    OnEventClick {
+class UpcomingEventsActivity : AppCompatActivity(), BranchListener, FavoriteListener, EventListener {
 
     private val upcomingEventsViewModel: UpcomingEventsViewModel by viewModel()
     private val favouriteEventActionObservable: FavouriteEventActionObservable by inject()
@@ -65,17 +58,25 @@ class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, On
         }
     }
 
+    override fun onFavouriteClick(eventApiData: EventApiData) {
+        upcomingEventsViewModel.onFavouriteClick(eventApiData)
+    }
+
+    override fun onBranchClicked(branchId: Int?, title: String?) {
+        val allEventsScreenIntent = allEventsRouter.createIntent(this, branchId, title)
+        startActivity(allEventsScreenIntent)
+    }
+
     private fun bindViews() {
         recyclerView = findViewById(R.id.upcoming_event_activity_recycler)
         eventsProgressBar = findViewById(R.id.events_progress_bar)
         inYourFavouriteButton = findViewById(R.id.all_events_activity_button_in_favourite)
 
         branchAdapter = BranchAdapter(
-            eventOnBranchClicked = this,
-            eventOnClick = this,
-            eventOnClickToastMessage = this,
+            eventBranchListener = this,
+            eventFavoriteListener = this,
             favouriteEventActionObservable = favouriteEventActionObservable,
-            onEventClick = this
+            eventListener = this
         )
         recyclerView.adapter = branchAdapter
         recyclerView.layoutManager = LinearLayoutManager(
@@ -97,22 +98,9 @@ class UpcomingEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, On
         branchAdapter.setList(upcomingEventListItem)
     }
 
-    override fun onBranchClicked(branchId: Int?, title: String?) {
-        val allEventsScreenIntent = allEventsRouter.createIntent(this, branchId, title)
-        startActivity(allEventsScreenIntent)
-    }
-
     private fun navigateToFavouriteEventsActivity() {
         val upcomingEventsScreenIntent = Intent(this, FavouriteEventsActivity::class.java)
         startActivity(upcomingEventsScreenIntent)
-    }
-
-    override fun onFavouriteClick(eventApiData: EventApiData) {
-        upcomingEventsViewModel.onFavouriteClick(eventApiData)
-    }
-
-    override fun onClickToastMessage(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
     override fun onEventClick(branchId: Int?) {

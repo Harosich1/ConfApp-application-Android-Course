@@ -4,15 +4,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.AllEvents.presentation.BRANCH_ID
+import kz.kolesateam.confapp.common.interactions.FavoriteListener
 import kz.kolesateam.confapp.common.models.EventApiData
-import kz.kolesateam.confapp.common.interactions.OnClick
 import kz.kolesateam.confapp.eventDetails.presentation.view.EventDetailsViewHolder
 import kz.kolesateam.confapp.eventDetails.presentation.viewModel.EventDetailsViewModel
 import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class EventDetailsActivity : AppCompatActivity(), OnClick {
+class EventDetailsActivity : AppCompatActivity(), FavoriteListener {
 
     private val eventDetailsViewModel: EventDetailsViewModel by viewModel()
     private val favouriteEventActionObservable: FavouriteEventActionObservable by inject()

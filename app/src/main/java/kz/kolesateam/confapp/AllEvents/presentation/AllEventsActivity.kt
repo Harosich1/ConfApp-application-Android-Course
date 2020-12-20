@@ -5,27 +5,23 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kz.kolesateam.confapp.AllEvents.presentation.viewModel.AllEventsViewModel
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.common.models.EventApiData
-import kz.kolesateam.confapp.common.EventDetailsRouter
-import kz.kolesateam.confapp.common.interactions.OnBranchClicked
-import kz.kolesateam.confapp.common.interactions.OnClick
-import kz.kolesateam.confapp.common.interactions.OnClickToastMessage
-import kz.kolesateam.confapp.common.interactions.OnEventClick
 import kz.kolesateam.confapp.common.presentation.models.UpcomingEventListItem
 import kz.kolesateam.confapp.common.presentation.view.BranchAdapter
-import kz.kolesateam.confapp.AllEvents.presentation.viewModel.AllEventsViewModel
-import kz.kolesateam.confapp.upcomingEvents.presentation.TOAST_TEXT_FOR_ENTER_IN_FAVOURITE
+import kz.kolesateam.confapp.common.interaction.BranchListener
+import kz.kolesateam.confapp.common.interaction.EventListener
+import kz.kolesateam.confapp.common.interactions.FavoriteListener
+import kz.kolesateam.confapp.eventDetails.presentation.EventDetailsRouter
 import kz.kolesateam.confapp.favourite_events.domain.FavouriteEventActionObservable
 import kz.kolesateam.confapp.favourite_events.presentation.FavouriteEventsActivity
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClickToastMessage,
-    OnEventClick {
+class AllEventsActivity : AppCompatActivity(), BranchListener, FavoriteListener, EventListener{
 
     private val allEventsViewModel: AllEventsViewModel by viewModel()
     private val favouriteEventActionObservable: FavouriteEventActionObservable by inject()
@@ -54,11 +50,10 @@ class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClick
         inYourFavouriteButton = findViewById(R.id.all_events_activity_button_in_favourite)
 
         branchAdapter = BranchAdapter(
-            eventOnBranchClicked = this,
-            eventOnClick = this,
-            eventOnClickToastMessage = this,
+            eventBranchListener = this,
+            eventFavoriteListener = this,
             favouriteEventActionObservable = favouriteEventActionObservable,
-            onEventClick = this
+            eventListener = this
         )
 
         recyclerView.adapter = branchAdapter
@@ -73,11 +68,10 @@ class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClick
             navigateToUpcomingEventsActivity()
         }
         inYourFavouriteButton.setOnClickListener {
-            Toast.makeText(this, TOAST_TEXT_FOR_ENTER_IN_FAVOURITE, Toast.LENGTH_LONG).show()
             navigateToFavouriteEventsActivity()
         }
     }
-
+    
     private fun observeUpcomingEventsViewModel() {
         allEventsViewModel.getAllEventsLiveData().observe(this, ::showResult)
     }
@@ -96,14 +90,10 @@ class AllEventsActivity : AppCompatActivity(), OnBranchClicked, OnClick, OnClick
 
     private fun navigateToFavouriteEventsActivity() {
         val upcomingEventsScreenIntent = Intent(this, FavouriteEventsActivity::class.java)
-        finish()
         startActivity(upcomingEventsScreenIntent)
     }
 
     override fun onBranchClicked(branchId: Int?, title: String?) {
-    }
-
-    override fun onClickToastMessage(message: String) {
     }
 
     override fun onEventClick(branchId: Int?) {

@@ -16,11 +16,10 @@ class EventsFavouritesRepository(
     private val favouriteEventActionObservable: FavouriteEventActionObservable
 ) : FavouritesRepository {
 
-    private var favouritesEvents: MutableMap<Int, EventApiData>
+    private val favouritesEvents: MutableMap<Int, EventApiData> = mutableMapOf()
 
     init {
         val favouriteEventsFromFile: Map<Int, EventApiData> = getFavouriteEventsFromFile()
-        favouritesEvents = mutableMapOf<Int, EventApiData>()
         favouritesEvents.putAll(favouriteEventsFromFile)
     }
 
