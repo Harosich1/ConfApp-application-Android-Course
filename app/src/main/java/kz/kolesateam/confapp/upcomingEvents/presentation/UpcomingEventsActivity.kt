@@ -60,6 +60,15 @@ class UpcomingEventsActivity : AppCompatActivity(), BranchListener, FavoriteList
         }
     }
 
+    override fun onFavouriteClick(eventApiData: EventApiData) {
+        upcomingEventsViewModel.onFavouriteClick(eventApiData)
+    }
+
+    override fun onBranchClicked(branchId: Int?, title: String?) {
+        val allEventsScreenIntent = allEventsRouter.createIntent(this, branchId, title)
+        startActivity(allEventsScreenIntent)
+    }
+
     private fun bindViews() {
         recyclerView = findViewById(R.id.upcoming_event_activity_recycler)
         eventsProgressBar = findViewById(R.id.events_progress_bar)
@@ -90,17 +99,8 @@ class UpcomingEventsActivity : AppCompatActivity(), BranchListener, FavoriteList
         branchAdapter.setList(upcomingEventListItem)
     }
 
-    override fun onBranchClicked(branchId: Int?, title: String?) {
-        val allEventsScreenIntent = allEventsRouter.createIntent(this, branchId, title)
-        startActivity(allEventsScreenIntent)
-    }
-
     private fun navigateToFavouriteEventsActivity() {
         val upcomingEventsScreenIntent = Intent(this, FavouriteEventsActivity::class.java)
         startActivity(upcomingEventsScreenIntent)
-    }
-
-    override fun onFavouriteClick(eventApiData: EventApiData) {
-        upcomingEventsViewModel.onFavouriteClick(eventApiData)
     }
 }

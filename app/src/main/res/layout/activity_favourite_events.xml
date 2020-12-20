@@ -67,6 +67,7 @@
             android:overScrollMode="never"
             android:paddingStart="@dimen/padding_40x"
             android:paddingBottom="@dimen/padding_120x"
+            android:paddingEnd="@dimen/padding_40x"
             android:scrollbars="none"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/favourite_events_header_static"

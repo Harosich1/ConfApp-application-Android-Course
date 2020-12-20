@@ -58,7 +58,6 @@ class FavouriteEventsActivity : AppCompatActivity(), BranchListener, FavoriteLis
             LinearLayoutManager.VERTICAL,
             false
         )
-        recyclerView.setPadding(60, 0, 60, 240)
 
         onMainPageButton.setOnClickListener {
             navigateToUpcomingEventsActivity()
